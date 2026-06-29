@@ -1,7 +1,20 @@
-@echo off
+﻿@echo off
 chcp 65001 >nul
+setlocal enableextensions
 title 声形绘 SoundShape 启动器
 cd /d "%~dp0"
+
+REM ===== 检测 Python 是否安装 =====
+where python >nul 2>nul
+if errorlevel 1 (
+    echo.
+    echo [错误] 未检测到 Python，请先安装 Python 3.10+
+    echo        下载地址: https://www.python.org/downloads/
+    echo        安装时务必勾选 "Add Python to PATH"
+    echo.
+    pause
+    exit /b 1
+)
 
 :MENU
 cls
@@ -64,13 +77,12 @@ if not exist "backend\.env" (
     echo          - DATABASE_URL  （PostgreSQL 连接串）
     echo          - JWT_SECRET    （至少 32 位随机字符串）
     echo.
-    set /p cont=是否仍要启动仅前端模式？(Y/N)：
-    if /i "%cont%"=="Y" goto START_FRONTEND
-    goto MENU
+    goto ASK_FRONTEND_FALLBACK
 )
 echo [1/2] 启动后端（端口 8787）...
-start "SoundShape 后端" cmd /k "cd /d %~dp0backend && npm run dev"
-echo       后端窗口已弹出，请等待 "✅ 声形绘后端已启动" 提示
+REM 新窗口也要 chcp 65001，否则后端中文输出会乱码
+start "SoundShape 后端" cmd /k "chcp 65001 >nul && cd /d %~dp0backend && npm run dev"
+echo       后端窗口已弹出，请等待 "声形绘后端已启动" 提示
 echo.
 echo [2/2] 启动前端（端口 8000），3 秒后打开浏览器...
 timeout /t 3 /nobreak >nul
@@ -78,6 +90,12 @@ python launcher\server.py --port 8000
 echo.
 echo [前端服务已停止，请手动关闭后端窗口]
 pause
+goto MENU
+
+:ASK_FRONTEND_FALLBACK
+set /p cont=是否仍要启动仅前端模式？(Y/N)：
+if /i "%cont%"=="Y" goto START_FRONTEND
+if /i "%cont%"=="y" goto START_FRONTEND
 goto MENU
 
 :RUN_TESTS
@@ -116,7 +134,7 @@ echo 【首次使用】
 echo   1. 双击 启动器.bat
 echo   2. 选 [1] 启动前端服务
 echo   3. 浏览器会自动打开首页
-echo   4. 体验：首页 → 工作台 → 画形状 → 识别 → 演奏 → 保存
+echo   4. 体验：首页 ^> 工作台 ^> 画形状 ^> 识别 ^> 演奏 ^> 保存
 echo   5. 数据保存在浏览器本地，刷新不丢失，换浏览器/清缓存会丢失
 echo.
 echo 【完整模式（可选）】
@@ -145,6 +163,9 @@ echo   A: 选 [4] 停止所有服务，或修改 launcher\server.py 默认端口
 echo.
 echo   Q: 画图后识别不出？
 echo   A: 至少画 4 个独立形状（矩形/圆点），形状之间留间隙
+echo.
+echo   Q: 中文显示乱码？
+echo   A: 启动器已自动切换 UTF-8 编码，无需手动处理
 echo.
 pause
 goto MENU

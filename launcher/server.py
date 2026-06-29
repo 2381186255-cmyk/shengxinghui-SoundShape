@@ -25,6 +25,16 @@ import webbrowser
 import sys
 from pathlib import Path
 
+# Windows cmd 默认编码可能是 GBK（cp936），强制 stdout 用 UTF-8
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except AttributeError:
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
+
 # 项目根目录 = 本文件的上两级
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = ROOT / "soundshape-design"
