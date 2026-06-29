@@ -1,0 +1,7 @@
+/* @mode: ink|thunder
+ * 字体引入 - Google Fonts @import（7.3）
+ * 严格白名单：Cormorant Garamond / Spectral / JetBrains Mono / Noto Serif SC
+ * 禁止：Inter / Roboto / Arial / system-ui / Space Grotesk / Geist
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap');

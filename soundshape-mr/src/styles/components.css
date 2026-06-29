@@ -1,0 +1,209 @@
+/* @mode: ink|thunder
+ * 组件样式（7.6）- btn-engrave / btn-holo / card-scroll / card-holo / toast
+ */
+
+/* ========== 墨绘态主按钮 btn-engrave（7.6.1） ========== */
+.btn-engrave {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 14px 32px;
+  background: var(--ink-full);
+  color: var(--parchment-base);
+  border: 1px solid var(--gold-dark);
+  border-radius: 0;
+  position: relative;
+  cursor: pointer;
+  transition: var(--transition-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(168, 124, 44, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 2px 0 var(--ink-mid);
+}
+.btn-engrave:hover {
+  background: var(--cinnabar);
+  border-color: var(--cinnabar-deep);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 200, 180, 0.3),
+    0 4px 12px var(--cinnabar-glow);
+}
+.btn-engrave:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.btn-engrave:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========== 雷霆态主按钮 btn-holo（7.6.2） ========== */
+.btn-holo {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  background: transparent;
+  color: var(--cyan-bright);
+  border: 1px solid var(--cyan-bright);
+  border-radius: 0;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-thunder);
+  text-shadow: 0 0 8px var(--cyan-faint);
+  box-shadow:
+    inset 0 0 12px rgba(0, 240, 255, 0.1),
+    0 0 8px rgba(0, 240, 255, 0.2);
+}
+.btn-holo:hover {
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow:
+    inset 0 0 20px rgba(0, 240, 255, 0.2),
+    0 0 16px var(--cyan-faint);
+}
+.btn-holo:active {
+  background: var(--cyan-bright);
+  color: var(--abyss-base);
+  text-shadow: none;
+}
+.btn-holo:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ========== 墨绘态卡片 card-scroll（7.6.3） ========== */
+.card-scroll {
+  background: var(--parchment-deep);
+  border: 1px solid var(--gold-faint);
+  padding: var(--space-lg);
+  position: relative;
+  border-top: 3px solid var(--gold-dark);
+  border-bottom: 3px solid var(--gold-dark);
+}
+.card-scroll::before,
+.card-scroll::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ink-faint);
+}
+.card-scroll::before { top: 8px; }
+.card-scroll::after { bottom: 8px; }
+
+/* ========== 雷霆态卡片 card-holo（7.6.4） ========== */
+.card-holo {
+  background: var(--abyss-deep);
+  border: 1px solid var(--cyan-faint);
+  padding: 20px;
+  position: relative;
+}
+.card-holo::before {
+  content: attr(data-tag);
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  letter-spacing: 0.15em;
+}
+
+/* ========== 双态 Toast（7.6.5） ========== */
+.toast-ink {
+  background: var(--parchment-deep);
+  color: var(--ink-full);
+  border-left: 4px solid var(--cinnabar);
+  font-family: var(--font-body);
+}
+.toast-thunder {
+  background: var(--abyss-deep);
+  color: var(--cyan-bright);
+  border-left: 4px solid var(--blood-orange);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 6px var(--cyan-faint);
+}
+
+/* Toast 容器 */
+.toast-container {
+  position: fixed;
+  top: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  pointer-events: none;
+}
+.toast-item {
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  animation: toast-slide-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: auto;
+  max-width: 90vw;
+}
+.toast-item.toast-exit {
+  animation: toast-slide-out 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes toast-slide-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes toast-slide-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* ========== 通用工具类 ========== */
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+.font-mono { font-family: var(--font-mono); }
+.font-cn { font-family: var(--font-cn); }
+
+.text-hero { font-size: var(--text-hero); font-weight: 300; letter-spacing: -0.02em; }
+.text-display-1 { font-size: var(--text-display-1); font-weight: 500; letter-spacing: -0.01em; }
+.text-display-2 { font-size: var(--text-display-2); font-weight: 600; }
+.text-body-lg { font-size: var(--text-body-lg); }
+.text-body { font-size: var(--text-body); }
+.text-caption { font-size: var(--text-caption); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.text-data { font-size: var(--text-data); font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.05em; }
+
+/* 输入框（墨绘态） */
+.input-ink {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--gold-dark);
+  color: var(--ink-full);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  padding: 8px 0;
+  width: 100%;
+  transition: var(--transition-ink);
+}
+.input-ink:focus {
+  outline: none;
+  border-bottom-color: var(--cinnabar);
+}
+
+/* 顶栏 */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-xl);
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+}
+[data-mode="thunder"] .topbar {
+  border-bottom-color: var(--cyan-faint);
+}

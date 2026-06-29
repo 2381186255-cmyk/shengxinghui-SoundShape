@@ -1,0 +1,190 @@
+/* @mode: transition
+ * 双态过渡动画（7.9）+ 触发光效动画（7.11）
+ * 2.4s 九阶段时间轴：0/200/400/800/1200/1400/1800/2200/2400ms
+ */
+
+/* ========== 双态过渡动画 ========== */
+
+/* 燃烧溶解（400ms 阶段） */
+@keyframes burn-dissolve {
+  0% { filter: brightness(1) contrast(1); opacity: 1; }
+  50% { filter: brightness(1.5) contrast(1.3) saturate(1.5); opacity: 0.8; }
+  100% { filter: brightness(0.3) contrast(2) saturate(0); opacity: 0; }
+}
+
+/* 扫描线扫过（800ms 阶段） */
+@keyframes scanline-sweep {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* 全息升起（1800ms 阶段） */
+@keyframes holo-emerge {
+  0% { transform: perspective(800px) rotateX(90deg) scale(0.3); opacity: 0; filter: blur(8px); }
+  60% { opacity: 0.6; filter: blur(2px); }
+  100% { transform: perspective(800px) rotateX(45deg) scale(1); opacity: 1; filter: blur(0); }
+}
+
+/* 印章激活（200ms 阶段） */
+@keyframes seal-activate {
+  0% { box-shadow: 0 0 0 0 var(--cinnabar-glow); }
+  100% { box-shadow: 0 0 40px 20px var(--cinnabar-glow); }
+}
+
+/* 摄像头开启（1400ms 阶段） */
+@keyframes camera-reveal {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 网格上线（2200ms 阶段） */
+@keyframes grid-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* 过渡覆盖层 */
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+}
+
+/* 黑场遮罩（1200ms 阶段） */
+.blackout-mask {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9100;
+  pointer-events: none;
+}
+
+/* 中心光点（贯穿 1200-1800ms） */
+.center-light {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--cyan-bright);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px 10px var(--cyan-bright);
+  z-index: 9200;
+  pointer-events: none;
+}
+
+/* ========== 触发光效动画（7.11 L1-L6） ========== */
+
+/* L1 键位高亮 */
+@keyframes key-highlight {
+  0% { background: transparent; box-shadow: none; }
+  20% { background: var(--soul-holo, var(--cyan-bright)); box-shadow: 0 0 30px var(--soul-holo, var(--cyan-bright)); }
+  100% { background: transparent; box-shadow: none; }
+}
+
+/* L2 涟漪扩散 */
+@keyframes ripple-spread {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* L3 粒子爆发（canvas 实现，无 CSS） */
+
+/* L4 食指光晕 */
+@keyframes cursor-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+  50% { transform: translate(-50%, -50%) scale(2); filter: brightness(1.5); }
+  100% { transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+}
+
+/* L5 扫描线脉冲 */
+@keyframes scanline-pulse {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* L6 屏幕震屏 */
+@keyframes screen-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+}
+
+/* 应用震屏 */
+.screen-shake {
+  animation: screen-shake 80ms ease-in-out;
+}
+
+/* ========== 手部追踪动画（7.10） ========== */
+
+/* 手部进入（7.10.9） */
+@keyframes hand-emerge {
+  0% { opacity: 0; transform: scale(0.5); filter: blur(8px); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+/* 手部离开（7.10.9） */
+@keyframes hand-dissolve {
+  0% { opacity: 1; filter: blur(0); }
+  100% { opacity: 0; filter: blur(6px); }
+}
+
+/* 低置信度频闪（7.10.6） */
+@keyframes confidence-flicker {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* 倒计时圆环填充（7.10.4） */
+@keyframes ring-fill {
+  from { stroke-dashoffset: var(--circumference); }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ========== 响应式断点（7.12） ========== */
+
+/* tablet 768-1279px */
+@media (max-width: 1279px) and (min-width: 768px) {
+  :root {
+    --text-hero: 61px;
+    --text-display-1: 41px;
+    --text-display-2: 27px;
+    --text-body-lg: 15px;
+    --text-body: 13px;
+  }
+}
+
+/* mobile <768px */
+@media (max-width: 767px) {
+  :root {
+    --text-hero: 48px;
+    --text-display-1: 32px;
+    --text-display-2: 22px;
+    --text-body-lg: 13px;
+    --text-body: 12px;
+    --text-caption: 10px;
+    --text-data: 12px;
+  }
+}
+
+/* 移动端降级提示 */
+.mobile-degrade-notice {
+  display: none;
+}
+@media (max-width: 767px) {
+  .mobile-degrade-notice {
+    display: block;
+    padding: var(--space-md);
+    background: var(--warning);
+    color: var(--abyss-base);
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    text-align: center;
+  }
+}

@@ -1,0 +1,163 @@
+/* @mode: ink|thunder
+ * 全局重置 + body 双态背景 + 纹理类（7.5）
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+/* 默认墨绘态背景纹理（7.5.1） */
+[data-mode="ink"] body,
+[data-mode="ink"] #root {
+  background-color: var(--parchment-base);
+}
+
+/* 雷霆态背景（7.5.5 scanline 由 overlay 单独处理） */
+[data-mode="thunder"] body,
+[data-mode="thunder"] #root {
+  background-color: var(--abyss-base);
+}
+
+/* ========== 纹理类（R4 强制） ========== */
+
+/* 羊皮纸纹理（7.5.1）- 墨绘态背景必须叠加 */
+.parchment-bg {
+  background-color: var(--parchment-base);
+  background-image:
+    /* 第一层：粗纤维噪声 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.5 0 0 0 0 0.3 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    /* 第二层：污渍渐变 */
+    radial-gradient(ellipse at 20% 30%, rgba(168, 124, 44, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(139, 58, 32, 0.06) 0%, transparent 40%),
+    /* 第三层：边缘暗角 */
+    radial-gradient(ellipse at center, transparent 60%, rgba(74, 63, 46, 0.12) 100%);
+}
+
+/* 五线谱水印（7.5.4）- 墨绘态绘制画布必须叠加 */
+.staff-watermark {
+  background-image:
+    linear-gradient(to bottom, transparent calc(50% - 24px), var(--terrain-faint) calc(50% - 24px), var(--terrain-faint) calc(50% - 23px), transparent calc(50% - 23px)),
+    linear-gradient(to bottom, transparent calc(50% - 12px), var(--terrain-faint) calc(50% - 12px), var(--terrain-faint) calc(50% - 11px), transparent calc(50% - 11px)),
+    linear-gradient(to bottom, transparent calc(50%), var(--terrain-faint) calc(50%), var(--terrain-faint) calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(to bottom, transparent calc(50% + 12px), var(--terrain-faint) calc(50% + 12px), var(--terrain-faint) calc(50% + 13px), transparent calc(50% + 13px)),
+    linear-gradient(to bottom, transparent calc(50% + 24px), var(--terrain-faint) calc(50% + 24px), var(--terrain-faint) calc(50% + 25px), transparent calc(50% + 25px));
+}
+
+/* Scanline 扫描线（7.5.5）- 雷霆态背景必须叠加 */
+.scanline-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 240, 255, 0.03) 2px,
+    rgba(0, 240, 255, 0.03) 3px
+  );
+  animation: scanline-roll 8s linear infinite;
+}
+
+@keyframes scanline-roll {
+  from { background-position: 0 0; }
+  to { background-position: 0 100px; }
+}
+
+/* Chromatic Aberration 色差错位（7.5.6）- 雷霆态关键文字必须叠加 */
+.chromatic-text {
+  text-shadow:
+    1px 0 0 rgba(255, 0, 80, 0.7),
+    -1px 0 0 rgba(0, 240, 255, 0.7);
+}
+
+/* 全息边框（7.5.7）- 雷霆态卡片必须叠加 */
+.holo-border {
+  position: relative;
+  border: 1px solid var(--cyan-faint);
+  background: rgba(0, 240, 255, 0.02);
+}
+.holo-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, var(--cyan-bright), transparent 30%, transparent 70%, var(--blood-orange)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* 朱砂印章（7.5.3）- 乐器标识 */
+.cinnabar-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--cinnabar);
+  color: var(--parchment-base);
+  font-family: var(--font-cn);
+  font-weight: 700;
+  font-size: 24px;
+  border-radius: 4px;
+  transform: rotate(var(--seal-rotate, -2deg));
+  opacity: var(--seal-opacity, 0.92);
+  box-shadow:
+    inset 0 0 0 2px var(--cinnabar-deep),
+    0 2px 8px rgba(140, 42, 31, 0.3);
+  background-image: radial-gradient(circle at 30% 40%, transparent 60%, rgba(0,0,0,0.15) 100%);
+}
+
+/* 灵格印章（雷霆态用灵格色） */
+.soul-seal {
+  background: var(--soul-ink, var(--cinnabar));
+  box-shadow:
+    inset 0 0 0 2px rgba(0,0,0,0.2),
+    0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* 滚动条样式（双态） */
+[data-mode="ink"] ::-webkit-scrollbar { width: 8px; }
+[data-mode="ink"] ::-webkit-scrollbar-track { background: var(--parchment-shadow); }
+[data-mode="ink"] ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+
+[data-mode="thunder"] ::-webkit-scrollbar { width: 8px; }
+[data-mode="thunder"] ::-webkit-scrollbar-track { background: var(--abyss-deep); }
+[data-mode="thunder"] ::-webkit-scrollbar-thumb { background: var(--cyan-mid); border-radius: 4px; }
+
+/* 焦点可见（7.13 可访问性） */
+*:focus-visible {
+  outline: 2px solid var(--gold-dark);
+  outline-offset: 2px;
+}
+[data-mode="thunder"] *:focus-visible {
+  outline-color: var(--cyan-bright);
+}
+
+/* prefers-reduced-motion（7.13） */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .scanline-overlay { animation: none; }
+}

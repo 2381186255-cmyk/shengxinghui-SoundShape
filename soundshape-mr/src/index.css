@@ -1,0 +1,14 @@
+/* @mode: ink|thunder
+ * 全局入口 - 引入设计系统 5 个 CSS
+ */
+
+@import './styles/fonts.css';
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/components.css';
+@import './styles/animations.css';
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

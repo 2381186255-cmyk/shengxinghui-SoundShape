@@ -1,0 +1,143 @@
+/* @mode: ink|thunder
+ * 设计系统 CSS 变量 - 双态配色 + 灵格色 + 字体 + 间距
+ * 严格按 MR 设计文档 7.3-7.4 实现
+ */
+
+:root {
+  /* 字体系统（7.3） */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --font-body: 'Spectral', 'Noto Serif SC', serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-cn: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+
+  /* 字号阶梯（桌面端） */
+  --text-hero: 72px;
+  --text-display-1: 48px;
+  --text-display-2: 32px;
+  --text-body-lg: 18px;
+  --text-body: 15px;
+  --text-caption: 12px;
+  --text-data: 14px;
+
+  /* 间距 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+
+  /* 圆角限制（C5: ≤8px） */
+  --radius-sm: 0;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* 过渡 */
+  --transition-ink: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-thunder: all 0.2s;
+}
+
+/* ========== 墨绘态变量（7.4.1） ========== */
+[data-mode="ink"] {
+  /* 羊皮纸三层 */
+  --parchment-base: #F1E4C8;
+  --parchment-deep: #E8D5A8;
+  --parchment-shadow: #C9B583;
+
+  /* 墨色三层 */
+  --ink-full: #1A1410;
+  --ink-mid: #4A3F2E;
+  --ink-faint: #8B7A5C;
+
+  /* 朱砂 */
+  --cinnabar: #B33A2C;
+  --cinnabar-deep: #8C2A1F;
+  --cinnabar-glow: rgba(179, 58, 44, 0.25);
+
+  /* 暗金 */
+  --gold-dark: #A87C2C;
+  --gold-faint: #C9A35C;
+
+  /* 山河底纹 */
+  --terrain: #9B8B6B;
+  --terrain-faint: rgba(155, 139, 107, 0.15);
+
+  /* 状态色 */
+  --success: #5C7A3D;
+  --warning: #C77A2C;
+  --error: #8C2A1F;
+
+  /* 背景与文字 */
+  --bg-primary: var(--parchment-base);
+  --bg-card: var(--parchment-deep);
+  --text-primary: var(--ink-full);
+  --text-secondary: var(--ink-mid);
+  --text-tertiary: var(--ink-faint);
+  --border-color: var(--gold-faint);
+}
+
+/* ========== 雷霆态变量（7.4.2） ========== */
+[data-mode="thunder"] {
+  /* 深渊底色 */
+  --abyss-base: #050407;
+  --abyss-deep: #0A0810;
+  --abyss-grid: rgba(0, 240, 255, 0.04);
+
+  /* 电光青 */
+  --cyan-bright: #00F0FF;
+  --cyan-mid: #00B8C4;
+  --cyan-faint: rgba(0, 240, 255, 0.15);
+
+  /* 血橙 */
+  --blood-orange: #FF4A1C;
+  --blood-deep: #C73814;
+  --blood-glow: rgba(255, 74, 28, 0.35);
+
+  /* 硫黄 */
+  --sulfur: #FFCC33;
+  --sulfur-faint: rgba(255, 204, 51, 0.2);
+
+  /* 文字 */
+  --text-bright: #E8F4F8;
+  --text-mid: #8BA0A8;
+  --text-faint: #4A5860;
+
+  /* 状态色 */
+  --success: #00FFA3;
+  --warning: #FFCC33;
+  --error: #FF4A1C;
+
+  /* 背景与文字 */
+  --bg-primary: var(--abyss-base);
+  --bg-card: var(--abyss-deep);
+  --text-primary: var(--text-bright);
+  --text-secondary: var(--text-mid);
+  --text-tertiary: var(--text-faint);
+  --border-color: var(--cyan-faint);
+}
+
+/* ========== 5 乐器灵格色（7.4.3 / R7） ========== */
+:root {
+  /* 墨绘印章色 / 雷霆全息色 */
+  --piano-ink: #2C4A7C;
+  --piano-holo: #00B4FF;
+
+  --guitar-ink: #B33A2C;
+  --guitar-holo: #FF6B35;
+
+  --violin-ink: #A87C2C;
+  --violin-holo: #FFCC33;
+
+  --flute-ink: #5C7A3D;
+  --flute-holo: #00FFA3;
+
+  --drums-ink: #5C2C7C;
+  --drums-holo: #B829FF;
+}
+
+/* 灵格色工具类 */
+.soul-piano { --soul-ink: var(--piano-ink); --soul-holo: var(--piano-holo); }
+.soul-guitar { --soul-ink: var(--guitar-ink); --soul-holo: var(--guitar-holo); }
+.soul-violin { --soul-ink: var(--violin-ink); --soul-holo: var(--violin-holo); }
+.soul-flute { --soul-ink: var(--flute-ink); --soul-holo: var(--flute-holo); }
+.soul-drums { --soul-ink: var(--drums-ink); --soul-holo: var(--drums-holo); }
