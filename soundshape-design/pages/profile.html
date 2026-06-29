@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>声形绘 SoundShape - 个人中心</title>
+    <style id="theme-vars">
+/*
+ * Pinguo design tokens
+ * Brand: Pinguo
+ * Domain: Consumer imaging product
+ * Style: Restrained, elegant, Apple-inspired
+ * Theme mode: light-dark
+ * Source language: zh
+ * Output language: en
+ *
+ * Color architecture (two layers):
+ *   1. Primitive palette - six categories. brand / background / text / icon
+ *      are each a 10-step scale (50 lightest to 900 darkest). state-success and
+ *      state-error are functional colors anchored on Apple system colors.
+ *      Anchors follow Apple Human Interface Guidelines system colors
+ *      (System Blue #007AFF, System Green #34C759, System Red #FF3B30,
+ *      system grays / label / background colors).
+ *   2. Semantic tokens - :root (light) and .dark map roles onto primitives.
+ *      Components and UI kits must only consume the semantic tokens below.
+ */
+
+/* @group-priority: brand, background, text, icon, state-success, state-error */
+
+:root {
+  /* ===== PRIMITIVE PALETTE ===== */
+
+  /* brand */
+  --brand-50: #e8f2ff;
+  --brand-100: #cfe5ff;
+  --brand-200: #9fcbff;
+  --brand-300: #66abff;
+  --brand-400: #2e8dff;
+  --brand-500: #007aff; /* @primary */
+  --brand-600: #0064d6;
+  --brand-700: #004fad;
+  --brand-800: #003b82;
+  --brand-900: #00275a;
+
+  /* background */
+  --background-50: #ffffff;
+  --background-100: #f7f7fa;
+  --background-200: #f2f2f7;
+  --background-300: #e5e5ea;
+  --background-400: #d1d1d6;
+  --background-500: #aeaeb2;
+  --background-600: #8e8e93;
+  --background-700: #3a3a3c;
+  --background-800: #1c1c1e;
+  --background-900: #000000;
+
+  /* text */
+  --text-50: #f5f5f7;
+  --text-100: #e3e3e8;
+  --text-200: #c7c7cc;
+  --text-300: #aeaeb2;
+  --text-400: #8e8e93;
+  --text-500: #6e6e73;
+  --text-600: #48484a;
+  --text-700: #3c3c43;
+  --text-800: #1d1d1f;
+  --text-900: #000000;
+
+  /* icon */
+  --icon-50: #f5f5f7;
+  --icon-100: #e5e5ea;
+  --icon-200: #d1d1d6;
+  --icon-300: #c7c7cc;
+  --icon-400: #aeaeb2;
+  --icon-500: #8e8e93;
+  --icon-600: #6e6e73;
+  --icon-700: #48484a;
+  --icon-800: #2c2c2e;
+  --icon-900: #1d1d1f;
+
+  /* state-success */
+  --state-success: #34c759; /* @primary */
+  --state-success-dark: #30d158;
+  --state-success-surface: #e9f9ee;
+  --state-success-foreground: #ffffff;
+
+  /* state-error */
+  --state-error: #ff3b30; /* @primary */
+  --state-error-dark: #ff453a;
+  --state-error-surface: #ffecea;
+  --state-error-foreground: #ffffff;
+
+  /* ===== SEMANTIC ROLES ===== */
+
+  /* semantic */
+  --background: var(--background-50);
+  --foreground: var(--text-800);
+  --card: var(--background-50);
+  --card-foreground: var(--text-800);
+  --popover: var(--background-50);
+  --popover-foreground: var(--text-900);
+
+  --primary: var(--brand-500);
+  --primary-foreground: var(--background-50);
+  --secondary: var(--background-200);
+  --secondary-foreground: var(--text-800);
+  --muted: var(--background-200);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-100);
+  --accent-foreground: var(--text-800);
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-300);
+  --input: var(--background-400);
+  --ring: var(--brand-500);
+
+  --icon: var(--icon-900);
+  --icon-muted: var(--icon-500);
+
+  /* chart */
+  --chart-1: var(--state-success);
+  --chart-2: var(--brand-500);
+  --chart-3: #ff9500;
+  --chart-4: #5856d6;
+  --chart-5: #af52de;
+
+  /* sidebar */
+  --sidebar: var(--background-200);
+  --sidebar-foreground: var(--text-800);
+  --sidebar-primary: var(--brand-500);
+  --sidebar-primary-foreground: var(--background-50);
+  --sidebar-accent: var(--background-300);
+  --sidebar-accent-foreground: var(--text-800);
+  --sidebar-border: var(--background-300);
+  --sidebar-ring: var(--brand-500);
+
+  /* TYPOGRAPHY */
+  --font-sans: DM Sans, ui-sans-serif, sans-serif, system-ui;
+  --font-serif: DM Sans, ui-sans-serif, sans-serif, system-ui;
+  --font-mono: JetBrains Mono, monospace;
+  --tracking-normal: 0em;
+
+  /* RADIUS */
+  --radius: 1.2rem;
+
+  /* SHADOWS */
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.04); /* Hairline */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04); /* Subtle */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.05); /* Card */
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.05); /* Raised */
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Card Hover */
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.05); /* Float */
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.10), 0 8px 16px -8px rgba(0, 0, 0, 0.06); /* Overlay */
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.12); /* Modal */
+
+  /* SPACING */
+  --spacing: 0.24rem;
+}
+
+/* ===== SEMANTIC ROLES - dark (primitive palette inherited) ===== */
+.dark {
+  --background: var(--background-900);
+  --foreground: var(--text-50);
+  --card: var(--background-800);
+  --card-foreground: var(--text-50);
+  --popover: var(--background-700);
+  --popover-foreground: var(--text-50);
+
+  --primary: var(--brand-400);
+  --primary-foreground: var(--background-900);
+  --secondary: var(--background-800);
+  --secondary-foreground: var(--text-50);
+  --muted: var(--background-800);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-700);
+  --accent-foreground: var(--text-50);
+  --destructive: var(--state-error-dark);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success-dark);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-700);
+  --input: var(--background-700);
+  --ring: var(--brand-400);
+
+  --icon: var(--icon-50);
+  --icon-muted: var(--icon-500);
+
+  --chart-1: var(--state-success-dark);
+  --chart-2: var(--brand-400);
+  --chart-3: #ff9f0a;
+  --chart-4: #5e5ce6;
+  --chart-5: #bf5af2;
+
+  --sidebar: var(--background-800);
+  --sidebar-foreground: var(--text-50);
+  --sidebar-primary: var(--brand-400);
+  --sidebar-primary-foreground: var(--background-900);
+  --sidebar-accent: var(--background-700);
+  --sidebar-accent-foreground: var(--text-50);
+  --sidebar-border: var(--background-700);
+  --sidebar-ring: var(--brand-400);
+
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.30);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.36), 0 1px 3px -1px rgba(0, 0, 0, 0.36);
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.40), 0 1px 2px -1px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.44), 0 2px 4px -2px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.50), 0 4px 8px -4px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.44);
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.60);
+}
+
+    </style>
+    <style id="component-vars">
+/*
+ * components.css - aggregated component CSS
+ * Auto-extracted from preview/component-*.html files.
+ * DO NOT EDIT. Regenerate with extract-components-css.mjs.
+ *
+ * Foundation tokens live in colors_and_type.css.
+ * This file consumes those tokens via var(--*) references.
+ */
+
+/* ============================================================
+ * Button
+ * source: preview/component-button.html
+ * rules: 10
+ */
+/* @anatomy
+   <div class="row"><span class="label">Primary 56</span><button class="btn btn-primary btn-lg">Buy now</button><button class="btn btn-primary btn-lg" disabled>Buy now</button></div>
+*/
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--spacing)*1.5);height:40px;padding:0 20px;border:none;border-radius:calc(var(--radius)*2);background:transparent;color:var(--foreground);font:600 14px/1 var(--font-sans);letter-spacing:var(--tracking-normal);white-space:nowrap;box-shadow:var(--shadow-sm);cursor:pointer;transition:background-color .18s ease,color .18s ease,opacity .18s ease,filter .18s ease}
+.btn:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{filter:brightness(.96)}
+.btn-secondary{height:48px;padding:0 24px;background:var(--secondary);color:var(--secondary-foreground)}
+.btn-secondary:hover{background:var(--muted)}
+.btn-text{height:48px;padding:0 4px;box-shadow:none}
+.btn-text:hover{color:var(--primary)}
+.btn-lg{height:56px;padding:0 28px;font-size:16px}
+
+/* ============================================================
+ * Card
+ * source: preview/component-card.html
+ * rules: 12
+ */
+/* @anatomy
+   <div class="row">
+   <span class="label">Info</span>
+   <article class="card">
+   <div><div class="eyebrow">Pinguo Apple</div>
+*/
+.card{width:188px;min-height:148px;padding:calc(var(--spacing)*5);display:flex;flex-direction:column;justify-content:space-between;background:var(--card);color:var(--card-foreground);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-md);transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card.disabled,.card.disabled:hover{opacity:.5;transform:none;box-shadow:var(--shadow-md)}
+.eyebrow,.meta{color:var(--muted-foreground);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.title{margin:6px 0 8px;font-size:18px;line-height:1.15}
+.body-copy{margin:0;color:var(--muted-foreground);font-size:13px}
+.cta{display:inline-flex;align-items:center;justify-content:center;width:max-content;margin-top:12px;padding:calc(var(--spacing)*2) calc(var(--spacing)*3.5);border-radius:999px;background:var(--primary);color:var(--primary-foreground);font-size:12px;font-weight:700;text-decoration:none}
+.media{aspect-ratio:4/3;border-radius:calc(var(--radius) - 4px);background:linear-gradient(135deg,var(--secondary),var(--accent));border:1px solid var(--border)}
+.media-card{min-height:212px;padding:calc(var(--spacing)*4)}
+.media-card .title{font-size:16px;margin:10px 0 6px}
+.price{font-size:12px;color:var(--muted-foreground)}
+.dark{background:var(--card);color:var(--card-foreground)}
+
+/* ============================================================
+ * Comparison Table
+ * source: preview/component-comparison-table.html
+ * rules: 13
+ */
+/* @anatomy
+   <div class="row"><span class="label">Default</span><div class="t"><div class="c m">Compare models</div>
+*/
+.t{display:grid;grid-template-columns:96px repeat(3,1fr);overflow:hidden;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--card-foreground);box-shadow:var(--shadow-sm)}
+.q{grid-template-columns:82px repeat(4,1fr)}
+.c{padding:10px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.t>.c:nth-child(4n),.q>.c:nth-child(5n){border-right:0}
+.t>.c:nth-last-child(-n+4),.q>.c:nth-last-child(-n+5){border-bottom:0}
+.m{background:var(--background);color:var(--muted-foreground);font:700 10px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase}
+.h{background:var(--background);font-weight:700}
+.k{display:block;font-size:14px;line-height:1.1}
+.s{display:block;margin-top:4px;color:var(--chart-2);font-size:11px;font-weight:700}
+.b .k{color:var(--chart-2)}
+.v{font-weight:600}
+.n{color:var(--muted-foreground);font-size:12px}
+.x{opacity:.45}
+
+/* ============================================================
+ * Input
+ * source: preview/component-input.html
+ * rules: 10
+ */
+/* @anatomy
+   <div class="row">
+   <span class="label">Search 44</span>
+   <div class="field">
+   <span class="icon">⌕</span>
+   <input class="control" aria-label="Search products" placeholder="Search products">
+   <button class="clear" type="button" aria-label="Clear search">×</button>
+   </div>
+*/
+.surface{display:flex;gap:calc(var(--spacing)*2);padding:calc(var(--spacing)*3);border:1px solid var(--border);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow-sm)}
+.dark{background:var(--background);color:var(--foreground)}
+.field{display:flex;align-items:center;gap:calc(var(--spacing)*2);min-width:240px;height:44px;padding:0 calc(var(--spacing)*3);border:1px solid var(--input);border-radius:var(--radius);background:var(--background);color:var(--foreground);box-shadow:var(--shadow-xs)}
+.field.small{height:40px}
+.field:focus-within{border-color:var(--ring);box-shadow:0 0 0 1px var(--ring)}
+.field.disabled{opacity:.55}
+.icon,.clear{padding:0;border:0;background:transparent;color:var(--icon-muted);font:inherit}
+.icon{font-size:13px}
+.control{flex:1;border:0;outline:0;background:transparent;color:inherit;font:inherit}
+.control::placeholder{color:var(--muted-foreground)}
+
+/* ============================================================
+ * Navigation
+ * source: preview/component-navigation.html
+ * rules: 16
+ */
+/* @anatomy
+   <div class="row"><span class="label">Global 44</span><nav class="webbar dark" aria-label="Pinguo Apple global navigation"><span class="brand">Pinguo Apple</span><div class="rail"><a class="link" href="#">Store</a><a class="link" href="#">Explore</a><a class="link" href="#">Community</a><a class="link" href="#">Support</a></div>
+*/
+.webbar,.mobile{border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.webbar{display:flex;align-items:center;gap:calc(var(--spacing)*2);min-width:320px;height:44px;padding:0 calc(var(--spacing)*3);border-radius:var(--radius);background:var(--sidebar)}
+.brand{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.link,.tab{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;color:inherit;text-decoration:none;white-space:nowrap;transition:background-color .18s ease,color .18s ease,opacity .18s ease}
+.link{height:32px;padding:0 calc(var(--spacing)*2.5)}
+.link:hover,.tab:hover{background:var(--secondary)}
+.link:focus-visible,.tab:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.dark{background:var(--sidebar);color:var(--foreground)}
+.disabled{opacity:.48}
+.disabled .link,.disabled .tab{pointer-events:none}
+.mobile{padding:calc(var(--spacing)*2);border-radius:calc(var(--radius)*1.1);background:var(--card)}
+.screen{display:flex;align-items:flex-end;justify-content:center;width:188px;height:164px;padding:calc(var(--spacing)*3);border-radius:calc(var(--radius)*.9);background:linear-gradient(180deg,var(--background),var(--secondary))}
+.tabbar{display:flex;gap:calc(var(--spacing)*1.5);padding:calc(var(--spacing)*1.5);border:1px solid var(--border);border-radius:999px;background:var(--card);box-shadow:var(--shadow-md)}
+.tab{flex-direction:column;gap:2px;min-width:56px;height:56px;padding:0 calc(var(--spacing)*1.5);font-size:11px;text-align:center}
+.dot{width:18px;height:18px;border-radius:999px;background:var(--secondary);box-shadow:inset 0 0 0 1px var(--border)}
+.tab:hover .dot{background:var(--primary)}
+
+/* ============================================================
+ * Product Grid
+ * source: preview/component-product-grid.html
+ * rules: 12
+ */
+/* @anatomy
+   <div class="row">
+   <span class="label">4-up</span>
+   <div class="grid grid-4">
+   <article class="card"><div class="media"></div>
+*/
+.grid{display:grid;gap:8px;flex:1}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--card-foreground);box-shadow:var(--shadow-xs);transition:border-color .2s ease,transform .2s ease}
+.card:hover{border-color:var(--primary);transform:translateY(-1px)}
+.media{aspect-ratio:1;border-radius:calc(var(--radius) - 4px);background:linear-gradient(135deg,var(--secondary),var(--background));border:1px solid var(--border)}
+.eyebrow{color:var(--muted-foreground);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.title{font-size:15px;line-height:1.25}
+.price{font-variant-numeric:tabular-nums}
+.cta{display:inline-flex;align-self:flex-start;padding:7px 10px;border-radius:999px;background:var(--primary);color:var(--primary-foreground);font-size:12px;text-decoration:none}
+.muted{color:var(--muted-foreground)}
+.is-disabled{opacity:.55}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="../assets/app.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+        <!-- Navbar -->
+        <nav class="h-14 flex items-center justify-between px-4 border-b" style="background: var(--background-50); border-color: var(--background-300);">
+            <a data-dom-id="nav-home" href="#" class="text-lg font-bold truncate" style="color: var(--brand-500);">
+                ◆ 声形绘
+            </a>
+            <div id="nav-right" class="flex items-center gap-2"></div>
+        </nav>
+
+        <!-- User Info -->
+        <section class="max-w-2xl mx-auto py-8 flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: var(--background-200);">
+                <i data-lucide="user" class="w-8 h-8" style="color: var(--text-400);"></i>
+            </div>
+            <h1 id="user-nickname" class="text-2xl font-bold mt-3 truncate" style="color: var(--text-900); word-break: keep-all;">音乐达人</h1>
+            <p id="user-email" class="text-sm truncate" style="color: var(--text-500);">user@example.com</p>
+        </section>
+
+        <!-- Stats Row -->
+        <section class="flex justify-center gap-8 py-4">
+            <div class="flex flex-col items-center">
+                <span id="stat-records" class="text-2xl font-bold whitespace-nowrap" style="color: var(--brand-500); font-variant-numeric: tabular-nums;">0</span>
+                <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">演奏</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <span id="stat-tunings" class="text-2xl font-bold whitespace-nowrap" style="color: var(--brand-500); font-variant-numeric: tabular-nums;">0</span>
+                <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">调音</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <span id="stat-instruments" class="text-2xl font-bold whitespace-nowrap" style="color: var(--brand-500); font-variant-numeric: tabular-nums;">0</span>
+                <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">乐器</span>
+            </div>
+        </section>
+
+        <!-- Tab Switcher -->
+        <section class="flex justify-center gap-2 py-4">
+            <button id="tab-records" class="tab-btn flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold whitespace-nowrap" style="background: var(--brand-500); color: var(--text-100);">演奏记录</button>
+            <button id="tab-tunings" class="tab-btn flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold whitespace-nowrap" style="background: var(--background-200); color: var(--text-600);">调音历史</button>
+        </section>
+
+        <!-- List container -->
+        <section id="list-wrap" class="max-w-2xl mx-auto flex flex-col gap-3 py-4 px-4"></section>
+
+        <!-- Bottom hint -->
+        <p id="bottom-hint" class="text-center py-6 text-sm" style="color: var(--text-400); display:none;">更多记录持续积累中...</p>
+
+        <!-- CTA when empty -->
+        <section id="empty-cta" class="max-w-2xl mx-auto px-4 pb-10" style="display:none;">
+            <div class="text-center p-8 rounded-2xl" style="background: var(--background-100); border: 1px dashed var(--background-400);">
+                <i data-lucide="music-2" class="w-10 h-10 mx-auto" style="color: var(--text-400);"></i>
+                <p id="empty-text" class="mt-3 text-sm" style="color: var(--text-500);">还没有演奏记录</p>
+                <button data-dom-id="nav-workbench" class="mt-4 inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold" style="background: var(--brand-500); color: var(--text-100); border:none;">
+                    去画第一件乐器
+                </button>
+            </div>
+        </section>
+    </main>
+    <script>
+      lucide.createIcons();
+      (function () {
+        /* ---- 登录态校验 ---- */
+        var user = SS.store.getUser();
+        var navRight = document.getElementById('nav-right');
+        if (!user) {
+          // 未登录：提示并跳转登录
+          navRight.innerHTML = '<a data-dom-id="nav-login" href="#" class="text-sm rounded-full px-4 py-1.5 font-semibold" style="background:var(--brand-500);color:var(--text-100);">登录</a>';
+          SS.bindNavigation();
+          SS.toast('请先登录', 'warn');
+          setTimeout(function () { window.location.href = 'login.html'; }, 800);
+          return;
+        }
+
+        /* ---- Navbar 右侧：工作台 + 退出 ---- */
+        navRight.innerHTML =
+          '<a data-dom-id="nav-workbench" href="#" class="text-sm rounded-full px-3 py-1.5 font-semibold" style="color:var(--brand-500);">工作台</a>' +
+          '<button id="btn-logout" class="text-sm rounded-full px-3 py-1.5 font-semibold" style="background:var(--background-200);color:var(--text-600);border:none;">退出</button>';
+        SS.bindNavigation();
+        document.getElementById('btn-logout').addEventListener('click', function () {
+          SS.store.clearUser();
+          SS.toast('已退出登录', 'info');
+          setTimeout(function () { window.location.href = 'home.html'; }, 400);
+        });
+
+        /* ---- 用户信息 ---- */
+        document.getElementById('user-nickname').textContent = user.nickname || '音乐达人';
+        document.getElementById('user-email').textContent = user.email || '';
+
+        /* ---- 乐器元数据 ---- */
+        var INST_META = {
+          piano:  { label: '钢琴 Piano',   icon: 'piano' },
+          guitar: { label: '吉他 Guitar',  icon: 'guitar' },
+          violin: { label: '小提琴 Violin', icon: 'violin' },
+          flute:  { label: '长笛 Flute',   icon: 'wind' },
+          drums:  { label: '架子鼓 Drums', icon: 'drum' }
+        };
+        function instLabel(k) { return (INST_META[k] && INST_META[k].label) || (k || '未知乐器'); }
+        function instIcon(k)  { return (INST_META[k] && INST_META[k].icon)  || 'music'; }
+
+        /* ---- 工具：时长格式化 ---- */
+        function fmtDuration(sec) {
+          sec = Math.round(sec || 0);
+          if (sec < 60) return sec + ' 秒';
+          var m = Math.floor(sec / 60), s = sec % 60;
+          return m + ' 分 ' + (s < 10 ? '0' : '') + s + ' 秒';
+        }
+        /* ---- 工具：日期格式化 ---- */
+        function fmtDate(iso) {
+          var d = new Date(iso);
+          if (isNaN(d)) return '';
+          var mm = (d.getMonth() + 1).toString().padStart(2, '0');
+          var dd = d.getDate().toString().padStart(2, '0');
+          return d.getFullYear() + '-' + mm + '-' + dd;
+        }
+
+        /* ---- 渲染统计 ---- */
+        function renderStats() {
+          var records = SS.store.getRecords();
+          var tunings = SS.store.getTunings();
+          var instSet = {};
+          records.forEach(function (r) { if (r.instrument) instSet[r.instrument] = 1; });
+          document.getElementById('stat-records').textContent = records.length;
+          document.getElementById('stat-tunings').textContent = tunings.length;
+          document.getElementById('stat-instruments').textContent = Object.keys(instSet).length;
+        }
+
+        /* ---- 当前 Tab ---- */
+        var currentTab = 'records';
+
+        /* ---- 渲染列表 ---- */
+        function renderList() {
+          var wrap = document.getElementById('list-wrap');
+          var emptyCta = document.getElementById('empty-cta');
+          var emptyText = document.getElementById('empty-text');
+          var bottomHint = document.getElementById('bottom-hint');
+          wrap.innerHTML = '';
+
+          var list = currentTab === 'records' ? SS.store.getRecords() : SS.store.getTunings();
+
+          if (list.length === 0) {
+            emptyCta.style.display = 'block';
+            emptyText.textContent = currentTab === 'records' ? '还没有演奏记录，画一个开始吧' : '还没有调音记录，去工作台试试调音器';
+            bottomHint.style.display = 'none';
+            // 空状态时 CTA 跳转目标调整
+            var cta = emptyCta.querySelector('[data-dom-id]');
+            if (cta) {
+              cta.setAttribute('data-dom-id', currentTab === 'records' ? 'nav-workbench' : 'nav-workbench');
+            }
+            lucide.createIcons();
+            return;
+          }
+
+          emptyCta.style.display = 'none';
+          bottomHint.style.display = 'block';
+
+          list.forEach(function (item) {
+            var card = document.createElement('article');
+            card.className = 'flex items-center gap-4 p-4 rounded-2xl';
+            card.style.cssText = 'background: var(--background-50); box-shadow: 0 4px 24px rgba(0,0,0,0.04); border: 1px solid var(--background-300);';
+
+            if (currentTab === 'records') {
+              // API 文档字段：notesPlayed / durationSec
+              var notesPlayed = item.notesPlayed || item.notes || [];
+              var noteCount = notesPlayed.length;
+              card.innerHTML =
+                '<div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background: var(--background-200);">' +
+                  '<i data-lucide="' + instIcon(item.instrument) + '" class="w-5 h-5" style="color: var(--text-400);"></i>' +
+                '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<h3 class="font-semibold truncate" style="color: var(--text-800);">' + instLabel(item.instrument) + '</h3>' +
+                  '<p class="text-sm truncate" style="color: var(--text-500);">' + fmtDuration(item.durationSec != null ? item.durationSec : item.duration) + ' · ' + noteCount + ' 个音符</p>' +
+                '</div>' +
+                '<button class="rec-play text-xs shrink-0 rounded-full px-3 py-1.5 font-semibold" data-id="' + item.id + '" style="background:var(--brand-500);color:var(--text-100);border:none;">播放</button>' +
+                '<button class="rec-del text-xs shrink-0 rounded-full px-3 py-1.5 font-semibold" data-id="' + item.id + '" style="background:var(--background-200);color:var(--text-600);border:none;">删除</button>' +
+                '<span class="text-xs shrink-0 whitespace-nowrap" style="color: var(--text-400);">' + fmtDate(item.created_at) + '</span>';
+            } else {
+              // 调音记录（API 字段：targetNote / measuredFreq / deviationCents）
+              var cents = (item.deviationCents != null) ? item.deviationCents : item.cents;
+              var dev = (cents !== undefined && cents !== null) ? (cents > 0 ? '+' + cents : '' + cents) + ' cents' : '—';
+              var targetNote = item.targetNote || item.note || '未知音';
+              var measuredFreq = (item.measuredFreq != null) ? item.measuredFreq : item.freq;
+              card.innerHTML =
+                '<div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background: var(--background-200);">' +
+                  '<i data-lucide="tuning" class="w-5 h-5" style="color: var(--text-400);"></i>' +
+                '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<h3 class="font-semibold truncate" style="color: var(--text-800);">' + targetNote + '</h3>' +
+                  '<p class="text-sm truncate" style="color: var(--text-500);">' + (measuredFreq ? measuredFreq.toFixed(1) + ' Hz' : '') + ' · 偏差 ' + dev + '</p>' +
+                '</div>' +
+                '<button class="tun-del text-xs shrink-0 rounded-full px-3 py-1.5 font-semibold" data-id="' + item.id + '" style="background:var(--background-200);color:var(--text-600);border:none;">删除</button>' +
+                '<span class="text-xs shrink-0 whitespace-nowrap" style="color: var(--text-400);">' + fmtDate(item.created_at) + '</span>';
+            }
+            wrap.appendChild(card);
+          });
+
+          lucide.createIcons();
+
+          /* 绑定播放 / 删除 */
+          wrap.querySelectorAll('.rec-play').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var id = btn.getAttribute('data-id');
+              var rec = SS.store.getRecords().find(function (r) { return r.id === id; });
+              var notesPlayed = rec ? (rec.notesPlayed || rec.notes || []) : [];
+              if (!rec || notesPlayed.length === 0) {
+                SS.toast('该记录没有音符', 'warn');
+                return;
+              }
+              SS.audio.resume();
+              btn.disabled = true;
+              var orig = btn.textContent;
+              btn.textContent = '播放中';
+              btn.style.opacity = '0.6';
+              notesPlayed.forEach(function (n) {
+                setTimeout(function () {
+                  // API 文档：notesPlayed 元素为 {note, timestamp}，无 duration 字段，回放默认 0.4s
+                  SS.audio.play(n.note, rec.instrument, 0.4);
+                }, n.timestamp != null ? n.timestamp : (n.time || 0));
+              });
+              // 恢复按钮
+              var durSec = (rec.durationSec != null) ? rec.durationSec : (rec.duration || 1);
+              var totalMs = Math.max(1500, durSec * 1000 + 500);
+              setTimeout(function () {
+                btn.disabled = false;
+                btn.textContent = orig;
+                btn.style.opacity = '1';
+              }, totalMs);
+            });
+          });
+
+          function bindDel(selector, deleter) {
+            wrap.querySelectorAll(selector).forEach(function (btn) {
+              btn.addEventListener('click', function () {
+                var id = btn.getAttribute('data-id');
+                deleter(id);
+                renderStats();
+                renderList();
+                SS.toast('已删除', 'info');
+              });
+            });
+          }
+          bindDel('.rec-del', function (id) { SS.store.deleteRecord(id); });
+          bindDel('.tun-del', function (id) { SS.store.deleteTuning(id); });
+        }
+
+        /* ---- Tab 切换 ---- */
+        function setTab(tab) {
+          currentTab = tab;
+          var a = document.getElementById('tab-records');
+          var b = document.getElementById('tab-tunings');
+          var activeStyle = 'background:var(--brand-500);color:var(--text-100);';
+          var idleStyle = 'background:var(--background-200);color:var(--text-600);';
+          a.style.cssText = a.style.cssText.replace(/background:[^;]+;color:[^;]+;/, '') + (tab === 'records' ? activeStyle : idleStyle);
+          b.style.cssText = b.style.cssText.replace(/background:[^;]+;color:[^;]+;/, '') + (tab === 'tunings' ? activeStyle : idleStyle);
+          renderList();
+        }
+        document.getElementById('tab-records').addEventListener('click', function () { setTab('records'); });
+        document.getElementById('tab-tunings').addEventListener('click', function () { setTab('tunings'); });
+
+        /* ---- 初始渲染 ---- */
+        renderStats();
+        renderList();
+      })();
+    </script>
+</body>
+</html>
+
+

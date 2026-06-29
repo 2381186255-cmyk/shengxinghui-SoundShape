@@ -1,0 +1,175 @@
+{
+  "project": {
+    "name": "声形绘 SoundShape",
+    "operation": "create",
+    "deviceType": "desktop",
+    "designRead": "music instrument app / non-tech users / playful-meets-precise / moderate density / avoid childish",
+    "designDials": {
+      "layoutVariance": 3,
+      "motionIntensity": 2,
+      "visualDensity": 3
+    },
+    "styleDefinitionBrief": "Music creation app: Apple minimal white canvas, blue accent, laser-glow play area, playful but precise feel for non-tech users.",
+    "generationTree": {
+      "nodes": [
+        { "id": "shell-navbar", "type": "partial", "output": "partials/navbar.html", "status": "planned", "children": ["page-home", "page-workbench", "page-workbench-result", "page-workbench-play", "page-login", "page-profile"] },
+        { "id": "page-home", "type": "page", "output": "pages/home.html", "status": "planned", "children": [] },
+        { "id": "page-workbench", "type": "page", "output": "pages/workbench.html", "status": "planned", "children": [] },
+        { "id": "page-workbench-result", "type": "page", "output": "pages/workbench-result.html", "status": "planned", "children": [] },
+        { "id": "page-workbench-play", "type": "page", "output": "pages/workbench-play.html", "status": "planned", "children": [] },
+        { "id": "page-login", "type": "page", "output": "pages/login.html", "status": "planned", "children": [] },
+        { "id": "page-profile", "type": "page", "output": "pages/profile.html", "status": "planned", "children": [] }
+      ]
+    },
+    "styleContinuityAnchors": {
+      "colorSystem": "Pure white bg, Apple blue #007AFF accent, dark play area with cyan/magenta/yellow glows",
+      "shapeSystem": "18px card radius, pill buttons, 12px input radius, 8px small radius",
+      "typographySystem": "SF Pro Display / Inter for display, SF Pro Text / Inter for body, system sans-serif stack",
+      "spacingSystem": "8px grid base, generous whitespace between sections",
+      "componentLanguage": "White card containers, pill CTA buttons, subtle shadows, minimal borders",
+      "surfaceAndDepth": "Whisper-light shadows at rest, deeper on hover, no colored shadows",
+      "imageryAndIconography": "Clean product-style visuals, linear icons matching text color",
+      "interactionTone": "Subtle hover lifts, smooth transitions, focused on playability"
+    }
+  },
+  "designSource": {
+    "operatingMode": "library-bound",
+    "libraryIdentity": {
+      "name": "Pinguo Apple Design",
+      "id": "dl_builtin_apple",
+      "version": null,
+      "scope": "built-in-global",
+      "path": "c:\\Users\\23811\\.trae-cn\\design_libraries\\dl_builtin_apple",
+      "versionSource": null
+    },
+    "libraryPath": "c:\\Users\\23811\\.trae-cn\\design_libraries\\dl_builtin_apple",
+    "brandPrefix": "brand",
+    "cssFilePath": "c:\\Users\\23811\\.trae-cn\\design_libraries\\dl_builtin_apple\\colors_and_type.css",
+    "iconAssets": {
+      "source": "assets/icons",
+      "projectIconDir": "assets/icons/dl-builtin-apple",
+      "libraryKey": "dl-builtin-apple",
+      "renderMethod": "css-mask",
+      "pathTemplate": "../assets/icons/dl-builtin-apple/{name}.svg",
+      "availableNames": ["arrow-down","arrow-left","arrow-right","arrow-up","box","check","chevron-down","chevron-left","chevron-right","chevron-up","chevrons-down-up","chevrons-up-down","circle-alert","circle-check","circle-minus","circle-pause","circle-play","circle-plus","circle-question-mark","external-link","file","folder-open","folder","funnel","grip","heart","house","mail","map-pin","message-circle-more","mouse-pointer-click","pen-line","send-horizontal","star","tag","thumbs-down","thumbs-up","trash-2","triangle-alert","user"],
+      "totalCount": 41,
+      "coloringRule": "currentColor by default"
+    },
+    "styleConstraints": {
+      "radiusMax": 18,
+      "spacingBase": 8,
+      "fontBody": 17,
+      "controlHeightDefault": 44
+    }
+  },
+  "pages": [
+    {
+      "nodeId": "page-home",
+      "title": "首页",
+      "htmlSrc": "pages/home.html",
+      "pageIndex": 1,
+      "pageType": "showcase",
+      "visualNorthStar": "Apple product hero: massive headline, generous whitespace, two pill CTAs, product visual below",
+      "compositionPattern": "centered-hero-single-cta",
+      "continuityAnchors": "identical navbar shell; centered hero layout with tagline + CTA + product visual",
+      "componentPlan": [],
+      "imagePlan": [{ "role": "critical-hero", "section": "hero", "filename": "hero-product-visual.png", "status": "planned" }],
+      "chartsRequired": false
+    },
+    {
+      "nodeId": "page-workbench",
+      "title": "工作台",
+      "htmlSrc": "pages/workbench.html",
+      "pageIndex": 2,
+      "pageType": "task-driven",
+      "visualNorthStar": "Dark canvas workspace with pill mode tabs, centered drawing/camera area, prominent blue identify button",
+      "compositionPattern": "centered-workspace",
+      "continuityAnchors": "identical navbar shell; task workspace with mode switcher + canvas area + action button",
+      "componentPlan": [],
+      "imagePlan": [],
+      "chartsRequired": false
+    },
+    {
+      "nodeId": "page-workbench-result",
+      "title": "工作台 - 识别结果",
+      "htmlSrc": "pages/workbench-result.html",
+      "pageIndex": 3,
+      "pageType": "task-driven",
+      "visualNorthStar": "Result card with green checkmark + instrument name + confidence, followed by tuning guide and tuner",
+      "compositionPattern": "stacked-cards",
+      "continuityAnchors": "identical navbar shell + workspace header; extends workbench with result + tuning sections",
+      "componentPlan": [],
+      "imagePlan": [],
+      "chartsRequired": false,
+      "stateGroupId": "sg-workbench",
+      "stateRole": "derived",
+      "baseStatePageId": "page-workbench"
+    },
+    {
+      "nodeId": "page-workbench-play",
+      "title": "工作台 - 演奏区",
+      "htmlSrc": "pages/workbench-play.html",
+      "pageIndex": 4,
+      "pageType": "task-driven",
+      "visualNorthStar": "Dark black play area with laser-glow instrument keys, side tuning guide, bottom tuner",
+      "compositionPattern": "dual-panel-dark",
+      "continuityAnchors": "identical navbar shell + workspace header; dark play area with glowing interactive keys",
+      "componentPlan": [],
+      "imagePlan": [],
+      "chartsRequired": false,
+      "stateGroupId": "sg-workbench",
+      "stateRole": "derived",
+      "baseStatePageId": "page-workbench"
+    },
+    {
+      "nodeId": "page-login",
+      "title": "登录",
+      "htmlSrc": "pages/login.html",
+      "pageIndex": 5,
+      "pageType": "task-driven",
+      "visualNorthStar": "Centered login form, minimal fields, blue pill submit, optional register link",
+      "compositionPattern": "centered-form",
+      "continuityAnchors": "minimal centered form page with brand logo",
+      "componentPlan": [],
+      "imagePlan": [],
+      "chartsRequired": false
+    },
+    {
+      "nodeId": "page-profile",
+      "title": "个人中心",
+      "htmlSrc": "pages/profile.html",
+      "pageIndex": 6,
+      "pageType": "information-dense",
+      "visualNorthStar": "User info card at top, tabs for play history and tuning history below",
+      "compositionPattern": "profile-tabs",
+      "continuityAnchors": "identical navbar shell; profile header + tabbed content area",
+      "componentPlan": [],
+      "imagePlan": [],
+      "chartsRequired": false
+    }
+  ],
+  "assets": [
+    { "role": "critical-hero", "section": "hero", "filename": "hero-product-visual.png", "owningPage": "page-home", "status": "planned" }
+  ],
+  "wiringPlan": [
+    { "from": "page-home", "to": "page-workbench", "domId": "cta-start", "label": "开始创作", "visible": true },
+    { "from": "page-home", "to": "page-login", "domId": "nav-login", "label": "登录", "visible": false },
+    { "from": "page-workbench", "to": "page-home", "domId": "nav-home", "label": "首页", "visible": false },
+    { "from": "page-workbench", "to": "page-workbench-result", "domId": "btn-identify", "label": "识别", "visible": true },
+    { "from": "page-workbench-result", "to": "page-workbench-play", "domId": "btn-play", "label": "开始演奏", "visible": true },
+    { "from": "page-workbench-result", "to": "page-workbench", "domId": "btn-reidentify", "label": "重新识别", "visible": false },
+    { "from": "page-workbench-play", "to": "page-workbench-result", "domId": "btn-back-result", "label": "返回", "visible": false },
+    { "from": "page-login", "to": "page-home", "domId": "nav-home", "label": "首页", "visible": false },
+    { "from": "page-login", "to": "page-profile", "domId": "login-success", "label": "登录成功", "visible": true },
+    { "from": "page-profile", "to": "page-home", "domId": "nav-home", "label": "首页", "visible": false },
+    { "from": "page-home", "to": "page-profile", "domId": "nav-profile", "label": "个人中心", "visible": false }
+  ],
+  "hiddenInteractionPlan": [
+    { "from": "page-workbench-result", "to": "page-workbench", "domId": "btn-reidentify", "label": "重新识别" },
+    { "from": "page-workbench-play", "to": "page-workbench-result", "domId": "btn-back-result", "label": "返回" },
+    { "from": "page-login", "to": "page-home", "domId": "nav-home", "label": "首页" },
+    { "from": "page-profile", "to": "page-home", "domId": "nav-home", "label": "首页" },
+    { "from": "page-home", "to": "page-login", "domId": "nav-login", "label": "登录" },
+    { "from": "page-home", "to": "page-profile", "domId": "nav-profile", "label": "个人中心" }
+  ]
+}

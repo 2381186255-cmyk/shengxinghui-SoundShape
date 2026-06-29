@@ -1,0 +1,555 @@
+{
+  "data": [
+    {
+      "id": "page-home",
+      "title": "首页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/home.html",
+        "interactions": [
+          {
+            "domId": "cta-start",
+            "targetPageId": "page-workbench"
+          },
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-home-dark",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workbench",
+      "title": "工作台",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 420,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workbench.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-generate",
+            "targetPageId": "page-workbench-result"
+          },
+          {
+            "domId": "btn-identify",
+            "targetPageId": "page-workbench-result"
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-workbench-dark",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workbench-result",
+      "title": "工作台 - 键位生成结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 840,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workbench-result.html",
+        "interactions": [
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-play",
+            "targetPageId": "page-workbench-play"
+          },
+          {
+            "domId": "btn-redraw",
+            "targetPageId": "page-workbench",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-reidentify",
+            "targetPageId": "page-workbench",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-workbench-result-dark",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workbench-play",
+      "title": "工作台 - 演奏区",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 1260,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workbench-play.html",
+        "interactions": [
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-back-workbench",
+            "targetPageId": "page-workbench",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-finish",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-back-result",
+            "targetPageId": "page-workbench-result",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-workbench-play-dark",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-login",
+      "title": "登录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 0,
+        "y": 1743,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/login.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "login-success",
+            "targetPageId": "page-profile"
+          },
+          {
+            "domId": "goto-register",
+            "targetPageId": "page-register",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-login-dark",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-register",
+      "title": "注册",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 0,
+        "y": 2333,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/register.html",
+        "interactions": [
+          {
+            "domId": "register-success",
+            "targetPageId": "page-profile"
+          },
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-register-dark",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-profile",
+      "title": "个人中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 420,
+        "y": 1743,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/profile.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-profile-dark",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-home-dark",
+      "title": "首页 (暗色)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 0,
+        "y": 2923,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/home-dark.html",
+        "interactions": [
+          {
+            "domId": "cta-start",
+            "targetPageId": "page-workbench-dark"
+          },
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workbench-dark",
+      "title": "工作台 (暗色)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 420,
+        "y": 2923,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workbench-dark.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-generate",
+            "targetPageId": "page-workbench-result-dark"
+          },
+          {
+            "domId": "btn-identify",
+            "targetPageId": "page-workbench-result-dark"
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-workbench",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workbench-result-dark",
+      "title": "工作台 - 键位生成结果 (暗色)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 840,
+        "y": 2923,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workbench-result-dark.html",
+        "interactions": [
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-play",
+            "targetPageId": "page-workbench-play-dark"
+          },
+          {
+            "domId": "btn-redraw",
+            "targetPageId": "page-workbench-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-reidentify",
+            "targetPageId": "page-workbench-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-workbench-result",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workbench-play-dark",
+      "title": "工作台 - 演奏区 (暗色)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 1260,
+        "y": 2923,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workbench-play-dark.html",
+        "interactions": [
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-back-workbench",
+            "targetPageId": "page-workbench-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-finish",
+            "targetPageId": "page-home-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-back-result",
+            "targetPageId": "page-workbench-result-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-workbench-play",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-login-dark",
+      "title": "登录 (暗色)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 0,
+        "y": 4277,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/login-dark.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "login-success",
+            "targetPageId": "page-profile-dark"
+          },
+          {
+            "domId": "goto-register",
+            "targetPageId": "page-register-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-login",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-register-dark",
+      "title": "注册 (暗色)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 0,
+        "y": 4867,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/register-dark.html",
+        "interactions": [
+          {
+            "domId": "register-success",
+            "targetPageId": "page-profile-dark"
+          },
+          {
+            "domId": "nav-login",
+            "targetPageId": "page-login-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-register",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-profile-dark",
+      "title": "个人中心 (暗色)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 420,
+        "y": 4277,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/profile-dark.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home-dark",
+            "hideEdge": true
+          },
+          {
+            "domId": "btn-toggle-theme",
+            "targetPageId": "page-profile",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "image-001",
+      "title": "产品主视觉 v3",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 0,
+        "y": 5457
+      },
+      "devMetadata": {
+        "imageSrc": "assets/hero-product-visual-v3.jpg"
+      }
+    },
+    {
+      "id": "image-002",
+      "title": "产品主视觉 v3 暗色",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1719571200000,
+      "canvasData": {
+        "x": 420,
+        "y": 5457
+      },
+      "devMetadata": {
+        "imageSrc": "assets/hero-product-visual-v3-dark.jpg"
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "mobile",
+    "projectName": "声形绘 SoundShape",
+    "designLibrary": {
+      "name": "Pinguo Apple Design",
+      "id": "dl_builtin_apple",
+      "version": null,
+      "scope": "built-in-global",
+      "path": "c:\\Users\\23811\\.trae-cn\\design_libraries\\dl_builtin_apple",
+      "versionSource": null
+    },
+    "windowSize": {
+      "width": 800,
+      "height": 600
+    }
+  }
+}

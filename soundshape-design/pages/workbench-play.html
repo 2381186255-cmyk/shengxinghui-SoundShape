@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>声形绘 · 演奏台</title>
+    <style id="theme-vars">
+/*
+ * Pinguo design tokens
+ * Brand: Pinguo
+ * Domain: Consumer imaging product
+ * Style: Restrained, elegant, Apple-inspired
+ * Theme mode: light-dark
+ * Source language: zh
+ * Output language: en
+ *
+ * Color architecture (two layers):
+ *   1. Primitive palette - six categories. brand / background / text / icon
+ *      are each a 10-step scale (50 lightest to 900 darkest). state-success and
+ *      state-error are functional colors anchored on Apple system colors.
+ *      Anchors follow Apple Human Interface Guidelines system colors
+ *      (System Blue #007AFF, System Green #34C759, System Red #FF3B30,
+ *      system grays / label / background colors).
+ *   2. Semantic tokens - :root (light) and .dark map roles onto primitives.
+ *      Components and UI kits must only consume the semantic tokens below.
+ */
+
+/* @group-priority: brand, background, text, icon, state-success, state-error */
+
+:root {
+  /* ===== PRIMITIVE PALETTE ===== */
+
+  /* brand */
+  --brand-50: #e8f2ff;
+  --brand-100: #cfe5ff;
+  --brand-200: #9fcbff;
+  --brand-300: #66abff;
+  --brand-400: #2e8dff;
+  --brand-500: #007aff; /* @primary */
+  --brand-600: #0064d6;
+  --brand-700: #004fad;
+  --brand-800: #003b82;
+  --brand-900: #00275a;
+
+  /* background */
+  --background-50: #ffffff;
+  --background-100: #f7f7fa;
+  --background-200: #f2f2f7;
+  --background-300: #e5e5ea;
+  --background-400: #d1d1d6;
+  --background-500: #aeaeb2;
+  --background-600: #8e8e93;
+  --background-700: #3a3a3c;
+  --background-800: #1c1c1e;
+  --background-900: #000000;
+
+  /* text */
+  --text-50: #f5f5f7;
+  --text-100: #e3e3e8;
+  --text-200: #c7c7cc;
+  --text-300: #aeaeb2;
+  --text-400: #8e8e93;
+  --text-500: #6e6e73;
+  --text-600: #48484a;
+  --text-700: #3c3c43;
+  --text-800: #1d1d1f;
+  --text-900: #000000;
+
+  /* icon */
+  --icon-50: #f5f5f7;
+  --icon-100: #e5e5ea;
+  --icon-200: #d1d1d6;
+  --icon-300: #c7c7cc;
+  --icon-400: #aeaeb2;
+  --icon-500: #8e8e93;
+  --icon-600: #6e6e73;
+  --icon-700: #48484a;
+  --icon-800: #2c2c2e;
+  --icon-900: #1d1d1f;
+
+  /* state-success */
+  --state-success: #34c759; /* @primary */
+  --state-success-dark: #30d158;
+  --state-success-surface: #e9f9ee;
+  --state-success-foreground: #ffffff;
+
+  /* state-error */
+  --state-error: #ff3b30; /* @primary */
+  --state-error-dark: #ff453a;
+  --state-error-surface: #ffecea;
+  --state-error-foreground: #ffffff;
+
+  /* ===== SEMANTIC ROLES ===== */
+
+  /* semantic */
+  --background: var(--background-50);
+  --foreground: var(--text-800);
+  --card: var(--background-50);
+  --card-foreground: var(--text-800);
+  --popover: var(--background-50);
+  --popover-foreground: var(--text-900);
+
+  --primary: var(--brand-500);
+  --primary-foreground: var(--background-50);
+  --secondary: var(--background-200);
+  --secondary-foreground: var(--text-800);
+  --muted: var(--background-200);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-100);
+  --accent-foreground: var(--text-800);
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-300);
+  --input: var(--background-400);
+  --ring: var(--brand-500);
+
+  --icon: var(--icon-900);
+  --icon-muted: var(--icon-500);
+
+  /* chart */
+  --chart-1: var(--state-success);
+  --chart-2: var(--brand-500);
+  --chart-3: #ff9500;
+  --chart-4: #5856d6;
+  --chart-5: #af52de;
+
+  /* sidebar */
+  --sidebar: var(--background-200);
+  --sidebar-foreground: var(--text-800);
+  --sidebar-primary: var(--brand-500);
+  --sidebar-primary-foreground: var(--background-50);
+  --sidebar-accent: var(--background-300);
+  --sidebar-accent-foreground: var(--text-800);
+  --sidebar-border: var(--background-300);
+  --sidebar-ring: var(--brand-500);
+
+  /* TYPOGRAPHY */
+  --font-sans: DM Sans, ui-sans-serif, sans-serif, system-ui;
+  --font-serif: DM Sans, ui-sans-serif, sans-serif, system-ui;
+  --font-mono: JetBrains Mono, monospace;
+  --tracking-normal: 0em;
+
+  /* RADIUS */
+  --radius: 1.2rem;
+
+  /* SHADOWS */
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.04); /* Hairline */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04); /* Subtle */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.05); /* Card */
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.05); /* Raised */
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Card Hover */
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.05); /* Float */
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.10), 0 8px 16px -8px rgba(0, 0, 0, 0.06); /* Overlay */
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.12); /* Modal */
+
+  /* SPACING */
+  --spacing: 0.24rem;
+}
+
+/* ===== SEMANTIC ROLES - dark (primitive palette inherited) ===== */
+.dark {
+  --background: var(--background-900);
+  --foreground: var(--text-50);
+  --card: var(--background-800);
+  --card-foreground: var(--text-50);
+  --popover: var(--background-700);
+  --popover-foreground: var(--text-50);
+
+  --primary: var(--brand-400);
+  --primary-foreground: var(--background-900);
+  --secondary: var(--background-800);
+  --secondary-foreground: var(--text-50);
+  --muted: var(--background-800);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-700);
+  --accent-foreground: var(--text-50);
+  --destructive: var(--state-error-dark);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success-dark);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-700);
+  --input: var(--background-700);
+  --ring: var(--brand-400);
+
+  --icon: var(--icon-50);
+  --icon-muted: var(--icon-500);
+
+  --chart-1: var(--state-success-dark);
+  --chart-2: var(--brand-400);
+  --chart-3: #ff9f0a;
+  --chart-4: #5e5ce6;
+  --chart-5: #bf5af2;
+
+  --sidebar: var(--background-800);
+  --sidebar-foreground: var(--text-50);
+  --sidebar-primary: var(--brand-400);
+  --sidebar-primary-foreground: var(--background-900);
+  --sidebar-accent: var(--background-700);
+  --sidebar-accent-foreground: var(--text-50);
+  --sidebar-border: var(--background-700);
+  --sidebar-ring: var(--brand-400);
+
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.30);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.36), 0 1px 3px -1px rgba(0, 0, 0, 0.36);
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.40), 0 1px 2px -1px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.44), 0 2px 4px -2px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.50), 0 4px 8px -4px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.44);
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.60);
+}
+
+    </style>
+    <style id="component-vars">
+/*
+ * components.css - aggregated component CSS
+ * Auto-extracted from preview/component-*.html files.
+ * DO NOT EDIT. Regenerate with extract-components-css.mjs.
+ *
+ * Foundation tokens live in colors_and_type.css.
+ * This file consumes those tokens via var(--*) references.
+ */
+
+/* ============================================================
+ * Button
+ * source: preview/component-button.html
+ * rules: 10
+ */
+/* @anatomy
+   <div class="row"><span class="label">Primary 56</span><button class="btn btn-primary btn-lg">Buy now</button><button class="btn btn-primary btn-lg" disabled>Buy now</button></div>
+*/
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--spacing)*1.5);height:40px;padding:0 20px;border:none;border-radius:calc(var(--radius)*2);background:transparent;color:var(--foreground);font:600 14px/1 var(--font-sans);letter-spacing:var(--tracking-normal);white-space:nowrap;box-shadow:var(--shadow-sm);cursor:pointer;transition:background-color .18s ease,color .18s ease,opacity .18s ease,filter .18s ease}
+.btn:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{filter:brightness(.96)}
+.btn-secondary{height:48px;padding:0 24px;background:var(--secondary);color:var(--secondary-foreground)}
+.btn-secondary:hover{background:var(--muted)}
+.btn-text{height:48px;padding:0 4px;box-shadow:none}
+.btn-text:hover{color:var(--primary)}
+.btn-lg{height:56px;padding:0 28px;font-size:16px}
+
+/* ============================================================
+ * Card
+ * source: preview/component-card.html
+ * rules: 12
+ */
+/* @anatomy
+   <div class="row">
+   <span class="label">Info</span>
+   <article class="card">
+   <div><div class="eyebrow">Pinguo Apple</div>
+*/
+.card{width:188px;min-height:148px;padding:calc(var(--spacing)*5);display:flex;flex-direction:column;justify-content:space-between;background:var(--card);color:var(--card-foreground);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-md);transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card.disabled,.card.disabled:hover{opacity:.5;transform:none;box-shadow:var(--shadow-md)}
+.eyebrow,.meta{color:var(--muted-foreground);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.title{margin:6px 0 8px;font-size:18px;line-height:1.15}
+.body-copy{margin:0;color:var(--muted-foreground);font-size:13px}
+.cta{display:inline-flex;align-items:center;justify-content:center;width:max-content;margin-top:12px;padding:calc(var(--spacing)*2) calc(var(--spacing)*3.5);border-radius:999px;background:var(--primary);color:var(--primary-foreground);font-size:12px;font-weight:700;text-decoration:none}
+.media{aspect-ratio:4/3;border-radius:calc(var(--radius) - 4px);background:linear-gradient(135deg,var(--secondary),var(--accent));border:1px solid var(--border)}
+.media-card{min-height:212px;padding:calc(var(--spacing)*4)}
+.media-card .title{font-size:16px;margin:10px 0 6px}
+.price{font-size:12px;color:var(--muted-foreground)}
+.dark{background:var(--card);color:var(--card-foreground)}
+
+/* ============================================================
+ * Comparison Table
+ * source: preview/component-comparison-table.html
+ * rules: 13
+ */
+/* @anatomy
+   <div class="row"><span class="label">Default</span><div class="t"><div class="c m">Compare models</div>
+*/
+.t{display:grid;grid-template-columns:96px repeat(3,1fr);overflow:hidden;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--card-foreground);box-shadow:var(--shadow-sm)}
+.q{grid-template-columns:82px repeat(4,1fr)}
+.c{padding:10px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.t>.c:nth-child(4n),.q>.c:nth-child(5n){border-right:0}
+.t>.c:nth-last-child(-n+4),.q>.c:nth-last-child(-n+5){border-bottom:0}
+.m{background:var(--background);color:var(--muted-foreground);font:700 10px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase}
+.h{background:var(--background);font-weight:700}
+.k{display:block;font-size:14px;line-height:1.1}
+.s{display:block;margin-top:4px;color:var(--chart-2);font-size:11px;font-weight:700}
+.b .k{color:var(--chart-2)}
+.v{font-weight:600}
+.n{color:var(--muted-foreground);font-size:12px}
+.x{opacity:.45}
+
+/* ============================================================
+ * Input
+ * source: preview/component-input.html
+ * rules: 10
+ */
+/* @anatomy
+   <div class="row">
+   <span class="label">Search 44</span>
+   <div class="field">
+   <span class="icon">⌕</span>
+   <input class="control" aria-label="Search products" placeholder="Search products">
+   <button class="clear" type="button" aria-label="Clear search">×</button>
+   </div>
+*/
+.surface{display:flex;gap:calc(var(--spacing)*2);padding:calc(var(--spacing)*3);border:1px solid var(--border);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow-sm)}
+.dark{background:var(--background);color:var(--foreground)}
+.field{display:flex;align-items:center;gap:calc(var(--spacing)*2);min-width:240px;height:44px;padding:0 calc(var(--spacing)*3);border:1px solid var(--input);border-radius:var(--radius);background:var(--background);color:var(--foreground);box-shadow:var(--shadow-xs)}
+.field.small{height:40px}
+.field:focus-within{border-color:var(--ring);box-shadow:0 0 0 1px var(--ring)}
+.field.disabled{opacity:.55}
+.icon,.clear{padding:0;border:0;background:transparent;color:var(--icon-muted);font:inherit}
+.icon{font-size:13px}
+.control{flex:1;border:0;outline:0;background:transparent;color:inherit;font:inherit}
+.control::placeholder{color:var(--muted-foreground)}
+
+/* ============================================================
+ * Navigation
+ * source: preview/component-navigation.html
+ * rules: 16
+ */
+/* @anatomy
+   <div class="row"><span class="label">Global 44</span><nav class="webbar dark" aria-label="Pinguo Apple global navigation"><span class="brand">Pinguo Apple</span><div class="rail"><a class="link" href="#">Store</a><a class="link" href="#">Explore</a><a class="link" href="#">Community</a><a class="link" href="#">Support</a></div>
+*/
+.webbar,.mobile{border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.webbar{display:flex;align-items:center;gap:calc(var(--spacing)*2);min-width:320px;height:44px;padding:0 calc(var(--spacing)*3);border-radius:var(--radius);background:var(--sidebar)}
+.brand{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.link,.tab{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;color:inherit;text-decoration:none;white-space:nowrap;transition:background-color .18s ease,color .18s ease,opacity .18s ease}
+.link{height:32px;padding:0 calc(var(--spacing)*2.5)}
+.link:hover,.tab:hover{background:var(--secondary)}
+.link:focus-visible,.tab:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.dark{background:var(--sidebar);color:var(--foreground)}
+.disabled{opacity:.48}
+.disabled .link,.disabled .tab{pointer-events:none}
+.mobile{padding:calc(var(--spacing)*2);border-radius:calc(var(--radius)*1.1);background:var(--card)}
+.screen{display:flex;align-items:flex-end;justify-content:center;width:188px;height:164px;padding:calc(var(--spacing)*3);border-radius:calc(var(--radius)*.9);background:linear-gradient(180deg,var(--background),var(--secondary))}
+.tabbar{display:flex;gap:calc(var(--spacing)*1.5);padding:calc(var(--spacing)*1.5);border:1px solid var(--border);border-radius:999px;background:var(--card);box-shadow:var(--shadow-md)}
+.tab{flex-direction:column;gap:2px;min-width:56px;height:56px;padding:0 calc(var(--spacing)*1.5);font-size:11px;text-align:center}
+.dot{width:18px;height:18px;border-radius:999px;background:var(--secondary);box-shadow:inset 0 0 0 1px var(--border)}
+.tab:hover .dot{background:var(--primary)}
+
+/* ============================================================
+ * Product Grid
+ * source: preview/component-product-grid.html
+ * rules: 12
+ */
+/* @anatomy
+   <div class="row">
+   <span class="label">4-up</span>
+   <div class="grid grid-4">
+   <article class="card"><div class="media"></div>
+*/
+.grid{display:grid;gap:8px;flex:1}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--card-foreground);box-shadow:var(--shadow-xs);transition:border-color .2s ease,transform .2s ease}
+.card:hover{border-color:var(--primary);transform:translateY(-1px)}
+.media{aspect-ratio:1;border-radius:calc(var(--radius) - 4px);background:linear-gradient(135deg,var(--secondary),var(--background));border:1px solid var(--border)}
+.eyebrow{color:var(--muted-foreground);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.title{font-size:15px;line-height:1.25}
+.price{font-variant-numeric:tabular-nums}
+.cta{display:inline-flex;align-self:flex-start;padding:7px 10px;border-radius:999px;background:var(--primary);color:var(--primary-foreground);font-size:12px;text-decoration:none}
+.muted{color:var(--muted-foreground)}
+.is-disabled{opacity:.55}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+      <!-- Navbar -->
+      <nav class="h-14 flex items-center justify-between px-6" style="background: var(--background-50); border-bottom: 1px solid var(--background-300);">
+        <a href="#" class="text-base font-semibold tracking-tight" style="color: var(--brand-500);" data-dom-id="nav-home">◆ 声形绘</a>
+        <div class="flex items-center gap-5">
+          <a href="#" class="text-sm font-medium cursor-pointer" style="color: var(--text-600);" data-dom-id="nav-home">首页</a>
+          <a href="#" class="text-sm font-medium cursor-pointer" style="color: var(--text-600);" data-dom-id="nav-workbench">工作台</a>
+          <a href="#" class="text-sm font-medium cursor-pointer" style="color: var(--text-600);" id="nav-auth" data-dom-id="nav-login">登录</a>
+        </div>
+      </nav>
+
+      <!-- Play Header -->
+      <div class="flex items-center justify-between px-4 sm:px-6 py-3" style="background: var(--background-50); border-bottom: 1px solid var(--background-300);">
+        <span class="text-sm cursor-pointer flex items-center gap-1" style="color: var(--brand-500);" data-dom-id="btn-back-result">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i><span>返回结果</span>
+        </span>
+        <span class="text-base font-semibold" style="color: var(--text-900);" id="play-title">演奏台</span>
+        <a href="#" class="text-sm cursor-pointer flex items-center gap-1" style="color: var(--text-500);" data-dom-id="btn-close-play">
+          <span>结束</span><i data-lucide="x" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+      <!-- Dark Play Zone -->
+      <div class="max-w-5xl mx-auto m-4 rounded-3xl overflow-hidden p-6 sm:p-10 relative" id="play-zone" style="background: #000; min-height: 320px;">
+        <div class="absolute inset-0 opacity-30" style="background:
+          radial-gradient(circle at 20% 30%, rgba(0,240,255,.15) 0, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(255,0,200,.12) 0, transparent 40%),
+          radial-gradient(circle at 50% 50%, rgba(255,230,0,.08) 0, transparent 60%);"></div>
+
+        <!-- M3 摄像头视频元素（隐藏，仅作 MediaPipe 输入） -->
+        <video id="cam-video" autoplay muted playsinline style="display:none;"></video>
+
+        <!-- M3+M5+M8 摄像头模式 Canvas（叠加视频镜像+键位+特效） -->
+        <canvas id="cam-canvas" class="absolute inset-0 w-full h-full" style="z-index: 3; display:none; object-fit: cover;"></canvas>
+
+        <!-- 键盘模式键位（默认显示，摄像头开启时隐藏） -->
+        <div class="relative z-10" id="keys-area"></div>
+
+        <canvas id="fx-canvas" class="absolute inset-0 pointer-events-none" style="z-index: 5;"></canvas>
+
+        <!-- M3 摄像头控制 -->
+        <div class="relative z-10 mt-4 flex items-center justify-center gap-3 flex-wrap" id="cam-controls">
+          <button id="cam-start" class="flex items-center gap-2 px-5 h-11 rounded-full text-sm font-semibold transition-all" style="background: var(--brand-500); color: #fff;">
+            <i data-lucide="camera" class="w-4 h-4"></i>
+            <span>开启摄像头演奏</span>
+          </button>
+          <button id="cam-stop" class="hidden flex items-center gap-2 px-5 h-11 rounded-full text-sm font-semibold transition-all" style="background: var(--state-error); color: #fff;">
+            <i data-lucide="camera-off" class="w-4 h-4"></i>
+            <span>关闭摄像头</span>
+          </button>
+          <span class="text-xs" id="cam-status" style="color: rgba(255,255,255,.5);">当前：键盘模式</span>
+        </div>
+
+        <p class="text-center text-xs mt-6 relative z-10" id="play-hint" style="color: rgba(255,255,255,.5);">
+          点击键位 / 按键盘弹奏 · 按 [Space] 演示一段旋律 · 开启摄像头后可用手势演奏
+        </p>
+      </div>
+
+      <!-- 控制面板 -->
+      <div class="max-w-5xl mx-auto m-4 mt-0 px-2">
+        <div class="rounded-3xl p-5 sm:p-6" style="background: var(--background-100); border:1px solid var(--background-300);">
+          <div class="grid grid-cols-1 lg:grid-cols-4 gap-5">
+            <div>
+              <label class="text-xs font-mono font-bold tracking-widest" style="color: var(--text-500);">VOLUME</label>
+              <div class="flex items-center gap-3 mt-2">
+                <i data-lucide="volume-1" class="w-4 h-4" style="color: var(--text-500);"></i>
+                <input type="range" id="volume-slider" min="0" max="100" value="70" class="flex-1" style="accent-color: var(--brand-500);">
+                <i data-lucide="volume-2" class="w-4 h-4" style="color: var(--text-500);"></i>
+              </div>
+              <p class="text-xs mt-1" id="volume-display" style="color: var(--text-400);">70%</p>
+            </div>
+            <div>
+              <label class="text-xs font-mono font-bold tracking-widest" style="color: var(--text-500);">SENSITIVITY</label>
+              <div class="flex items-center gap-3 mt-2">
+                <i data-lucide="target" class="w-4 h-4" style="color: var(--text-500);"></i>
+                <input type="range" id="sensitivity-slider" min="0" max="100" value="50" class="flex-1" style="accent-color: var(--brand-500);">
+                <i data-lucide="crosshair" class="w-4 h-4" style="color: var(--text-500);"></i>
+              </div>
+              <p class="text-xs mt-1" id="sensitivity-display" style="color: var(--text-400);">50（边界框 ±0%）</p>
+            </div>
+            <div>
+              <label class="text-xs font-mono font-bold tracking-widest" style="color: var(--text-500);">BPM</label>
+              <div class="flex items-center gap-3 mt-2">
+                <button id="bpm-dec" class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--background-50); border:1px solid var(--background-300);">−</button>
+                <input type="number" id="bpm-input" min="40" max="240" value="90" class="w-16 text-center rounded-lg h-8" style="background: var(--background-50); border:1px solid var(--background-300); color: var(--text-800);">
+                <button id="bpm-inc" class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--background-50); border:1px solid var(--background-300);">+</button>
+                <button id="metronome-btn" class="ml-auto flex items-center gap-1.5 px-3 h-8 rounded-full text-xs font-medium transition-all" style="background: var(--background-50); color: var(--text-600); border:1px solid var(--background-300);">
+                  <i data-lucide="metronome" class="w-3.5 h-3.5"></i><span>节拍器</span>
+                </button>
+              </div>
+            </div>
+            <div>
+              <label class="text-xs font-mono font-bold tracking-widest" style="color: var(--text-500);">RECORD</label>
+              <div class="flex items-center gap-2 mt-2">
+                <button id="record-btn" class="flex items-center gap-2 px-4 h-10 rounded-full text-sm font-semibold transition-all" style="background: var(--state-error); color: #fff;">
+                  <span class="w-3 h-3 rounded-full bg-white"></span><span id="record-label">开始记录</span>
+                </button>
+                <button id="save-btn" class="flex items-center gap-1.5 px-4 h-10 rounded-full text-sm font-semibold transition-all" style="background: var(--brand-500); color: #fff;">
+                  <i data-lucide="save" class="w-4 h-4"></i><span>保存</span>
+                </button>
+              </div>
+              <p class="text-xs mt-1" id="record-info" style="color: var(--text-400);">未开始 · 已弹 0 音</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 调音参考 -->
+      <div class="max-w-5xl mx-auto m-4 mt-0 px-2 pb-10">
+        <div class="p-5 rounded-3xl" style="background: var(--background-100); border:1px solid var(--background-300);">
+          <div class="text-sm font-semibold mb-3" style="color: var(--text-800);">调音参考 · 点击试听</div>
+          <div id="quick-tuning" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="../assets/app.js"></script>
+    <!-- M4 MediaPipe Hands（CDN，加载失败自动降级到键盘模式） -->
+    <script id="mediapipe-hands-script" src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous" onerror="window.__mp_hands_failed=true;"></script>
+    <script id="mediapipe-camera-script" src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675466862/camera_utils.js" crossorigin="anonymous" onerror="window.__mp_camera_failed=true;"></script>
+    <script>
+      lucide.createIcons();
+
+      // ===== 登录态切换 =====
+      (function(){
+        if (window.SS && SS.store.isLoggedIn()) {
+          const auth = document.getElementById('nav-auth');
+          if (auth) {
+            auth.textContent = '退出';
+            auth.removeAttribute('data-dom-id');
+            auth.id = 'nav-logout';
+            auth.addEventListener('click', function(e){
+              e.preventDefault();
+              SS.store.clearUser();
+              SS.toast('已退出登录', 'success');
+              setTimeout(()=>location.reload(), 600);
+            });
+          }
+        }
+      })();
+
+      // ===== 1. 读取当前乐器 =====
+      const result = SS.flow.getResult();
+      const lastInst = SS.store.getLastInstrument();
+      let currentInst = (result && result.instrument) || lastInst || 'piano';
+      SS.store.setLastInstrument(currentInst);
+
+      const INST_META = {
+        piano:   { name: '钢琴', icon: '🎹', notes: ['C4','D4','E4','F4','G4','A4','B4','C5','D5','E5'] },
+        guitar:  { name: '吉他', icon: '🎸', notes: ['E2','A2','D3','G3','B3','E4'] },
+        violin:  { name: '小提琴', icon: '🎻', notes: ['G3','D4','A4','E5'] },
+        flute:   { name: '长笛', icon: '🪈', notes: ['C4','D4','E4','F4','G4','A4','B4'] },
+        drums:   { name: '架子鼓', icon: '🥁', notes: ['kick','snare','hihat','tom1','tom2','crash'] }
+      };
+      const drumLabels = { kick:'底鼓', snare:'军鼓', hihat:'踩镲', tom1:'嗵1', tom2:'嗵2', crash:'吊镲' };
+
+      document.getElementById('play-title').innerHTML = INST_META[currentInst].icon + ' ' + INST_META[currentInst].name + '演奏';
+
+      // ===== 2. 键盘映射 =====
+      const keyboardMap = (() => {
+        const m = {};
+        if (currentInst === 'piano') {
+          ['A','S','D','F','G','H','J','K','L',';'].forEach((k, i) => m[INST_META.piano.notes[i]] = k);
+        } else if (currentInst === 'guitar') {
+          ['1','2','3','4','5','6'].forEach((k, i) => m[INST_META.guitar.notes[i]] = k);
+        } else if (currentInst === 'violin') {
+          ['1','2','3','4'].forEach((k, i) => m[INST_META.violin.notes[i]] = k);
+        } else if (currentInst === 'flute') {
+          ['A','S','D','F','G','H','J'].forEach((k, i) => m[INST_META.flute.notes[i]] = k);
+        } else if (currentInst === 'drums') {
+          ['Q','W','E','R','T','Y'].forEach((k, i) => m[INST_META.drums.notes[i]] = k);
+        }
+        return m;
+      })();
+      const keyToNote = {};
+      Object.keys(keyboardMap).forEach(note => { keyToNote[keyboardMap[note]] = note; });
+
+      // ===== 3. 渲染键位 =====
+      const keysArea = document.getElementById('keys-area');
+      const noteToKey = {};
+
+      function renderKeys() {
+        keysArea.innerHTML = '';
+        const meta = INST_META[currentInst];
+
+        if (currentInst === 'piano' || currentInst === 'flute') {
+          const row = document.createElement('div');
+          row.className = 'flex justify-center gap-1 flex-wrap';
+          meta.notes.forEach(note => {
+            const key = document.createElement('button');
+            key.className = 'play-key relative rounded-b-xl flex items-end justify-center pb-3 transition-all duration-75';
+            key.style.cssText = 'width: 56px; height: 180px; background: rgba(255,255,255,.92); border:1px solid rgba(0,240,255,.3); box-shadow: 0 4px 16px rgba(0,240,255,.1); color: var(--text-700); cursor: pointer;';
+            key.innerHTML = '<span class="text-xs font-mono font-bold">' + note + '</span>';
+            const kb = keyboardMap[note];
+            if (kb) key.innerHTML += '<span class="absolute top-2 text-[10px] font-mono opacity-50">' + kb + '</span>';
+            key.addEventListener('mousedown', () => triggerKey(note, key));
+            key.addEventListener('touchstart', e => { e.preventDefault(); triggerKey(note, key); }, { passive: false });
+            row.appendChild(key);
+            noteToKey[note] = key;
+          });
+          keysArea.appendChild(row);
+        } else if (currentInst === 'guitar' || currentInst === 'violin') {
+          const row = document.createElement('div');
+          row.className = 'flex justify-center gap-4 sm:gap-6 flex-wrap';
+          meta.notes.forEach(note => {
+            const wrap = document.createElement('div');
+            wrap.className = 'flex flex-col items-center gap-2';
+            const lbl = document.createElement('div');
+            lbl.className = 'text-xs font-mono font-bold';
+            lbl.style.color = 'rgba(0,240,255,.8)';
+            lbl.textContent = note;
+            wrap.appendChild(lbl);
+            const hz = document.createElement('div');
+            hz.className = 'text-[10px]';
+            hz.style.color = 'rgba(255,255,255,.4)';
+            hz.textContent = Math.round(SS.noteToFreq(note)) + 'Hz';
+            wrap.appendChild(hz);
+            const string = document.createElement('button');
+            string.className = 'play-key rounded-full transition-all duration-75';
+            string.style.cssText = 'width: 8px; height: 160px; background: linear-gradient(180deg, rgba(0,240,255,.6), rgba(255,255,255,.8), rgba(0,240,255,.6)); box-shadow: 0 0 12px rgba(0,240,255,.4); cursor: pointer;';
+            string.addEventListener('mousedown', () => triggerKey(note, string));
+            string.addEventListener('touchstart', e => { e.preventDefault(); triggerKey(note, string); }, { passive: false });
+            wrap.appendChild(string);
+            const kb = keyboardMap[note];
+            if (kb) {
+              const kbb = document.createElement('div');
+              kbb.className = 'text-[10px] font-mono mt-1';
+              kbb.style.color = 'rgba(255,255,255,.5)';
+              kbb.textContent = kb;
+              wrap.appendChild(kbb);
+            }
+            row.appendChild(wrap);
+            noteToKey[note] = string;
+          });
+          keysArea.appendChild(row);
+        } else if (currentInst === 'drums') {
+          const row = document.createElement('div');
+          row.className = 'flex justify-center gap-3 sm:gap-5 flex-wrap';
+          meta.notes.forEach(note => {
+            const drum = document.createElement('button');
+            drum.className = 'play-key rounded-full flex flex-col items-center justify-center transition-all duration-75';
+            drum.style.cssText = 'width: 90px; height: 90px; background: radial-gradient(circle, rgba(0,240,255,.2), rgba(0,0,0,.6)); border:2px solid rgba(0,240,255,.4); box-shadow: 0 0 20px rgba(0,240,255,.15); color: #fff; cursor: pointer;';
+            drum.innerHTML = '<div class="text-sm font-semibold">' + drumLabels[note] + '</div><div class="text-[10px] opacity-60 font-mono">' + note + '</div>';
+            const kb = keyboardMap[note];
+            if (kb) {
+              const kbb = document.createElement('div');
+              kbb.className = 'text-[10px] font-mono opacity-50';
+              kbb.textContent = kb;
+              drum.appendChild(kbb);
+            }
+            drum.addEventListener('mousedown', () => triggerKey(note, drum));
+            drum.addEventListener('touchstart', e => { e.preventDefault(); triggerKey(note, drum); }, { passive: false });
+            row.appendChild(drum);
+            noteToKey[note] = drum;
+          });
+          keysArea.appendChild(row);
+        }
+      }
+      renderKeys();
+
+      // ===== 4. 触发音符 + 光晕特效 =====
+      const fx = document.getElementById('fx-canvas');
+      const fxCtx = fx.getContext('2d');
+      let particles = [];
+
+      // M8 文档：粒子系统参数（严格固定）
+      const EFFECT_PARAMS = {
+        handFingertip: { radius: 8, glowRadius: 24, color: 'rgba(255,255,255,0.9)' },
+        trail: { particlesPerFrame: 1, maxParticles: 200, lifetime: 400, sizeStart: 4, sizeEnd: 0, color: 'rgba(255,255,255,0.4)' },
+        triggerBurst: { particleCount: 12, speed: 200, lifetime: 400, sizeStart: 6, sizeEnd: 0, colors: ['#00F0FF', '#FF00C8', '#FFE600'] },
+        triggerGlow: { radiusStart: 0, radiusEnd: 80, duration: 300, fadeDuration: 600, color: 'rgba(0,240,255,0.6)' }
+      };
+      // 性能降级等级：3=全部, 2=glow+burst, 1=仅glow, 0=全关
+      let effectLevel = 3;
+
+      function resizeFx() {
+        const rect = fx.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        fx.width = rect.width * dpr;
+        fx.height = rect.height * dpr;
+        fxCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      setTimeout(resizeFx, 50);
+      window.addEventListener('resize', resizeFx);
+
+      // 统一触发入口：note + 可选 element + 可选位置
+      function triggerKey(note, el, fxX, fxY) {
+        SS.audio.resume();
+        SS.audio.play(note, currentInst);
+
+        if (el) {
+          const orig = el.style.background;
+          el.style.background = 'linear-gradient(180deg, #00F0FF, #0080ff)';
+          el.style.transform = 'translateY(2px) scale(0.98)';
+          setTimeout(() => {
+            el.style.background = orig;
+            el.style.transform = '';
+          }, 150);
+        }
+
+        // 特效坐标：优先用传入坐标（手部追踪模式），否则用元素中心
+        if (fxX == null || fxY == null) {
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            const fxRect = fx.getBoundingClientRect();
+            fxX = rect.left + rect.width / 2 - fxRect.left;
+            fxY = rect.top + rect.height / 2 - fxRect.top;
+          }
+        }
+        if (fxX != null && fxY != null) {
+          spawnTriggerEffect(fxX, fxY);
+        }
+
+        if (recording) {
+          const now = performance.now();
+          // API 文档 2.2 notesPlayed 结构：[{note, timestamp}]
+          recordedNotes.push({ note: note, timestamp: Math.round(now - recordStartTime) });
+          updateRecordInfo();
+        }
+      }
+
+      // M8 文档：触发特效 = triggerGlow + triggerBurst
+      function spawnTriggerEffect(x, y) {
+        if (effectLevel < 1) return;
+        const now = performance.now();
+        // triggerGlow: 半径 0→80px，持续 300ms 后衰减 600ms
+        const g = EFFECT_PARAMS.triggerGlow;
+        particles.push({
+          type: 'glow',
+          x, y, vx: 0, vy: 0,
+          bornAt: now,
+          lifetime: g.duration + g.fadeDuration,
+          color: g.color,
+          radiusStart: g.radiusStart,
+          radiusEnd: g.radiusEnd,
+          duration: g.duration,
+          fadeDuration: g.fadeDuration
+        });
+        if (effectLevel < 2) return;
+        // triggerBurst: 12 个粒子，速度 200 px/s，寿命 400ms
+        const b = EFFECT_PARAMS.triggerBurst;
+        for (let i = 0; i < b.particleCount; i++) {
+          const angle = (i / b.particleCount) * Math.PI * 2 + Math.random() * 0.3;
+          const speed = b.speed / 60; // px/frame (60fps)
+          particles.push({
+            type: 'burst',
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            bornAt: now,
+            lifetime: b.lifetime,
+            color: b.colors[Math.floor(Math.random() * b.colors.length)],
+            sizeStart: b.sizeStart,
+            sizeEnd: b.sizeEnd
+          });
+        }
+      }
+
+      // M8 文档：手部指尖光点（持续渲染，非衰减）
+      function spawnFingertip(x, y) {
+        // 复用 particles 数组，但 type=fingertip，每帧重置位置
+        let p = particles.find(pp => pp.type === 'fingertip' && pp.id === x + '_' + y);
+        if (!p) {
+          p = { type: 'fingertip', x, y, id: x + '_' + y, bornAt: performance.now(), lifetime: Infinity };
+          particles.push(p);
+        }
+        p.x = x; p.y = y; p.bornAt = performance.now();
+      }
+
+      function clearFingertips() {
+        particles = particles.filter(p => p.type !== 'fingertip');
+      }
+
+      // M8 文档：拖尾粒子（每帧生成 1 个，上限 200）
+      function spawnTrail(x, y) {
+        if (effectLevel < 3) return;
+        const t = EFFECT_PARAMS.trail;
+        if (particles.filter(p => p.type === 'trail').length >= t.maxParticles) return;
+        particles.push({
+          type: 'trail',
+          x, y, vx: 0, vy: 0,
+          bornAt: performance.now(),
+          lifetime: t.lifetime,
+          color: t.color,
+          sizeStart: t.sizeStart,
+          sizeEnd: t.sizeEnd
+        });
+      }
+
+      function animateFx() {
+        const rect = fx.getBoundingClientRect();
+        fxCtx.clearRect(0, 0, rect.width, rect.height);
+        const now = performance.now();
+
+        // 清理过期粒子（fingertip 例外，单独管理）
+        particles = particles.filter(p => p.type === 'fingertip' || (now - p.bornAt) < p.lifetime);
+
+        // 限制 trail 总数为 maxParticles
+        const trails = particles.filter(p => p.type === 'trail');
+        if (trails.length > EFFECT_PARAMS.trail.maxParticles) {
+          const toRemove = trails.length - EFFECT_PARAMS.trail.maxParticles;
+          const sorted = trails.sort((a, b) => a.bornAt - b.bornAt);
+          for (let i = 0; i < toRemove; i++) {
+            const idx = particles.indexOf(sorted[i]);
+            if (idx >= 0) particles.splice(idx, 1);
+          }
+        }
+
+        particles.forEach(p => {
+          if (p.type === 'fingertip') {
+            // 指尖光点：radius 8 + glow 24
+            const fp = EFFECT_PARAMS.handFingertip;
+            fxCtx.globalAlpha = 0.9;
+            const g = fxCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, fp.glowRadius);
+            g.addColorStop(0, 'rgba(255,255,255,0.5)');
+            g.addColorStop(1, 'transparent');
+            fxCtx.fillStyle = g;
+            fxCtx.beginPath();
+            fxCtx.arc(p.x, p.y, fp.glowRadius, 0, Math.PI * 2);
+            fxCtx.fill();
+            fxCtx.fillStyle = fp.color;
+            fxCtx.beginPath();
+            fxCtx.arc(p.x, p.y, fp.radius, 0, Math.PI * 2);
+            fxCtx.fill();
+            return;
+          }
+          const age = now - p.bornAt;
+          const t = Math.min(1, age / p.lifetime);
+          if (p.type === 'glow') {
+            // triggerGlow: 前 duration ms 扩展到 radiusEnd，后 fadeDuration ms 衰减
+            let radius, alpha;
+            if (age < p.duration) {
+              radius = p.radiusStart + (p.radiusEnd - p.radiusStart) * (age / p.duration);
+              alpha = 0.6;
+            } else {
+              radius = p.radiusEnd;
+              alpha = 0.6 * Math.max(0, 1 - (age - p.duration) / p.fadeDuration);
+            }
+            fxCtx.globalAlpha = Math.max(0, alpha);
+            const g = fxCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius);
+            g.addColorStop(0, p.color);
+            g.addColorStop(1, 'transparent');
+            fxCtx.fillStyle = g;
+            fxCtx.beginPath();
+            fxCtx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+            fxCtx.fill();
+          } else if (p.type === 'burst') {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vx *= 0.96;
+            p.vy *= 0.96;
+            const size = p.sizeStart + (p.sizeEnd - p.sizeStart) * t;
+            fxCtx.globalAlpha = Math.max(0, 1 - t);
+            fxCtx.fillStyle = p.color;
+            fxCtx.shadowBlur = 8;
+            fxCtx.shadowColor = p.color;
+            fxCtx.beginPath();
+            fxCtx.arc(p.x, p.y, Math.max(0.5, size), 0, Math.PI * 2);
+            fxCtx.fill();
+            fxCtx.shadowBlur = 0;
+          } else if (p.type === 'trail') {
+            const size = p.sizeStart + (p.sizeEnd - p.sizeStart) * t;
+            fxCtx.globalAlpha = Math.max(0, 0.4 * (1 - t));
+            fxCtx.fillStyle = p.color;
+            fxCtx.beginPath();
+            fxCtx.arc(p.x, p.y, Math.max(0.5, size), 0, Math.PI * 2);
+            fxCtx.fill();
+          }
+        });
+        fxCtx.globalAlpha = 1;
+        requestAnimationFrame(animateFx);
+      }
+      animateFx();
+
+      // ===== 5. 键盘弹奏 =====
+      const pressedKeys = new Set();
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT') return;
+        const k = e.key.toUpperCase();
+        if (pressedKeys.has(k)) return;
+        pressedKeys.add(k);
+
+        if (k === ' ' || e.code === 'Space') {
+          e.preventDefault();
+          playDemo();
+          return;
+        }
+        const note = keyToNote[k];
+        if (note) {
+          e.preventDefault();
+          triggerKey(note, noteToKey[note]);
+        }
+      });
+      document.addEventListener('keyup', (e) => {
+        pressedKeys.delete(e.key.toUpperCase());
+      });
+
+      // ===== 6. 演示旋律 =====
+      function playDemo() {
+        SS.audio.resume();
+        const melody = INST_META[currentInst].notes.filter(n => /^[A-G]/.test(n)).slice(0, 6);
+        const demoSeq = [0, 0, 1, 2, 2, 1, 0, 3, 4, 4, 3, 2, 2, 1, 1];
+        demoSeq.forEach((idx, i) => {
+          const note = melody[idx % melody.length];
+          if (note) {
+            setTimeout(() => {
+              SS.audio.play(note, currentInst, 0.25);
+              const el = noteToKey[note];
+              if (el) {
+                const orig = el.style.background;
+                el.style.background = 'linear-gradient(180deg, #00F0FF, #0080ff)';
+                setTimeout(() => el.style.background = orig, 200);
+              }
+            }, i * 220);
+          }
+        });
+        SS.toast('演示旋律：欢乐颂片段', 'info');
+      }
+
+      // ===== 7. 音量 / BPM / 节拍器 =====
+      const volSlider = document.getElementById('volume-slider');
+      const volDisplay = document.getElementById('volume-display');
+      volSlider.addEventListener('input', () => {
+        const v = parseInt(volSlider.value) / 100;
+        SS.audio.setVolume(v);
+        volDisplay.textContent = volSlider.value + '%';
+      });
+      SS.audio.setVolume(0.6);
+
+      const bpmInput = document.getElementById('bpm-input');
+      const metronome = new SS.Metronome(90);
+      const metronomeBtn = document.getElementById('metronome-btn');
+      let metronomeOn = false;
+
+      document.getElementById('bpm-dec').addEventListener('click', () => { bpmInput.value = Math.max(40, parseInt(bpmInput.value) - 5); metronome.setBpm(parseInt(bpmInput.value)); });
+      document.getElementById('bpm-inc').addEventListener('click', () => { bpmInput.value = Math.min(240, parseInt(bpmInput.value) + 5); metronome.setBpm(parseInt(bpmInput.value)); });
+      bpmInput.addEventListener('change', () => { metronome.setBpm(parseInt(bpmInput.value)); });
+
+      metronomeBtn.addEventListener('click', () => {
+        metronomeOn = !metronomeOn;
+        if (metronomeOn) {
+          metronome.setBpm(parseInt(bpmInput.value));
+          metronome.start();
+          metronomeBtn.style.background = 'var(--brand-500)';
+          metronomeBtn.style.color = '#fff';
+          SS.toast('节拍器开启 ' + bpmInput.value + ' BPM', 'success');
+        } else {
+          metronome.stop();
+          metronomeBtn.style.background = 'var(--background-50)';
+          metronomeBtn.style.color = 'var(--text-600)';
+          SS.toast('节拍器关闭', 'info');
+        }
+      });
+
+      // ===== 8. 录制 + 保存 =====
+      let recording = false;
+      let recordedNotes = [];
+      let recordStartTime = 0;
+      const recordBtn = document.getElementById('record-btn');
+      const recordLabel = document.getElementById('record-label');
+      const recordInfo = document.getElementById('record-info');
+      const saveBtn = document.getElementById('save-btn');
+
+      function updateRecordInfo() {
+        const n = recordedNotes.length;
+        const dur = recording ? Math.round((performance.now() - recordStartTime) / 1000) : 0;
+        recordInfo.textContent = (recording ? '录制中 · ' : '已停 · ') + n + ' 音 · ' + dur + ' 秒';
+      }
+
+      recordBtn.addEventListener('click', () => {
+        if (!recording) {
+          recording = true;
+          recordedNotes = [];
+          recordStartTime = performance.now();
+          recordBtn.style.background = 'var(--text-800)';
+          recordLabel.textContent = '停止';
+          recordInfo.textContent = '录制中 · 0 音 · 0 秒';
+          SS.toast('开始记录演奏', 'success');
+          const tick = () => {
+            if (!recording) return;
+            updateRecordInfo();
+            setTimeout(tick, 500);
+          };
+          tick();
+        } else {
+          recording = false;
+          recordBtn.style.background = 'var(--state-error)';
+          recordLabel.textContent = '开始记录';
+          updateRecordInfo();
+          SS.toast('已停止记录，共 ' + recordedNotes.length + ' 个音符', 'info');
+        }
+      });
+
+      saveBtn.addEventListener('click', () => {
+        if (recordedNotes.length === 0) {
+          SS.toast('请先开始记录并弹奏一些音符', 'warn');
+          return;
+        }
+        const duration = Math.max(1, Math.round((performance.now() - recordStartTime) / 1000));
+        const record = {
+          instrument: currentInst,
+          notesPlayed: recordedNotes,
+          durationSec: duration
+        };
+
+        if (!SS.store.isLoggedIn()) {
+          SS.store.addRecord(record);
+          SS.toast('已保存到本机（' + recordedNotes.length + ' 音 · ' + duration + ' 秒）。登录后可跨设备同步', 'success');
+        } else {
+          SS.store.addRecord(record);
+          SS.toast('演奏已保存到记录', 'success');
+        }
+        setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
+      });
+
+      // ===== 9. 调音参考 =====
+      (function renderQuickTuning() {
+        const wrap = document.getElementById('quick-tuning');
+        const notes = INST_META[currentInst].notes;
+        notes.forEach(note => {
+          const btn = document.createElement('button');
+          btn.className = 'px-3 h-9 rounded-full text-xs font-medium transition-all hover:scale-105 flex items-center gap-1.5';
+          btn.style.cssText = 'background: var(--background-50); border:1px solid var(--background-300); color: var(--text-700);';
+          const isDrum = currentInst === 'drums';
+          btn.innerHTML = '<span class="font-mono font-bold" style="color: var(--brand-500);">' + (isDrum ? drumLabels[note] : note) + '</span>' + (isDrum ? '' : '<span style="color: var(--text-400);">' + Math.round(SS.noteToFreq(note)) + 'Hz</span>');
+          btn.addEventListener('click', () => {
+            SS.audio.resume();
+            SS.audio.play(note, currentInst, 1.0);
+          });
+          wrap.appendChild(btn);
+        });
+      })();
+
+      // ===== 10. 灵敏度滑块（M5 文档：0-100，默认 50，边界框 ±20%） =====
+      const sensSlider = document.getElementById('sensitivity-slider');
+      const sensDisplay = document.getElementById('sensitivity-display');
+      function updateSensitivity() {
+        const s = parseInt(sensSlider.value);
+        const offset = ((s - 50) / 50) * 20; // -20% .. +20%
+        sensDisplay.textContent = s + '（边界框 ' + (offset >= 0 ? '+' : '') + offset.toFixed(0) + '%）';
+        SS.store.setSettings({ sensitivity: s });
+      }
+      sensSlider.addEventListener('input', updateSensitivity);
+      // 从用户设置加载
+      (function loadSettings() {
+        const s = SS.store.getSettings();
+        if (s.volume != null) {
+          volSlider.value = s.volume;
+          volSlider.dispatchEvent(new Event('input'));
+        }
+        if (s.sensitivity != null) {
+          sensSlider.value = s.sensitivity;
+        }
+        updateSensitivity();
+      })();
+
+      // ============================================================
+      // M3 摄像头实时画面 + M4 MediaPipe Hands + M5 键位叠加+触发判定
+      // ============================================================
+
+      // M5 文档：键位归一化坐标 [0,1]（用于叠加在摄像头画面上）
+      const normKeys = (function buildNormKeys() {
+        const notes = INST_META[currentInst].notes;
+        const n = notes.length;
+        const keys = [];
+        if (currentInst === 'piano' || currentInst === 'flute') {
+          // 横向排列 8/7 键，宽度等分，位于画面中下部
+          const w = 0.9 / n;
+          for (let i = 0; i < n; i++) {
+            keys.push({
+              id: 'key-' + i,
+              note: notes[i],
+              x: 0.05 + i * w,
+              y: 0.55,
+              w: w * 0.92,
+              h: 0.35,
+              shape: 'rect'
+            });
+          }
+        } else if (currentInst === 'guitar' || currentInst === 'violin') {
+          // 竖向排列 6/4 弦，位于画面中部
+          const w = 0.7 / n;
+          for (let i = 0; i < n; i++) {
+            keys.push({
+              id: 'key-' + i,
+              note: notes[i],
+              x: 0.15 + i * w,
+              y: 0.15,
+              w: w * 0.5,
+              h: 0.7,
+              shape: 'line'
+            });
+          }
+        } else if (currentInst === 'drums') {
+          // 5 个鼓件分散排列
+          const positions = [
+            { x: 0.20, y: 0.40 }, { x: 0.40, y: 0.30 },
+            { x: 0.60, y: 0.30 }, { x: 0.75, y: 0.45 }, { x: 0.50, y: 0.65 }
+          ];
+          for (let i = 0; i < n && i < positions.length; i++) {
+            keys.push({
+              id: 'key-' + i,
+              note: notes[i],
+              x: positions[i].x - 0.08,
+              y: positions[i].y - 0.08,
+              w: 0.16,
+              h: 0.16,
+              shape: 'circle'
+            });
+          }
+        }
+        return keys;
+      })();
+
+      // M5 状态：上一帧每只手食指尖是否在键位内
+      let prevInsideMap = {}; // {handNote_keyId: true}
+      let lastTriggerTime = {}; // {keyId: timestamp}，用于 150ms cooldown
+      const COOLDOWN_MS = 150;
+
+      // M5 文档：触发判定算法
+      function pointInKey(px, py, key, sensitivity) {
+        // 灵敏度调节：sensitivity 50 → 0% 偏移；100 → +20%；0 → -20%
+        const offset = ((sensitivity - 50) / 50) * 0.20;
+        const cx = key.x + key.w / 2;
+        const cy = key.y + key.h / 2;
+        const hw = key.w / 2 * (1 + offset);
+        const hh = key.h / 2 * (1 + offset);
+        if (key.shape === 'circle') {
+          const r = Math.max(hw, hh);
+          const dx = px - cx, dy = py - cy;
+          return (dx * dx + dy * dy) <= r * r;
+        }
+        return px >= cx - hw && px <= cx + hw && py >= cy - hh && py <= cy + hh;
+      }
+
+      function processHandLandmarks(hands) {
+        const sensitivity = parseInt(sensSlider.value);
+        const now = performance.now();
+        const currentInsideSet = new Set();
+
+        clearFingertips();
+
+        for (const hand of hands) {
+          const handedness = hand.handedness || 'Right';
+          // M5 文档：食指尖 = landmarks[8]
+          const tip = hand.landmarks[8];
+          if (!tip) continue;
+          // landmarks 是 [0,1] 归一化，已镜像视频，故 x 直接用
+          const px = tip.x;
+          const py = tip.y;
+
+          // 在 fx-canvas 上绘制指尖光点 + 拖尾
+          const camRect = camCanvas.getBoundingClientRect();
+          const fxRect2 = fx.getBoundingClientRect();
+          // 摄像头 canvas 与 fx-canvas 都铺满 play-zone，故坐标可一致
+          const sx = px * camRect.width;
+          const sy = py * camRect.height;
+          spawnFingertip(sx, sy);
+          spawnTrail(sx, sy);
+
+          for (const key of normKeys) {
+            const inside = pointInKey(px, py, key, sensitivity);
+            const mapKey = handedness + '_' + key.id;
+            const prevInside = !!prevInsideMap[mapKey];
+            currentInsideSet.add(mapKey + ':' + (inside ? '1' : '0'));
+
+            // 标记 hover 状态供渲染使用
+            key._hover = key._hover || {};
+            key._hover[handedness] = inside;
+
+            // M5 触发条件：prevInside=false 且 currInside=true（进入瞬间）
+            if (!prevInside && inside) {
+              // 150ms cooldown 防抖
+              const lastT = lastTriggerTime[key.id] || 0;
+              if (now - lastT >= COOLDOWN_MS) {
+                lastTriggerTime[key.id] = now;
+                key._triggeredAt = now;
+                // 计算触发位置（键位中心，转 fx-canvas 坐标）
+                const tx = (key.x + key.w / 2) * camRect.width;
+                const ty = (key.y + key.h / 2) * camRect.height;
+                triggerKey(key.note, null, tx, ty);
+              }
+            }
+          }
+        }
+
+        // 更新 prevInsideMap：保留仍在区域内的，移除已离开的
+        const newMap = {};
+        for (const entry of currentInsideSet) {
+          const [mapKey, inside] = entry.split(':');
+          if (inside === '1') newMap[mapKey] = true;
+        }
+        prevInsideMap = newMap;
+      }
+
+      // M3+M5 渲染：镜像视频 + 键位叠加
+      const camVideo = document.getElementById('cam-video');
+      const camCanvas = document.getElementById('cam-canvas');
+      const camCtx = camCanvas.getContext('2d');
+
+      function resizeCamCanvas() {
+        const rect = camCanvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        camCanvas.width = rect.width * dpr;
+        camCanvas.height = rect.height * dpr;
+        camCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener('resize', resizeCamCanvas);
+
+      function drawCameraFrame() {
+        if (!camActive) return;
+        const rect = camCanvas.getBoundingClientRect();
+        const W = rect.width, H = rect.height;
+        // M3：镜像翻转渲染视频帧
+        camCtx.save();
+        camCtx.translate(W, 0);
+        camCtx.scale(-1, 1);
+        if (camVideo.readyState >= 2) {
+          camCtx.drawImage(camVideo, 0, 0, W, H);
+        } else {
+          camCtx.fillStyle = '#000';
+          camCtx.fillRect(0, 0, W, H);
+        }
+        camCtx.restore();
+
+        // 半透暗化，便于看清键位
+        camCtx.fillStyle = 'rgba(0,0,0,0.35)';
+        camCtx.fillRect(0, 0, W, H);
+
+        // M5 渲染键位
+        const now = performance.now();
+        for (const key of normKeys) {
+          const x = key.x * W, y = key.y * H, w = key.w * W, h = key.h * H;
+          const hover = key._hover && (key._hover.Left || key._hover.Right);
+          const triggered = key._triggeredAt && (now - key._triggeredAt < 200);
+          const cooldown = (now - (lastTriggerTime[key.id] || 0) < COOLDOWN_MS) && !triggered;
+
+          if (triggered) {
+            // M5：triggered 状态
+            camCtx.strokeStyle = '#00F0FF';
+            camCtx.lineWidth = 3;
+            camCtx.fillStyle = 'rgba(0,240,255,0.3)';
+          } else if (hover) {
+            // M5：hover 状态
+            camCtx.strokeStyle = 'rgba(0,240,255,0.6)';
+            camCtx.lineWidth = 2;
+            const grad = camCtx.createRadialGradient(x + w/2, y + h/2, 0, x + w/2, y + h/2, Math.max(w, h)/2);
+            grad.addColorStop(0, 'rgba(0,240,255,0.18)');
+            grad.addColorStop(1, 'rgba(0,240,255,0)');
+            camCtx.fillStyle = grad;
+          } else if (cooldown) {
+            // M5：cooldown 状态
+            camCtx.strokeStyle = 'rgba(0,240,255,0.4)';
+            camCtx.lineWidth = 1;
+            camCtx.fillStyle = 'transparent';
+          } else {
+            // M5：idle 状态
+            camCtx.strokeStyle = 'rgba(0,240,255,0.15)';
+            camCtx.lineWidth = 1;
+            camCtx.fillStyle = 'transparent';
+          }
+
+          if (key.shape === 'circle') {
+            const cx = x + w/2, cy = y + h/2, r = Math.max(w, h)/2;
+            camCtx.beginPath();
+            camCtx.arc(cx, cy, r, 0, Math.PI * 2);
+            if (camCtx.fillStyle !== 'transparent') camCtx.fill();
+            camCtx.stroke();
+          } else {
+            camCtx.beginPath();
+            camCtx.rect(x, y, w, h);
+            if (camCtx.fillStyle !== 'transparent') camCtx.fill();
+            camCtx.stroke();
+          }
+
+          // M5：音名标签（JetBrains Mono, 14px, 白色, 中心）
+          camCtx.fillStyle = '#fff';
+          camCtx.font = '600 14px "JetBrains Mono", monospace';
+          camCtx.textAlign = 'center';
+          camCtx.textBaseline = 'middle';
+          const label = (currentInst === 'drums') ? (drumLabels[key.note] || key.note) : key.note;
+          camCtx.fillText(label, x + w/2, y + h/2);
+        }
+
+        // 清除 hover 状态（下一帧由 processHandLandmarks 重设）
+        for (const key of normKeys) {
+          if (key._hover) { key._hover.Left = false; key._hover.Right = false; }
+        }
+
+        requestAnimationFrame(drawCameraFrame);
+      }
+
+      // M4 MediaPipe Hands
+      let handsModel = null;
+      let mpCamera = null;
+      let camActive = false;
+      let mpFailed = false;
+      // 性能监控
+      let frameTimes = [];
+      function recordFps() {
+        const now = performance.now();
+        frameTimes.push(now);
+        if (frameTimes.length > 60) frameTimes.shift();
+        if (frameTimes.length >= 30) {
+          const fps = 1000 * (frameTimes.length - 1) / (frameTimes[frameTimes.length - 1] - frameTimes[0]);
+          applyPerformanceLevel(fps);
+        }
+      }
+      // M4 文档：性能降级策略
+      function applyPerformanceLevel(fps) {
+        let newLevel = 3;
+        if (fps < 10) {
+          newLevel = 0;
+          if (!window.__ss_lowfps_warned) {
+            window.__ss_lowfps_warned = true;
+            SS.toast('设备性能不足，建议切换到键盘模式', 'warn');
+          }
+        } else if (fps < 15) {
+          newLevel = 1; // 仅 glow
+        } else if (fps < 25) {
+          newLevel = 2; // glow + burst
+        } else {
+          newLevel = 3; // 全部
+          window.__ss_lowfps_warned = false;
+        }
+        if (newLevel !== effectLevel) {
+          effectLevel = newLevel;
+          const levelNames = ['全关', '仅光晕', '光晕+爆发', '全部'];
+          SS.toast('性能降级：' + fps.toFixed(0) + 'fps → 特效' + levelNames[newLevel], 'info');
+        }
+      }
+
+      // M3 错误处理（严格按文档）
+      function handleCameraError(err) {
+        let msg = '摄像头开启失败';
+        if (err && err.name === 'NotAllowedError') {
+          msg = '请允许摄像头权限';
+        } else if (err && err.name === 'NotFoundError') {
+          msg = '未检测到摄像头，请使用键盘模式';
+        } else if (err && err.name === 'NotReadableError') {
+          msg = '摄像头被其他应用占用，请关闭后重试';
+        } else if (err && err.name === 'OverconstrainedError') {
+          // 自动降级分辨率到 640x480 重试
+          return startCameraStream(true);
+        }
+        SS.toast(msg, 'error');
+        camActive = false;
+        updateCamUI();
+      }
+
+      // M4 加载 MediaPipe Hands
+      async function loadHandsModel() {
+        if (handsModel) return handsModel;
+        if (window.__mp_hands_failed || typeof window.Hands === 'undefined') {
+          mpFailed = true;
+          throw new Error('MediaPipe Hands 加载失败');
+        }
+        handsModel = new window.Hands({
+          locateFile: (file) => 'https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/' + file
+        });
+        // M4 文档：严格固定参数
+        handsModel.setOptions({
+          maxNumHands: 2,
+          modelComplexity: 1,
+          minDetectionConfidence: 0.6,
+          minTrackingConfidence: 0.5
+        });
+        handsModel.onResults((results) => {
+          recordFps();
+          const hands = [];
+          if (results.multiHandLandmarks && results.multiHandedness) {
+            for (let i = 0; i < results.multiHandLandmarks.length; i++) {
+              const lms = results.multiHandLandmarks[i];
+              const handed = results.multiHandedness[i];
+              // MediaPipe 在镜像视频下，Left/Right 与用户视角相反，这里取 label
+              hands.push({
+                handedness: handed.label || 'Right',
+                landmarks: lms.map(p => ({ x: p.x, y: p.y, z: p.z }))
+              });
+            }
+          }
+          processHandLandmarks(hands);
+        });
+        return handsModel;
+      }
+
+      // M3 启动摄像头流
+      async function startCameraStream(lowRes) {
+        try {
+          const constraints = {
+            video: lowRes
+              ? { width: { ideal: 640 }, height: { ideal: 480 } }
+              : { width: { ideal: 1280 }, height: { ideal: 720 } },
+            audio: false
+          };
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          camVideo.srcObject = stream;
+          await new Promise((resolve) => {
+            camVideo.onloadedmetadata = () => { camVideo.play(); resolve(); };
+          });
+          camActive = true;
+          updateCamUI();
+          resizeCamCanvas();
+          drawCameraFrame();
+
+          // 启动 M4 MediaPipe Hands 推理
+          try {
+            await loadHandsModel();
+            // 使用 MediaPipe Camera Utils 拉取帧
+            if (window.__mp_camera_failed || typeof window.Camera === 'undefined') {
+              // 降级：用 requestAnimationFrame 手动送帧
+              pumpFramesManually();
+            } else {
+              mpCamera = new window.Camera(camVideo, {
+                onFrame: async () => {
+                  if (!camActive) return;
+                  try { await handsModel.send({ image: camVideo }); } catch (e) {}
+                },
+                width: 640,
+                height: 480
+              });
+              mpCamera.start();
+            }
+          } catch (mpErr) {
+            mpFailed = true;
+            SS.toast('手部追踪加载失败，已降级为摄像头预览+键盘模式', 'warn');
+          }
+        } catch (err) {
+          handleCameraError(err);
+        }
+      }
+
+      // MediaPipe Camera Utils 不可用时的降级方案
+      let manualPumpRunning = false;
+      function pumpFramesManually() {
+        if (manualPumpRunning) return;
+        manualPumpRunning = true;
+        const loop = async () => {
+          if (!camActive || !handsModel) { manualPumpRunning = false; return; }
+          try { await handsModel.send({ image: camVideo }); } catch (e) {}
+          if (camActive) requestAnimationFrame(loop);
+          else manualPumpRunning = false;
+        };
+        requestAnimationFrame(loop);
+      }
+
+      function stopCamera() {
+        camActive = false;
+        if (mpCamera) { try { mpCamera.stop(); } catch (e) {} mpCamera = null; }
+        if (camVideo.srcObject) {
+          camVideo.srcObject.getTracks().forEach(t => t.stop());
+          camVideo.srcObject = null;
+        }
+        clearFingertips();
+        prevInsideMap = {};
+        lastTriggerTime = {};
+        // 清除 hover/triggered 状态
+        for (const key of normKeys) {
+          key._hover = null;
+          key._triggeredAt = 0;
+        }
+        updateCamUI();
+      }
+
+      function updateCamUI() {
+        const camStartBtn = document.getElementById('cam-start');
+        const camStopBtn = document.getElementById('cam-stop');
+        const camStatus = document.getElementById('cam-status');
+        const keysArea2 = document.getElementById('keys-area');
+        if (camActive) {
+          camStartBtn.classList.add('hidden');
+          camStopBtn.classList.remove('hidden');
+          camStatus.textContent = '当前：手势模式' + (mpFailed ? '（追踪失败，仅预览）' : '');
+          camCanvas.style.display = 'block';
+          keysArea2.style.display = 'none';
+          document.getElementById('play-hint').textContent = '食指点击虚拟键位即可触发 · 按 [Space] 演示旋律';
+        } else {
+          camStartBtn.classList.remove('hidden');
+          camStopBtn.classList.add('hidden');
+          camStatus.textContent = '当前：键盘模式';
+          camCanvas.style.display = 'none';
+          keysArea2.style.display = '';
+          document.getElementById('play-hint').textContent = '点击键位 / 按键盘弹奏 · 按 [Space] 演示一段旋律 · 开启摄像头后可用手势演奏';
+        }
+      }
+
+      document.getElementById('cam-start').addEventListener('click', () => {
+        SS.audio.resume();
+        startCameraStream(false);
+      });
+      document.getElementById('cam-stop').addEventListener('click', () => {
+        stopCamera();
+        SS.toast('摄像头已关闭', 'info');
+      });
+
+      // 初始化 UI 状态
+      updateCamUI();
+    </script>
+</body>
+</html>
