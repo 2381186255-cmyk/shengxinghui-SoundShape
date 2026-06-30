@@ -22,6 +22,15 @@ import type {
   Instrument, HandData, EffectLevel, DrawMode,
 } from '../lib/types';
 
+// 键盘提示（文档 M4 映射）
+const KEYBOARD_HINTS: Record<Instrument, string> = {
+  piano: 'A S D F G H J K',
+  guitar: '1 2 3 4 5 6',
+  violin: '1 2 3 4',
+  flute: 'A S D F G H J',
+  drums: 'Q W E R T',
+};
+
 // 5 乐器模板（文档 M2）
 const TEMPLATES: Array<{ id: string; name: string; instrument: Instrument; shapes: DrawnShape[] }> = [
   {
@@ -297,7 +306,7 @@ export function WorkbenchPage() {
     }
   };
 
-  const handleCameraError = (err: any) => {
+  const handleCameraError = async (err: any) => {
     console.error('摄像头错误', err);
     let code = 'CAMERA_ERROR';
     let msg = '摄像头开启失败';
@@ -312,8 +321,9 @@ export function WorkbenchPage() {
       msg = '摄像头被其他程序占用';
     }
     setError({ code, message: msg });
-    setPhase('error');
     showToast(msg + '，已降级到键盘模式', 'warn');
+    // 即使摄像头失败，也要播放双态过渡切换到 thunder 态
+    await playTransition();
     // 降级到键盘模式：仍然进入 tracking 但无手部追踪
     setPhase('tracking');
     startRenderLoop();
@@ -438,9 +448,12 @@ export function WorkbenchPage() {
   };
 
   // === 渲染循环 ===
+  const phaseRef = useRef<WorkbenchPhase>('idle');
+  useEffect(() => { phaseRef.current = phase; }, [phase]);
+
   const startRenderLoop = () => {
     const loop = async () => {
-      if (phase !== 'tracking' && phase !== 'paused') return;
+      if (phaseRef.current !== 'tracking' && phaseRef.current !== 'paused') return;
       const canvas = mrCanvasRef.current;
       const video = videoRef.current;
       if (!canvas) {
@@ -508,6 +521,18 @@ export function WorkbenchPage() {
           await handsRef.current.send({ image: video });
         } catch (e) {
           // MediaPipe 推理失败，跳过
+        }
+      } else if (!streamRef.current) {
+        // 键盘降级模式：显示提示
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.7)';
+        ctx.font = '14px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('键盘模式 · 按键演奏', canvas.width / 2, 30);
+        if (recognition) {
+          const keyMap = KEYBOARD_HINTS[recognition.instrument];
+          if (keyMap) {
+            ctx.fillText(keyMap, canvas.width / 2, canvas.height - 20);
+          }
         }
       }
 
@@ -612,131 +637,142 @@ export function WorkbenchPage() {
 
   // === 渲染 ===
   return (
-    <div className="parchment-bg min-h-screen">
+    <div className="immersive">
       <TopNav />
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="font-display text-display-1" style={{ color: 'var(--ink-full)' }}>工作台</h1>
-            <p className="text-caption" style={{ color: 'var(--ink-faint)' }}>
-              状态：{phase} {fps > 0 && `· ${fps} FPS · L${effectLevel}`}
-            </p>
+      <div className="workbench-layout">
+        {/* ===== 左侧工具面板 ===== */}
+        <aside className="tool-panel">
+          {/* 工作台标识 */}
+          <div className="tool-group">
+            <div className="tool-group-title">工作台 · WORKBENCH</div>
+            <h1 className="section-title" style={{ fontSize: 28, marginBottom: 8 }}>声形绘</h1>
+            <div className="status-bar" style={{ marginTop: 8 }}>
+              <span>
+                <span className="status-dot" />
+                {phase}
+              </span>
+              <span>{fps > 0 ? `${fps} FPS · L${effectLevel}` : '—'}</span>
+            </div>
           </div>
-          <div className="flex gap-3">
-            <button onClick={handleClear} className="btn-engrave" style={{ padding: '8px 16px', fontSize: 13 }}>
-              清空
+
+          {/* 模式切换 */}
+          {(phase === 'idle' || phase === 'drawing') && (
+            <div className="tool-group">
+              <div className="tool-group-title">识别模式</div>
+              <button
+                onClick={() => setDrawMode('contour')}
+                className={`btn-tool ${drawMode === 'contour' ? 'active' : ''}`}
+                style={{ textAlign: 'left', justifyContent: 'flex-start' }}
+              >
+                A · 画乐器轮廓
+              </button>
+              <button
+                onClick={() => setDrawMode('abstract')}
+                className={`btn-tool ${drawMode === 'abstract' ? 'active' : ''}`}
+                style={{ textAlign: 'left', justifyContent: 'flex-start' }}
+              >
+                B · 画抽象形状
+              </button>
+            </div>
+          )}
+
+          {/* 工具栏 */}
+          {(phase === 'idle' || phase === 'drawing') && (
+            <div className="tool-group">
+              <div className="tool-group-title">绘制工具</div>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {(['rect', 'circle', 'line'] as const).map(t => (
+                  <button
+                    key={t}
+                    onClick={() => setTool(t)}
+                    className={`btn-tool ${tool === t ? 'active' : ''}`}
+                    style={{ padding: '8px 12px', fontSize: 12 }}
+                  >
+                    {t === 'rect' ? '矩形' : t === 'circle' ? '圆形' : '长条'}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 模板 */}
+          {(phase === 'idle' || phase === 'drawing') && (
+            <div className="tool-group">
+              <div className="tool-group-title">乐器模板</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {TEMPLATES.map(tpl => (
+                  <button
+                    key={tpl.id}
+                    onClick={() => loadTemplate(tpl.id)}
+                    className="btn-tool"
+                    style={{ textAlign: 'left', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    {tpl.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 操作按钮 */}
+          <div className="tool-group">
+            <div className="tool-group-title">操作</div>
+            <button onClick={handleClear} className="btn-tool" style={{ textAlign: 'left', justifyContent: 'flex-start' }}>
+              清空画布
             </button>
             {(phase === 'idle' || phase === 'drawing') && (
-              <button onClick={handleGenerate} className="btn-engrave" style={{ padding: '8px 16px', fontSize: 13 }}>
+              <button onClick={handleGenerate} className="btn-primary" style={{ padding: '12px 20px', fontSize: 14 }}>
                 生成键位
               </button>
             )}
             {phase === 'camera-pending' && (
-              <button onClick={startCamera} className="btn-engrave" style={{ padding: '8px 16px', fontSize: 13 }}>
-                唤声（开启摄像头）
+              <button onClick={startCamera} className="btn-primary" style={{ padding: '12px 20px', fontSize: 14 }}>
+                唤声 · 开启摄像头
               </button>
             )}
             {(phase === 'tracking' || phase === 'paused') && (
               <>
-                <button onClick={handleSave} className="btn-engrave" style={{ padding: '8px 16px', fontSize: 13 }}>
+                <button onClick={handleSave} className="btn-tool" style={{ textAlign: 'left', justifyContent: 'flex-start' }}>
                   保存记录
                 </button>
-                <button onClick={handleStop} className="btn-engrave" style={{ padding: '8px 16px', fontSize: 13, background: 'var(--cinnabar)' }}>
-                  停止
+                <button onClick={handleStop} className="btn-primary" style={{ padding: '12px 20px', fontSize: 14 }}>
+                  停止演奏
                 </button>
               </>
             )}
           </div>
-        </div>
 
-        {/* 模式切换 */}
-        {(phase === 'idle' || phase === 'drawing') && (
-          <div className="flex gap-4 mb-4">
-            <button
-              onClick={() => setDrawMode('contour')}
-              className="font-body text-body"
-              style={{
-                padding: '8px 16px',
-                background: drawMode === 'contour' ? 'var(--ink-full)' : 'transparent',
-                color: drawMode === 'contour' ? 'var(--parchment-base)' : 'var(--ink-mid)',
-                border: '1px solid var(--ink-mid)',
-                cursor: 'pointer',
-              }}
-            >
-              模式 A：画乐器轮廓
-            </button>
-            <button
-              onClick={() => setDrawMode('abstract')}
-              className="font-body text-body"
-              style={{
-                padding: '8px 16px',
-                background: drawMode === 'abstract' ? 'var(--ink-full)' : 'transparent',
-                color: drawMode === 'abstract' ? 'var(--parchment-base)' : 'var(--ink-mid)',
-                border: '1px solid var(--ink-mid)',
-                cursor: 'pointer',
-              }}
-            >
-              模式 B：画抽象形状
-            </button>
-          </div>
-        )}
-
-        {/* 工具栏 */}
-        {(phase === 'idle' || phase === 'drawing') && (
-          <div className="flex gap-2 mb-4">
-            {(['rect', 'circle', 'line'] as const).map(t => (
-              <button
-                key={t}
-                onClick={() => setTool(t)}
-                className="font-mono text-caption"
-                style={{
-                  padding: '6px 12px',
-                  background: tool === t ? 'var(--cinnabar)' : 'transparent',
-                  color: tool === t ? 'var(--parchment-base)' : 'var(--ink-mid)',
-                  border: '1px solid var(--gold-faint)',
-                  cursor: 'pointer',
-                }}
-              >
-                {t === 'rect' ? '矩形' : t === 'circle' ? '圆形' : '长条'}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* 模板 */}
-        {(phase === 'idle' || phase === 'drawing') && (
-          <div className="mb-4">
-            <p className="text-caption mb-2" style={{ color: 'var(--ink-faint)' }}>或选择模板：</p>
-            <div className="flex gap-2 flex-wrap">
-              {TEMPLATES.map(tpl => (
-                <button
-                  key={tpl.id}
-                  onClick={() => loadTemplate(tpl.id)}
-                  className="font-body text-body"
-                  style={{
-                    padding: '6px 12px',
-                    background: 'var(--parchment-deep)',
-                    color: 'var(--ink-mid)',
-                    border: '1px solid var(--gold-faint)',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {tpl.name}
-                </button>
-              ))}
+          {/* 错误提示 */}
+          {error && (
+            <div className="tool-group">
+              <div className="tool-group-title" style={{ color: 'var(--cinnabar)' }}>错误</div>
+              <div style={{
+                padding: '10px 14px',
+                background: 'rgba(179, 58, 44, 0.08)',
+                border: '1px solid var(--cinnabar)',
+                fontSize: 13,
+                color: 'var(--cinnabar)',
+                fontFamily: 'var(--font-body)',
+              }}>
+                {error.message}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </aside>
 
-        {/* 画布区 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* ===== 右侧主画布区 ===== */}
+        <main className="canvas-stage">
           {/* 绘制画布 */}
           {(phase === 'idle' || phase === 'drawing' || phase === 'generating' || phase === 'error') && (
-            <div className="card-scroll">
-              <p className="text-caption mb-3" style={{ color: 'var(--ink-faint)' }}>
-                绘制画布（{shapes.length} 形状）
-              </p>
+            <div className="canvas-frame">
+              <div className="status-bar" style={{ marginBottom: 12 }}>
+                <span>
+                  <span className="status-dot" />
+                  绘制画布 · DRAW
+                </span>
+                <span>{shapes.length} 形状</span>
+              </div>
               <canvas
                 ref={drawCanvasRef}
                 width={640}
@@ -746,6 +782,7 @@ export function WorkbenchPage() {
                   background: 'var(--parchment-base)',
                   border: '1px solid var(--gold-faint)',
                   cursor: 'crosshair',
+                  display: 'block',
                 }}
                 onMouseDown={startDraw}
                 onMouseMove={moveDraw}
@@ -755,57 +792,81 @@ export function WorkbenchPage() {
                 onTouchMove={moveDraw}
                 onTouchEnd={endDraw}
               />
-              {error && (
-                <p className="mt-3 font-body text-body" style={{ color: 'var(--cinnabar)' }}>
-                  ⚠ {error.message}
-                </p>
-              )}
             </div>
           )}
 
           {/* MR 演奏画布 */}
           {(phase === 'camera-pending' || phase === 'camera-loading' || phase === 'tracking' || phase === 'paused') && (
-            <div className="card-holo holo-border" style={{ position: 'relative' }}>
-              <p className="text-caption mb-3" data-tag="MR · LIVE" style={{ color: 'var(--cyan-bright)' }}>
-                MR 演奏区
-              </p>
+            <div className="canvas-frame">
+              <div className="status-bar" style={{ marginBottom: 12 }}>
+                <span>
+                  <span className="status-dot" />
+                  MR · LIVE
+                </span>
+                <span>{recognition ? `${recognition.instrument} · ${recognition.keys.length} 键` : '—'}</span>
+              </div>
               <canvas
                 ref={mrCanvasRef}
                 width={640}
                 height={400}
                 className="w-full"
-                style={{ background: '#050407', border: '1px solid var(--cyan-faint)' }}
+                style={{ background: '#050407', border: '1px solid var(--cyan-faint)', display: 'block' }}
               />
               <video ref={videoRef} style={{ display: 'none' }} playsInline muted />
               {transitioning && (
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  background: '#000', display: 'flex',
-                  alignItems: 'center', justifyContent: 'center',
-                  pointerEvents: 'none',
-                }}>
-                  <div style={{
-                    width: 4, height: 4, background: 'var(--cyan-bright)',
-                    borderRadius: '50%', boxShadow: '0 0 20px 10px var(--cyan-bright)',
-                  }} />
+                <div className="transition-fullscreen">
+                  <div className="transition-light-point" />
                 </div>
               )}
             </div>
           )}
-        </div>
 
-        {/* 识别结果信息 */}
-        {recognition && (
-          <div className="mt-6 card-scroll">
-            <p className="font-display text-display-2 mb-2" style={{ color: 'var(--ink-full)' }}>
-              {recognition.instrument} · {recognition.keys.length} 键
-            </p>
-            <p className="text-caption" style={{ color: 'var(--ink-faint)' }}>
-              识别模式：{recognition.mode === 'contour' ? '轮廓匹配（A）' : '抽象回退（B）'} ·
-              置信度：{(recognition.confidence * 100).toFixed(0)}%
-            </p>
+          {/* 识别结果卡片 */}
+          {recognition && (
+            <div className="card-immersive">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
+                <h2 className="section-title" style={{ fontSize: 24, margin: 0 }}>
+                  {recognition.instrument}
+                </h2>
+                <span style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 12,
+                  letterSpacing: '0.1em',
+                  color: 'var(--ink-faint)',
+                }}>
+                  {recognition.keys.length} KEYS
+                </span>
+              </div>
+              <div style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 13,
+                color: 'var(--ink-mid)',
+                display: 'flex',
+                gap: 16,
+                flexWrap: 'wrap',
+              }}>
+                <span>识别模式：{recognition.mode === 'contour' ? '轮廓匹配（A）' : '抽象回退（B）'}</span>
+                <span>置信度：{(recognition.confidence * 100).toFixed(0)}%</span>
+              </div>
+            </div>
+          )}
+
+          {/* 状态提示 */}
+          <div className="status-bar" style={{ marginTop: 'auto' }}>
+            <span>
+              <span className="status-dot" />
+              {phase === 'idle' && '准备就绪 · 请绘制或选择模板'}
+              {phase === 'drawing' && '绘制中 · 完成后点击"生成键位"'}
+              {phase === 'generating' && '识别中...'}
+              {phase === 'camera-pending' && '键位已就绪 · 点击"唤声"开始演奏'}
+              {phase === 'camera-loading' && '摄像头开启中...'}
+              {phase === 'tracking' && '演奏中 · 食指触发键位'}
+              {phase === 'paused' && '已暂停'}
+              {phase === 'error' && '出错了 · 请查看错误信息'}
+            </span>
+            <span>SOUND SHAPE MR</span>
           </div>
-        )}
+        </main>
       </div>
     </div>
   );

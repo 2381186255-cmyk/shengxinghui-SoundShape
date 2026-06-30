@@ -51,57 +51,7 @@ export function fmtDate(iso: string): string {
   }
 }
 
-// 时间格式化（时:分）
-export function fmtTime(iso: string): string {
-  try {
-    const d = new Date(iso);
-    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
-  } catch {
-    return '';
-  }
-}
-
 // 生成 ID
 export function genId(prefix = 'id'): string {
   return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-}
-
-// 节流
-export function throttle<T extends (...args: any[]) => void>(fn: T, delay: number): T {
-  let last = 0;
-  return ((...args: any[]) => {
-    const now = Date.now();
-    if (now - last >= delay) {
-      last = now;
-      fn(...args);
-    }
-  }) as T;
-}
-
-// requestAnimationFrame 节流
-export function rafThrottle<T extends (...args: any[]) => void>(fn: T): T {
-  let scheduled = false;
-  let lastArgs: any[];
-  return ((...args: any[]) => {
-    lastArgs = args;
-    if (!scheduled) {
-      scheduled = true;
-      requestAnimationFrame(() => {
-        scheduled = false;
-        fn(...lastArgs);
-      });
-    }
-  }) as T;
-}
-
-// clamp
-export function clamp(v: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, v));
-}
-
-// 距离
-export function distance(x1: number, y1: number, x2: number, y2: number): number {
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  return Math.sqrt(dx * dx + dy * dy);
 }

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>声形绘 - 键位生成结果</title>
+    <style id="theme-vars">
+/* 墨画态 / 雷霆态 Design Tokens */
+
+/* ========== INK (Light) Theme (default / :root) ========== */
+:root {
+  --background: #f3e9d2;
+  --foreground: #1a1410;
+  --card: #ede0c4;
+  --card-foreground: #1a1410;
+  --muted: #c9b896;
+  --muted-foreground: #3d3328;
+  --border: #c9b896;
+  --input: #e2d4b0;
+  --ring: #b8332a;
+  --radius: 4px;
+  --primary: #b8332a;
+  --primary-foreground: #ffffff;
+  --secondary: #a87b2c;
+  --secondary-foreground: #ffffff;
+  --accent: #4a5a6a;
+  --accent-foreground: #ffffff;
+  --destructive: #8a1f18;
+  --destructive-foreground: #ffffff;
+
+  --background-50: #f3e9d2;
+  --background-100: #ede0c4;
+  --background-200: #e2d4b0;
+  --background-300: #c9b896;
+  --background-400: #b09c7c;
+  --background-500: #9a8568;
+  --background-600: #7d6b52;
+  --background-700: #6b5d4a;
+  --background-800: #3d3328;
+  --background-900: #1a1410;
+
+  --brand-50: #f0d5d3;
+  --brand-100: #e5b0ac;
+  --brand-200: #d08a83;
+  --brand-300: #b8332a;
+  --brand-400: #b8332a;
+  --brand-500: #b8332a;
+  --brand-600: #8a1f18;
+  --brand-700: #6c1812;
+
+  --text-50: #f3e9d2;
+  --text-100: #ede0c4;
+  --text-200: #c9b896;
+  --text-300: #9a8568;
+  --text-400: #6b5d4a;
+  --text-500: #3d3328;
+  --text-600: #3d3328;
+  --text-700: #2d2318;
+  --text-800: #1a1410;
+  --text-900: #0d0a08;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+}
+
+/* ========== THUNDER (Dark) Theme ========== */
+.dark {
+  --background: #050810;
+  --foreground: #d6f7ff;
+  --card: #0a1020;
+  --card-foreground: #d6f7ff;
+  --muted: #0f1830;
+  --muted-foreground: #6a8a99;
+  --border: rgba(0, 229, 255, 0.35);
+  --input: #050810;
+  --ring: #00e5ff;
+  --radius: 0px;
+  --primary: #00e5ff;
+  --primary-foreground: #020407;
+  --secondary: #ff2bd6;
+  --secondary-foreground: #020407;
+  --accent: #ffb800;
+  --accent-foreground: #020407;
+  --destructive: #ff3366;
+  --destructive-foreground: #020407;
+
+  --background-50: #020407;
+  --background-100: #050810;
+  --background-200: #0a1020;
+  --background-300: #0f1830;
+  --background-400: #142040;
+  --background-500: #1a2850;
+  --background-600: #203060;
+  --background-700: #264070;
+  --background-800: #305090;
+  --background-900: #5070b0;
+
+  --brand-50: #e0f7ff;
+  --brand-100: #b0eaff;
+  --brand-200: #80ddff;
+  --brand-300: #00e5ff;
+  --brand-400: #00e5ff;
+  --brand-500: #00e5ff;
+  --brand-600: #00b8cc;
+  --brand-700: #008a99;
+
+  --text-50: #d6f7ff;
+  --text-100: #c0e8ff;
+  --text-200: #9ad4f0;
+  --text-300: #6a8a99;
+  --text-400: #4a6a7a;
+  --text-500: #3a5a6a;
+  --text-600: #2a4a5a;
+  --text-700: #1a3a4a;
+  --text-800: #0a2a3a;
+  --text-900: #020407;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+        <style>
+      ::-webkit-scrollbar { width: 0 !important; height: 0 !important; }
+      html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+  <div class="paper-grain"></div>
+  <div class="page-content">
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <a href="workbench.html" class="nav-logo font-display">◆ 声形绘</a>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-link" data-dom-id="nav-login">登录</a>
+        <button class="btn-toggle-theme" data-dom-id="btn-toggle-theme">雷霆</button>
+      </div>
+    </nav>
+
+    <!-- Success Card -->
+    <div class="success-card">
+      <div class="success-icon">◎</div>
+      <div class="success-title">键位生成成功</div>
+      <div class="success-instrument">钢　琴</div>
+      <div class="success-detail">已检测到8个键位，标准C大调排列<br>可进行调音后开始演奏</div>
+    </div>
+
+    <!-- Key Preview -->
+    <div class="section-label-wrapper">
+      <span class="section-label font-seal">键位预览</span>
+    </div>
+    <div class="key-preview">
+      <div class="key-row-label">壹 · 白键</div>
+      <div class="key-grid">
+        <div class="key-cell"><span class="key-note">C</span><span class="key-num">壹</span></div>
+        <div class="key-cell"><span class="key-note">D</span><span class="key-num">贰</span></div>
+        <div class="key-cell"><span class="key-note">E</span><span class="key-num">叁</span></div>
+        <div class="key-cell"><span class="key-note">F</span><span class="key-num">肆</span></div>
+        <div class="key-cell"><span class="key-note">G</span><span class="key-num">伍</span></div>
+        <div class="key-cell"><span class="key-note">A</span><span class="key-num">陆</span></div>
+        <div class="key-cell"><span class="key-note">B</span><span class="key-num">柒</span></div>
+        <div class="key-cell"><span class="key-note">C</span><span class="key-num">捌</span></div>
+      </div>
+      <div class="key-row-label">贰 · 黑键</div>
+      <div class="key-grid">
+        <div class="key-cell black-key"><span class="key-note">C#</span></div>
+        <div class="key-cell black-key"><span class="key-note">D#</span></div>
+        <div class="key-cell black-key"><span class="key-note">F#</span></div>
+        <div class="key-cell black-key"><span class="key-note">G#</span></div>
+        <div class="key-cell black-key"><span class="key-note">A#</span></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Tuning Guide -->
+    <div class="tuning-section">
+      <div class="tuning-title">调音参考</div>
+      <div class="tuning-row">
+        <span class="tuning-key">C4</span>
+        <span class="tuning-note">中央C</span>
+        <span class="tuning-freq">261.63 Hz</span>
+      </div>
+      <div class="tuning-row">
+        <span class="tuning-key">D4</span>
+        <span class="tuning-note">re</span>
+        <span class="tuning-freq">293.66 Hz</span>
+      </div>
+      <div class="tuning-row">
+        <span class="tuning-key">E4</span>
+        <span class="tuning-note">mi</span>
+        <span class="tuning-freq">329.63 Hz</span>
+      </div>
+      <div class="tuning-row">
+        <span class="tuning-key">F4</span>
+        <span class="tuning-note">fa</span>
+        <span class="tuning-freq">349.23 Hz</span>
+      </div>
+      <div class="tuning-row">
+        <span class="tuning-key">G4</span>
+        <span class="tuning-note">sol</span>
+        <span class="tuning-freq">392.00 Hz</span>
+      </div>
+      <div class="tuning-row">
+        <span class="tuning-key">A4</span>
+        <span class="tuning-note">la</span>
+        <span class="tuning-freq">440.00 Hz</span>
+      </div>
+      <div class="tuning-row">
+        <span class="tuning-key">B4</span>
+        <span class="tuning-note">si</span>
+        <span class="tuning-freq">493.88 Hz</span>
+      </div>
+      <div class="tuning-row">
+        <span class="tuning-key">C5</span>
+        <span class="tuning-note">高音do</span>
+        <span class="tuning-freq">523.25 Hz</span>
+      </div>
+    </div>
+
+    <!-- Real-time Tuner -->
+    <div class="tuner-section">
+      <div class="tuner-title">实时调音器</div>
+      <div class="tuner-display">A4</div>
+      <div class="tuner-freq-text">当前频率：440.00 Hz · 偏差 ±0 Hz</div>
+      <button class="tuner-btn">开启麦克风</button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-section">
+      <a href="workbench.html" class="btn-secondary" data-dom-id="btn-redraw">重新画</a>
+      <a href="workbench-play.html" class="btn-primary" data-dom-id="btn-play">开始演奏</a>
+    </div>
+  </div>
+
+    <style>
+    :root {
+      --ink-paper: #f3e9d2;
+      --ink-paper-edge: #e2d4b0;
+      --ink-ink: #1a1410;
+      --ink-ink-soft: #3d3328;
+      --ink-cinnabar: #b8332a;
+      --ink-cinnabar-deep: #8a1f18;
+      --ink-gold: #a87b2c;
+      --ink-mountain: #6b5d4a;
+      --ink-water: #4a5a6a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Serif SC', serif;
+      background: var(--ink-paper);
+      color: var(--ink-ink);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .font-display { font-family: 'Ma Shan Zheng', cursive; }
+    .font-seal { font-family: 'ZCOOL QingKe HuangYou', cursive; letter-spacing: 0.3em; }
+
+    .paper-grain {
+      position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.5;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.32  0 0 0 0 0.2  0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      mix-blend-mode: multiply;
+    }
+
+    .page-content { position: relative; z-index: 2; width: 100%; padding: 0 20px; }
+
+    /* Top Nav */
+    .top-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 0; border-bottom: 2px solid var(--ink-ink); position: relative;
+    }
+    .top-nav::after {
+      content: ''; position: absolute; bottom: 5px; left: 10%; right: 10%;
+      border-bottom: 1px dashed var(--ink-cinnabar);
+    }
+    .nav-logo { font-family: 'Ma Shan Zheng', cursive; font-size: 22px; color: var(--ink-ink); text-decoration: none; }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .nav-link {
+      font-family: 'Noto Serif SC', serif; font-size: 13px; color: var(--ink-ink-soft);
+      text-decoration: none; padding: 6px 12px; border: 1px solid var(--ink-paper-edge);
+      border-radius: 4px; transition: all 0.3s;
+    }
+    .nav-link:hover { border-color: var(--ink-cinnabar); color: var(--ink-cinnabar); transform: translateY(-2px); }
+    .btn-toggle-theme {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 12px;
+      letter-spacing: 0.2em; padding: 4px 14px; border-radius: 20px;
+      border: 1.5px solid var(--ink-cinnabar); color: var(--ink-cinnabar);
+      background: transparent; cursor: pointer; transition: all 0.3s;
+    }
+    .btn-toggle-theme:hover { background: var(--ink-cinnabar); color: #fff; }
+
+    /* Success Card */
+    .success-card {
+      text-align: center; padding: 30px 20px; margin: 24px 0;
+      background: rgba(255,255,255,0.6); border: 2px solid var(--ink-ink);
+      border-radius: 4px; position: relative;
+    }
+    .success-card::after {
+      content: ''; position: absolute; inset: 4px;
+      border: 1px dashed var(--ink-cinnabar); pointer-events: none;
+    }
+    .success-icon { font-size: 48px; margin-bottom: 8px; }
+    .success-title {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 28px;
+      color: var(--ink-cinnabar); margin-bottom: 8px;
+    }
+    .success-instrument {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 16px;
+      letter-spacing: 0.3em; color: var(--ink-gold);
+      border: 1px solid var(--ink-gold); display: inline-block;
+      padding: 4px 20px; border-radius: 2px;
+    }
+    .success-detail {
+      font-size: 13px; color: var(--ink-mountain); margin-top: 12px; line-height: 1.6;
+    }
+
+    /* Section Label */
+    .section-label-wrapper { text-align: center; margin: 24px 0 16px; }
+    .section-label {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 12px;
+      letter-spacing: 0.3em; color: var(--ink-cinnabar);
+      border: 1px solid var(--ink-cinnabar); padding: 4px 16px;
+      display: inline-block; border-radius: 2px;
+    }
+
+    /* Key Preview Grid */
+    .key-preview {
+      background: rgba(255,255,255,0.5); border: 2px solid var(--ink-ink);
+      border-radius: 4px; padding: 16px; position: relative;
+    }
+    .key-preview::after {
+      content: ''; position: absolute; inset: 4px;
+      border: 1px dashed var(--ink-cinnabar); pointer-events: none;
+    }
+    .key-grid {
+      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+    }
+    .key-cell {
+      width: 44px; height: 56px; border: 2px solid var(--ink-ink);
+      border-radius: 3px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--ink-paper-edge); position: relative;
+      transition: all 0.3s;
+    }
+    .key-cell::after {
+      content: ''; position: absolute; inset: 2px;
+      border: 1px dashed rgba(184,51,42,0.3); pointer-events: none;
+    }
+    .key-cell:hover { transform: translateY(-3px); box-shadow: 0 3px 8px rgba(184,51,42,0.2); }
+    .key-note {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 16px;
+      color: var(--ink-ink);
+    }
+    .key-num {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 9px;
+      color: var(--ink-mountain); letter-spacing: 0.1em;
+    }
+    .key-cell.black-key {
+      background: var(--ink-ink); height: 36px; width: 30px;
+    }
+    .key-cell.black-key .key-note { color: var(--ink-paper); font-size: 12px; }
+    .key-cell.black-key .key-num { color: var(--ink-mountain); }
+    .key-row-label {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 10px;
+      color: var(--ink-cinnabar); letter-spacing: 0.2em;
+      margin: 12px 0 8px;
+    }
+
+    /* Tuning Guide */
+    .tuning-section {
+      margin-top: 24px; padding: 20px;
+      background: rgba(255,255,255,0.5); border: 2px solid var(--ink-ink);
+      border-radius: 4px; position: relative;
+    }
+    .tuning-section::after {
+      content: ''; position: absolute; inset: 4px;
+      border: 1px dashed var(--ink-cinnabar); pointer-events: none;
+    }
+    .tuning-title {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 20px;
+      color: var(--ink-ink); margin-bottom: 12px;
+    }
+    .tuning-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid var(--ink-paper-edge);
+      font-size: 13px;
+    }
+    .tuning-row:last-child { border-bottom: none; }
+    .tuning-key { color: var(--ink-ink); font-weight: 700; }
+    .tuning-freq { color: var(--ink-mountain); }
+    .tuning-note { color: var(--ink-cinnabar); }
+
+    /* Real-time Tuner */
+    .tuner-section {
+      margin-top: 24px; padding: 20px;
+      background: rgba(255,255,255,0.5); border: 2px solid var(--ink-ink);
+      border-radius: 4px; position: relative; text-align: center;
+    }
+    .tuner-section::after {
+      content: ''; position: absolute; inset: 4px;
+      border: 1px dashed var(--ink-cinnabar); pointer-events: none;
+    }
+    .tuner-title {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 20px;
+      color: var(--ink-ink); margin-bottom: 16px;
+    }
+    .tuner-display {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 40px;
+      color: var(--ink-cinnabar); margin: 12px 0;
+    }
+    .tuner-freq-text { font-size: 13px; color: var(--ink-mountain); margin-bottom: 16px; }
+    .tuner-btn {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 13px;
+      letter-spacing: 0.2em; background: var(--ink-cinnabar); color: #fff;
+      border: none; border-radius: 4px; padding: 10px 32px;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .tuner-btn:hover {
+      background: var(--ink-cinnabar-deep); transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(184,51,42,0.3);
+    }
+
+    /* Action Buttons */
+    .action-section { display: flex; gap: 12px; padding: 30px 0; }
+    .btn-secondary {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 18px; letter-spacing: 0.1em;
+      background: transparent; color: var(--ink-cinnabar);
+      border: 2px solid var(--ink-cinnabar); border-radius: 4px;
+      padding: 12px 24px; cursor: pointer; transition: all 0.3s;
+      flex: 1; text-align: center; text-decoration: none; display: block;
+    }
+    .btn-secondary:hover { background: var(--ink-cinnabar); color: #fff; transform: translateY(-4px); }
+    .btn-primary {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 18px; letter-spacing: 0.1em;
+      background: var(--ink-cinnabar); color: #fff; border: none; border-radius: 4px;
+      padding: 12px 24px; cursor: pointer; transition: all 0.3s;
+      flex: 1; text-align: center; text-decoration: none; display: block;
+    }
+    .btn-primary:hover {
+      background: var(--ink-cinnabar-deep); transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(184,51,42,0.3);
+    }
+
+    .divider {
+      border: none; border-top: 2px solid var(--ink-ink); margin: 20px 0; position: relative;
+    }
+    .divider::after {
+      content: ''; position: absolute; top: 5px; left: 10%; right: 10%;
+      border-top: 1px dashed var(--ink-cinnabar);
+    }
+  </style>
+</body>
+</html>
+
+

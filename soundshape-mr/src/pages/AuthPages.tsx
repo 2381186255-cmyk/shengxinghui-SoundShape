@@ -1,5 +1,5 @@
-// @mode: ink
-// 登录/注册页
+// @mode: ink|thunder
+// 登录/注册页 - 沉浸式双态
 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
@@ -30,43 +30,41 @@ export function LoginPage() {
   };
 
   return (
-    <div className="parchment-bg min-h-screen">
+    <div className="immersive">
       <TopNav />
-      <div className="max-w-md mx-auto px-8 py-16">
-        <h1 className="font-display text-display-1 mb-2" style={{ color: 'var(--ink-full)' }}>登录</h1>
-        <p className="font-body text-body mb-8" style={{ color: 'var(--ink-mid)' }}>
-          登录后可保存演奏记录与调音数据
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="text-caption block mb-2" style={{ color: 'var(--ink-faint)' }}>邮箱</label>
+      <div style={{ padding: '40px 24px', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <form onSubmit={handleSubmit} className="form-immersive">
+          <h1 className="form-title">登录</h1>
+          <p className="form-subtitle">登录后可保存演奏记录与调音数据</p>
+          <div style={{ marginBottom: 24 }}>
+            <label className="field-label">邮箱</label>
             <input
               type="email"
-              className="input-ink"
+              className="input-immersive"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
               placeholder="you@example.com"
             />
           </div>
-          <div>
-            <label className="text-caption block mb-2" style={{ color: 'var(--ink-faint)' }}>密码</label>
+          <div style={{ marginBottom: 32 }}>
+            <label className="field-label">密码</label>
             <input
               type="password"
-              className="input-ink"
+              className="input-immersive"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
               placeholder="8-32 位含字母+数字"
             />
           </div>
-          <button type="submit" className="btn-engrave w-full" disabled={loading}>
+          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
             {loading ? '登录中...' : '登录'}
           </button>
+          <p style={{ marginTop: 24, textAlign: 'center' }} className="font-body">
+            还没账号？<Link to="/register" style={{ color: 'var(--cinnabar)' }}>立即注册</Link>
+          </p>
         </form>
-        <p className="mt-6 text-center font-body text-body" style={{ color: 'var(--ink-mid)' }}>
-          还没账号？<Link to="/register" style={{ color: 'var(--cinnabar)' }}>立即注册</Link>
-        </p>
       </div>
     </div>
   );
@@ -94,19 +92,17 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="parchment-bg min-h-screen">
+    <div className="immersive">
       <TopNav />
-      <div className="max-w-md mx-auto px-8 py-16">
-        <h1 className="font-display text-display-1 mb-2" style={{ color: 'var(--ink-full)' }}>注册</h1>
-        <p className="font-body text-body mb-8" style={{ color: 'var(--ink-mid)' }}>
-          创建账号开启你的 MR 音乐之旅
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="text-caption block mb-2" style={{ color: 'var(--ink-faint)' }}>昵称</label>
+      <div style={{ padding: '40px 24px', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <form onSubmit={handleSubmit} className="form-immersive">
+          <h1 className="form-title">注册</h1>
+          <p className="form-subtitle">创建账号开启你的 MR 音乐之旅</p>
+          <div style={{ marginBottom: 24 }}>
+            <label className="field-label">昵称</label>
             <input
               type="text"
-              className="input-ink"
+              className="input-immersive"
               value={nickname}
               onChange={e => setNickname(e.target.value)}
               required
@@ -114,38 +110,38 @@ export function RegisterPage() {
               placeholder="1-20 字符"
             />
           </div>
-          <div>
-            <label className="text-caption block mb-2" style={{ color: 'var(--ink-faint)' }}>邮箱</label>
+          <div style={{ marginBottom: 24 }}>
+            <label className="field-label">邮箱</label>
             <input
               type="email"
-              className="input-ink"
+              className="input-immersive"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
               placeholder="you@example.com"
             />
           </div>
-          <div>
-            <label className="text-caption block mb-2" style={{ color: 'var(--ink-faint)' }}>密码</label>
+          <div style={{ marginBottom: 32 }}>
+            <label className="field-label">密码</label>
             <input
               type="password"
-              className="input-ink"
+              className="input-immersive"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
               placeholder="8-32 位含字母+数字"
             />
-            <p className="text-caption mt-1" style={{ color: 'var(--ink-faint)' }}>
+            <p className="font-mono" style={{ fontSize: 10, opacity: 0.5, marginTop: 6, letterSpacing: '0.05em' }}>
               至少 8 位，需同时包含字母和数字
             </p>
           </div>
-          <button type="submit" className="btn-engrave w-full" disabled={loading}>
+          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
             {loading ? '注册中...' : '注册'}
           </button>
+          <p style={{ marginTop: 24, textAlign: 'center' }} className="font-body">
+            已有账号？<Link to="/login" style={{ color: 'var(--cinnabar)' }}>去登录</Link>
+          </p>
         </form>
-        <p className="mt-6 text-center font-body text-body" style={{ color: 'var(--ink-mid)' }}>
-          已有账号？<Link to="/login" style={{ color: 'var(--cinnabar)' }}>去登录</Link>
-        </p>
       </div>
     </div>
   );

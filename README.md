@@ -2,7 +2,7 @@
 
 > 画出来，就能弹 —— 画图生成虚拟键位 + 摄像头实时手部追踪 + 区域触发演奏 + 激光特效
 
-![首页](soundshape-design/test-shots/01-home.png)
+![首页](soundshape-mr/tests/screens/01-home.png)
 
 一个面向非技术用户的 Web 音乐应用。在画布上画几个形状（方块/长条/圆点），系统按形状特征自动生成虚拟音键区，叠加到摄像头画面上，用手指在空中触碰即可演奏音乐，伴随激光光晕特效。**无需安装真实乐器，无需乐器识别，画几笔就能弹。**
 
@@ -101,7 +101,7 @@ music voice/
 │   │   ├── app.js                # 全站共享脚本（路由/存储/识别/音色/键盘）
 │   │   ├── icons/                # 41 个 SVG 图标
 │   │   └── hero-product-visual-v3.jpg
-│   └── test-shots/               # 19 张测试截图
+│   └── tests/screens/            # 10 张测试截图
 ├── backend/                      # 后端（Node.js + Express + TypeScript）
 │   ├── src/
 │   │   ├── server.ts             # 入口，含 /api/health
@@ -203,13 +203,17 @@ python launcher/run_tests.py
 
 ## 截图预览
 
-| 首页 | 工作台 | 画图 | 识别结果 |
+| 首页 | 工作台导航 | 工作台空闲 | 绘制形状 |
 | :---: | :---: | :---: | :---: |
-| ![首页](soundshape-design/test-shots/01-home.png) | ![工作台](soundshape-design/test-shots/02-workbench.png) | ![画图](soundshape-design/test-shots/03-drawn-shapes.png) | ![识别](soundshape-design/test-shots/04-identified.png) |
+| ![首页](soundshape-mr/tests/screens/01-home.png) | ![工作台导航](soundshape-mr/tests/screens/02-workbench-nav.png) | ![工作台空闲](soundshape-mr/tests/screens/03-workbench-idle.png) | ![绘制](soundshape-mr/tests/screens/04-workbench-drawn.png) |
 
-| 演奏区 | 演奏中 | 已保存 | 个人中心 |
+| 模板 | 生成键位 | 摄像头 | 注册 |
 | :---: | :---: | :---: | :---: |
-| ![演奏区](soundshape-design/test-shots/06-play.png) | ![演奏中](soundshape-design/test-shots/07-played.png) | ![已保存](soundshape-design/test-shots/08-saved.png) | ![个人中心](soundshape-design/test-shots/09-profile.png) |
+| ![模板](soundshape-mr/tests/screens/05-template.png) | ![生成](soundshape-mr/tests/screens/06-generated.png) | ![摄像头](soundshape-mr/tests/screens/07-camera.png) | ![注册](soundshape-mr/tests/screens/08-register.png) |
+
+| 注册完成 | 个人中心 |
+| :---: | :---: |
+| ![注册完成](soundshape-mr/tests/screens/09-register-done.png) | ![个人中心](soundshape-mr/tests/screens/10-profile.png) |
 
 ---
 

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作台 - 声形绘 SOUND SHAPE</title>
+    <style id="theme-vars">
+/* 墨画态 / 雷霆态 Design Tokens */
+
+/* ========== INK (Light) Theme (default / :root) ========== */
+:root {
+  --background: #f3e9d2;
+  --foreground: #1a1410;
+  --card: #ede0c4;
+  --card-foreground: #1a1410;
+  --muted: #c9b896;
+  --muted-foreground: #3d3328;
+  --border: #c9b896;
+  --input: #e2d4b0;
+  --ring: #b8332a;
+  --radius: 4px;
+  --primary: #b8332a;
+  --primary-foreground: #ffffff;
+  --secondary: #a87b2c;
+  --secondary-foreground: #ffffff;
+  --accent: #4a5a6a;
+  --accent-foreground: #ffffff;
+  --destructive: #8a1f18;
+  --destructive-foreground: #ffffff;
+
+  --background-50: #f3e9d2;
+  --background-100: #ede0c4;
+  --background-200: #e2d4b0;
+  --background-300: #c9b896;
+  --background-400: #b09c7c;
+  --background-500: #9a8568;
+  --background-600: #7d6b52;
+  --background-700: #6b5d4a;
+  --background-800: #3d3328;
+  --background-900: #1a1410;
+
+  --brand-50: #f0d5d3;
+  --brand-100: #e5b0ac;
+  --brand-200: #d08a83;
+  --brand-300: #b8332a;
+  --brand-400: #b8332a;
+  --brand-500: #b8332a;
+  --brand-600: #8a1f18;
+  --brand-700: #6c1812;
+
+  --text-50: #f3e9d2;
+  --text-100: #ede0c4;
+  --text-200: #c9b896;
+  --text-300: #9a8568;
+  --text-400: #6b5d4a;
+  --text-500: #3d3328;
+  --text-600: #3d3328;
+  --text-700: #2d2318;
+  --text-800: #1a1410;
+  --text-900: #0d0a08;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+}
+
+/* ========== THUNDER (Dark) Theme ========== */
+.dark {
+  --background: #050810;
+  --foreground: #d6f7ff;
+  --card: #0a1020;
+  --card-foreground: #d6f7ff;
+  --muted: #0f1830;
+  --muted-foreground: #6a8a99;
+  --border: rgba(0, 229, 255, 0.35);
+  --input: #050810;
+  --ring: #00e5ff;
+  --radius: 0px;
+  --primary: #00e5ff;
+  --primary-foreground: #020407;
+  --secondary: #ff2bd6;
+  --secondary-foreground: #020407;
+  --accent: #ffb800;
+  --accent-foreground: #020407;
+  --destructive: #ff3366;
+  --destructive-foreground: #020407;
+
+  --background-50: #020407;
+  --background-100: #050810;
+  --background-200: #0a1020;
+  --background-300: #0f1830;
+  --background-400: #142040;
+  --background-500: #1a2850;
+  --background-600: #203060;
+  --background-700: #264070;
+  --background-800: #305090;
+  --background-900: #5070b0;
+
+  --brand-50: #e0f7ff;
+  --brand-100: #b0eaff;
+  --brand-200: #80ddff;
+  --brand-300: #00e5ff;
+  --brand-400: #00e5ff;
+  --brand-500: #00e5ff;
+  --brand-600: #00b8cc;
+  --brand-700: #008a99;
+
+  --text-50: #d6f7ff;
+  --text-100: #c0e8ff;
+  --text-200: #9ad4f0;
+  --text-300: #6a8a99;
+  --text-400: #4a6a7a;
+  --text-500: #3a5a6a;
+  --text-600: #2a4a5a;
+  --text-700: #1a3a4a;
+  --text-800: #0a2a3a;
+  --text-900: #020407;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+        <style>
+      ::-webkit-scrollbar { width: 0 !important; height: 0 !important; }
+      html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+  <!-- Scanlines -->
+  <div class="scanlines"></div>
+
+  <!-- Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="btn-theme-toggle" data-dom-id="btn-toggle-theme">墨画</button>
+
+  <!-- Page Content -->
+  <div class="page">
+
+    <!-- Top Nav -->
+    <nav class="top-nav">
+      <div class="logo">SOUND SHAPE</div>
+      <div class="nav-links">
+        <a href="home-dark.html" data-dom-id="nav-home">首页</a>
+        <a href="login-dark.html" data-dom-id="nav-login">登录</a>
+      </div>
+    </nav>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-label">STEP 1 OF 3</div>
+      <div class="step-title">DRAW SHAPE TO GENERATE KEYS</div>
+    </div>
+
+    <!-- Canvas Area -->
+    <div class="canvas-area">
+      <div class="canvas-crosshair"></div>
+      <div class="canvas-hint">
+        <span class="canvas-hint-icon">&#9998;</span>
+        在此区域绘制乐器形状<br>
+        DRAW INSTRUMENT SHAPE HERE
+      </div>
+      <div class="canvas-coords">X: 240 Y: 160</div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <button class="tool-pill active">
+        <span class="tool-pill-icon">&#9998;</span>
+        画笔 BRUSH
+      </button>
+      <button class="tool-pill">
+        <span class="tool-pill-icon">&#9632;</span>
+        直线 LINE
+      </button>
+      <button class="tool-pill">
+        <span class="tool-pill-icon">&#9675;</span>
+        圆形 CIRCLE
+      </button>
+      <button class="tool-pill">
+        <span class="tool-pill-icon">&#9654;</span>
+        橡皮 ERASER
+      </button>
+      <button class="tool-pill">
+        <span class="tool-pill-icon">&#8634;</span>
+        撤销 UNDO
+      </button>
+      <button class="tool-pill">
+        <span class="tool-pill-icon">&#10005;</span>
+        清除 CLEAR
+      </button>
+    </div>
+
+    <!-- Template Section -->
+    <div class="template-section">
+      <div class="section-label">TEMPLATES // 模板</div>
+      <div class="template-grid">
+        <div>
+          <div class="template-item piano">&#9834;</div>
+          <div class="template-label">钢琴</div>
+        </div>
+        <div>
+          <div class="template-item guitar">&#9835;</div>
+          <div class="template-label">吉他</div>
+        </div>
+        <div>
+          <div class="template-item drums">&#9837;</div>
+          <div class="template-label">鼓组</div>
+        </div>
+        <div>
+          <div class="template-item violin">&#9833;</div>
+          <div class="template-label">小提琴</div>
+        </div>
+        <div>
+          <div class="template-item flute">&#9836;</div>
+          <div class="template-label">长笛</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hint -->
+    <div class="hint-text">
+      <strong>TIP:</strong> 画出一个乐器的轮廓或形状，系统将自动识别并生成虚拟键位。<br>
+      DRAW AN INSTRUMENT OUTLINE &mdash; THE SYSTEM WILL RECOGNIZE IT AND GENERATE VIRTUAL KEYS.
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <a href="workbench-result-dark.html" class="btn-primary" data-dom-id="btn-generate">
+        GENERATE KEYS &amp; PLAY
+      </a>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span><span class="status-dot"></span>CANVAS READY</span>
+      <span>LATENCY: &lt;16ms</span>
+    </div>
+
+  </div>
+
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --th-bg: #050810;
+      --th-bg-deep: #020407;
+      --th-cyan: #00e5ff;
+      --th-magenta: #ff2bd6;
+      --th-amber: #ffb800;
+      --th-green: #39ff7a;
+      --th-line: rgba(0,229,255,.35);
+      --th-text: #d6f7ff;
+      --th-text-dim: #6a8a99;
+    }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: var(--th-bg);
+      color: var(--th-text);
+      min-height: 100vh;
+      overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;
+      border-radius: 0;
+    }
+
+    /* === Scanlines === */
+    .scanlines {
+      position: fixed; inset: 0; pointer-events: none; z-index: 2;
+      background: repeating-linear-gradient(0deg,
+        rgba(0,229,255,.06) 0, rgba(0,229,255,.06) 1px,
+        transparent 1px, transparent 3px);
+    }
+    .scanlines::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.6) 100%);
+    }
+
+    /* === Particles === */
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 3; }
+    .particle {
+      position: absolute; width: 2px; height: 2px; background: var(--th-cyan);
+      border-radius: 50%; box-shadow: 0 0 6px var(--th-cyan);
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
+    }
+    .particle:nth-child(1) { left: 12%; animation-duration: 9s; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 28%; animation-duration: 11s; animation-delay: 3s; }
+    .particle:nth-child(3) { left: 50%; animation-duration: 8s; animation-delay: 1s; }
+    .particle:nth-child(4) { left: 70%; animation-duration: 12s; animation-delay: 5s; }
+    .particle:nth-child(5) { left: 85%; animation-duration: 10s; animation-delay: 2s; }
+    .particle:nth-child(6) { left: 40%; animation-duration: 7s; animation-delay: 6s; }
+
+    /* === Layout === */
+    .page { position: relative; z-index: 1; width: 100%; padding: 0 20px; }
+
+    /* === Top Nav === */
+    .top-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid var(--th-line);
+    }
+    .top-nav .logo { font-size: 13px; color: var(--th-cyan); letter-spacing: 0.15em; }
+    .nav-links { display: flex; gap: 16px; }
+    .nav-links a {
+      color: var(--th-text-dim); text-decoration: none; font-size: 12px;
+      letter-spacing: 0.1em; text-transform: uppercase; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--th-cyan); }
+
+    /* === Theme Toggle === */
+    .btn-theme-toggle {
+      position: fixed; top: 14px; right: 14px; z-index: 10;
+      background: transparent; border: 1px solid var(--th-line); color: var(--th-text-dim);
+      font-family: 'Share Tech Mono', monospace; font-size: 11px; padding: 4px 10px;
+      letter-spacing: 0.1em; cursor: pointer; border-radius: 0;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-theme-toggle:hover { border-color: var(--th-cyan); color: var(--th-cyan); }
+
+    /* === Step Indicator === */
+    .step-indicator {
+      padding: 20px 0 16px;
+      border-bottom: 1px solid var(--th-line);
+    }
+    .step-label {
+      font-size: 10px; color: var(--th-text-dim); letter-spacing: 0.3em;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .step-title {
+      font-size: 14px; color: var(--th-cyan); letter-spacing: 0.2em;
+      text-shadow: 0 0 10px rgba(0,229,255,0.4);
+    }
+
+    /* === Canvas Area === */
+    .canvas-area {
+      position: relative; margin-top: 20px;
+      background: var(--th-bg-deep);
+      border: 2px dashed var(--th-cyan);
+      min-height: 320px;
+      overflow: hidden;
+      border-radius: 0;
+    }
+    .canvas-area::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .canvas-hint {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center; color: var(--th-text-dim);
+      font-size: 12px; letter-spacing: 0.15em;
+      z-index: 1;
+    }
+    .canvas-hint-icon {
+      font-size: 36px; color: var(--th-cyan);
+      text-shadow: 0 0 16px rgba(0,229,255,0.3);
+      margin-bottom: 12px; display: block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .canvas-crosshair {
+      position: absolute; top: 50%; left: 50%;
+      width: 40px; height: 40px;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    .canvas-crosshair::before {
+      content: ""; position: absolute; top: 50%; left: 0;
+      width: 100%; height: 1px; background: var(--th-line);
+    }
+    .canvas-crosshair::after {
+      content: ""; position: absolute; left: 50%; top: 0;
+      width: 1px; height: 100%; background: var(--th-line);
+    }
+    .canvas-coords {
+      position: absolute; bottom: 8px; right: 12px;
+      font-size: 10px; color: var(--th-text-dim);
+      letter-spacing: 0.1em; z-index: 1;
+    }
+
+    /* === Toolbar === */
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 20px; padding: 16px 0;
+    }
+    .tool-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px;
+      background: transparent;
+      border: 1px solid var(--th-line);
+      color: var(--th-text);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; letter-spacing: 0.15em;
+      cursor: pointer; border-radius: 0;
+      transition: border-color .2s, color .2s, box-shadow .2s;
+    }
+    .tool-pill:hover {
+      border-color: var(--th-cyan);
+      box-shadow: 0 0 8px rgba(0,229,255,0.15);
+    }
+    .tool-pill.active {
+      border-color: var(--th-cyan);
+      color: var(--th-cyan);
+      background: rgba(0,229,255,0.08);
+    }
+    .tool-pill-icon { font-size: 14px; }
+
+    /* === Template Section === */
+    .template-section { margin-top: 20px; }
+    .section-label {
+      font-size: 11px; letter-spacing: 0.3em; color: var(--th-cyan);
+      text-transform: uppercase; margin-bottom: 12px;
+      padding-bottom: 6px; border-bottom: 1px solid var(--th-line);
+    }
+    .template-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    }
+    .template-item {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      background: rgba(0,229,255,0.03);
+      border: 1px solid var(--th-line);
+      font-size: 20px;
+      cursor: pointer; border-radius: 0;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .template-item:hover {
+      border-color: var(--th-cyan);
+      box-shadow: 0 0 10px rgba(0,229,255,0.15);
+    }
+    .template-item.piano { color: #00B4FF; }
+    .template-item.guitar { color: #FF6B35; }
+    .template-item.drums { color: #B829FF; }
+    .template-item.violin { color: #FFCC33; }
+    .template-item.flute { color: #00FFA3; }
+    .template-label {
+      text-align: center; font-size: 9px; color: var(--th-text-dim);
+      letter-spacing: 0.1em; margin-top: 4px;
+    }
+
+    /* === Hint === */
+    .hint-text {
+      margin-top: 24px; padding: 12px 16px;
+      background: rgba(0,229,255,0.04);
+      border-left: 2px solid var(--th-cyan);
+      border-radius: 0;
+      font-size: 12px; color: var(--th-text-dim);
+      line-height: 1.6; letter-spacing: 0.05em;
+    }
+    .hint-text strong { color: var(--th-cyan); }
+
+    /* === CTA === */
+    .cta-section { margin: 24px 0 40px; }
+    .btn-primary {
+      display: block; width: 100%; padding: 18px;
+      background: var(--th-cyan); color: var(--th-bg-deep);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px; letter-spacing: 0.2em;
+      text-transform: uppercase; text-decoration: none;
+      border: none; border-radius: 0; cursor: pointer;
+      transition: box-shadow .2s;
+    }
+    .btn-primary:hover { box-shadow: 0 0 30px rgba(0,229,255,0.5); }
+
+    /* === Status Bar === */
+    .status-bar {
+      display: flex; justify-content: space-between;
+      padding: 8px 0; margin-top: 8px;
+      border-top: 1px solid var(--th-line);
+      font-size: 10px; color: var(--th-text-dim);
+      letter-spacing: 0.1em;
+    }
+    .status-dot {
+      display: inline-block; width: 6px; height: 6px;
+      background: var(--th-green); margin-right: 4px;
+      box-shadow: 0 0 4px var(--th-green);
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</body>
+</html>
+
+

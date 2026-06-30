@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>声形绘 - 演奏区</title>
+    <style id="theme-vars">
+/* 墨画态 / 雷霆态 Design Tokens */
+
+/* ========== INK (Light) Theme (default / :root) ========== */
+:root {
+  --background: #f3e9d2;
+  --foreground: #1a1410;
+  --card: #ede0c4;
+  --card-foreground: #1a1410;
+  --muted: #c9b896;
+  --muted-foreground: #3d3328;
+  --border: #c9b896;
+  --input: #e2d4b0;
+  --ring: #b8332a;
+  --radius: 4px;
+  --primary: #b8332a;
+  --primary-foreground: #ffffff;
+  --secondary: #a87b2c;
+  --secondary-foreground: #ffffff;
+  --accent: #4a5a6a;
+  --accent-foreground: #ffffff;
+  --destructive: #8a1f18;
+  --destructive-foreground: #ffffff;
+
+  --background-50: #f3e9d2;
+  --background-100: #ede0c4;
+  --background-200: #e2d4b0;
+  --background-300: #c9b896;
+  --background-400: #b09c7c;
+  --background-500: #9a8568;
+  --background-600: #7d6b52;
+  --background-700: #6b5d4a;
+  --background-800: #3d3328;
+  --background-900: #1a1410;
+
+  --brand-50: #f0d5d3;
+  --brand-100: #e5b0ac;
+  --brand-200: #d08a83;
+  --brand-300: #b8332a;
+  --brand-400: #b8332a;
+  --brand-500: #b8332a;
+  --brand-600: #8a1f18;
+  --brand-700: #6c1812;
+
+  --text-50: #f3e9d2;
+  --text-100: #ede0c4;
+  --text-200: #c9b896;
+  --text-300: #9a8568;
+  --text-400: #6b5d4a;
+  --text-500: #3d3328;
+  --text-600: #3d3328;
+  --text-700: #2d2318;
+  --text-800: #1a1410;
+  --text-900: #0d0a08;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+}
+
+/* ========== THUNDER (Dark) Theme ========== */
+.dark {
+  --background: #050810;
+  --foreground: #d6f7ff;
+  --card: #0a1020;
+  --card-foreground: #d6f7ff;
+  --muted: #0f1830;
+  --muted-foreground: #6a8a99;
+  --border: rgba(0, 229, 255, 0.35);
+  --input: #050810;
+  --ring: #00e5ff;
+  --radius: 0px;
+  --primary: #00e5ff;
+  --primary-foreground: #020407;
+  --secondary: #ff2bd6;
+  --secondary-foreground: #020407;
+  --accent: #ffb800;
+  --accent-foreground: #020407;
+  --destructive: #ff3366;
+  --destructive-foreground: #020407;
+
+  --background-50: #020407;
+  --background-100: #050810;
+  --background-200: #0a1020;
+  --background-300: #0f1830;
+  --background-400: #142040;
+  --background-500: #1a2850;
+  --background-600: #203060;
+  --background-700: #264070;
+  --background-800: #305090;
+  --background-900: #5070b0;
+
+  --brand-50: #e0f7ff;
+  --brand-100: #b0eaff;
+  --brand-200: #80ddff;
+  --brand-300: #00e5ff;
+  --brand-400: #00e5ff;
+  --brand-500: #00e5ff;
+  --brand-600: #00b8cc;
+  --brand-700: #008a99;
+
+  --text-50: #d6f7ff;
+  --text-100: #c0e8ff;
+  --text-200: #9ad4f0;
+  --text-300: #6a8a99;
+  --text-400: #4a6a7a;
+  --text-500: #3a5a6a;
+  --text-600: #2a4a5a;
+  --text-700: #1a3a4a;
+  --text-800: #0a2a3a;
+  --text-900: #020407;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+        <style>
+      ::-webkit-scrollbar { width: 0 !important; height: 0 !important; }
+      html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+  <div class="scanline-overlay"></div>
+  <div class="page-content">
+    <!-- Top Bar -->
+    <nav class="top-bar">
+      <div class="top-bar-left">
+        <a href="workbench-result.html" class="btn-back" data-dom-id="btn-back-workbench">← 返回工作台</a>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <a href="home.html" class="btn-finish" data-dom-id="btn-finish">完成</a>
+        <button class="btn-toggle-theme" data-dom-id="btn-toggle-theme">雷霆</button>
+      </div>
+    </nav>
+
+    <!-- Camera Viewport -->
+    <div class="viewport">
+      <!-- Corner Brackets -->
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+
+      <!-- HUD -->
+      <div class="hud">
+        <div class="hud-row">
+          <span class="hud-label">状态</span>
+          <span class="hud-status tracking">HAND TRACKED</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-label">手指</span>
+          <span class="hud-value">FINGER → D4</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-label">延迟</span>
+          <span class="hud-value">LATENCY 38ms</span>
+        </div>
+      </div>
+
+      <!-- Hand Skeleton SVG -->
+      <svg class="hand-skeleton" width="120" height="160" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Wrist -->
+        <circle cx="60" cy="140" r="6" stroke="rgba(0,229,255,0.6)" stroke-width="1.5" fill="none"/>
+        <!-- Palm -->
+        <line x1="60" y1="134" x2="60" y2="90" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <line x1="60" y1="120" x2="35" y2="100" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <line x1="60" y1="120" x2="85" y2="100" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <!-- Thumb -->
+        <line x1="35" y1="100" x2="20" y2="70" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <circle cx="20" cy="70" r="4" stroke="rgba(0,229,255,0.6)" stroke-width="1.5" fill="none"/>
+        <!-- Index -->
+        <line x1="60" y1="90" x2="45" y2="35" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <circle cx="45" cy="35" r="4" stroke="rgba(0,229,255,0.6)" stroke-width="1.5" fill="none"/>
+        <!-- Middle -->
+        <line x1="60" y1="90" x2="60" y2="20" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <circle cx="60" cy="20" r="4" stroke="rgba(0,229,255,0.6)" stroke-width="1.5" fill="none"/>
+        <!-- Ring -->
+        <line x1="60" y1="90" x2="75" y2="30" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <circle cx="75" cy="30" r="4" stroke="rgba(0,229,255,0.6)" stroke-width="1.5" fill="none"/>
+        <!-- Pinky -->
+        <line x1="85" y1="100" x2="95" y2="55" stroke="rgba(0,229,255,0.5)" stroke-width="1.5"/>
+        <circle cx="95" cy="55" r="4" stroke="rgba(0,229,255,0.6)" stroke-width="1.5" fill="none"/>
+        <!-- Palm joints -->
+        <circle cx="35" cy="100" r="3" stroke="rgba(0,229,255,0.4)" stroke-width="1" fill="none"/>
+        <circle cx="85" cy="100" r="3" stroke="rgba(0,229,255,0.4)" stroke-width="1" fill="none"/>
+        <circle cx="60" cy="90" r="4" stroke="rgba(0,229,255,0.5)" stroke-width="1.5" fill="none"/>
+      </svg>
+
+      <!-- Holographic Piano Keys -->
+      <div class="holo-keys">
+        <div class="holo-key"><span class="holo-key-label">C</span></div>
+        <div class="holo-key black"></div>
+        <div class="holo-key"><span class="holo-key-label">D</span></div>
+        <div class="holo-key black"></div>
+        <div class="holo-key active"><span class="holo-key-label">E</span></div>
+        <div class="holo-key"><span class="holo-key-label">F</span></div>
+        <div class="holo-key black"></div>
+        <div class="holo-key"><span class="holo-key-label">G</span></div>
+        <div class="holo-key black"></div>
+        <div class="holo-key"><span class="holo-key-label">A</span></div>
+        <div class="holo-key black"></div>
+        <div class="holo-key"><span class="holo-key-label">B</span></div>
+        <div class="holo-key"><span class="holo-key-label">C</span></div>
+      </div>
+    </div>
+
+    <!-- Bottom Control Panel -->
+    <div class="control-panel">
+      <div class="control-row">
+        <span class="control-label">灵敏度</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <input type="range" class="range-slider" min="1" max="100" value="65">
+          <span class="control-value">65%</span>
+        </div>
+      </div>
+      <div class="control-row">
+        <span class="control-label">手部骨架</span>
+        <div class="toggle-switch on"></div>
+      </div>
+      <div class="control-row">
+        <span class="control-label">音量</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <input type="range" class="range-slider" min="0" max="100" value="80">
+          <span class="control-value">80%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Section -->
+    <div class="save-section">
+      <button class="btn-save">保存演奏</button>
+    </div>
+  </div>
+
+    <style>
+    :root {
+      --ink-cinnabar: #b8332a;
+      --ink-cinnabar-deep: #8a1f18;
+      --ink-ink: #1a1410;
+      --ink-ink-soft: #3d3328;
+      --ink-paper: #f3e9d2;
+      --ink-paper-edge: #e2d4b0;
+      --dark-bg: #0a0f1a;
+      --dark-surface: #111827;
+      --cyan: rgba(0,229,255,0.4);
+      --cyan-solid: #00e5ff;
+      --cyan-dim: rgba(0,229,255,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Serif SC', serif;
+      background: var(--dark-bg);
+      color: #c8d6e5;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .font-display { font-family: 'Ma Shan Zheng', cursive; }
+    .font-seal { font-family: 'ZCOOL QingKe HuangYou', cursive; letter-spacing: 0.3em; }
+
+    /* Scanline overlay */
+    .scanline-overlay {
+      position: fixed; inset: 0; pointer-events: none; z-index: 3; opacity: 0.08;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,229,255,0.1) 2px, rgba(0,229,255,0.1) 4px
+      );
+    }
+
+    .page-content { position: relative; z-index: 2; width: 100%; padding: 0 16px; }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid var(--cyan);
+    }
+    .top-bar-left { display: flex; gap: 10px; align-items: center; }
+    .btn-back {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 12px;
+      letter-spacing: 0.2em; color: var(--cyan-solid);
+      background: transparent; border: 1px solid var(--cyan);
+      padding: 6px 14px; border-radius: 3px; cursor: pointer;
+      transition: all 0.3s; text-decoration: none;
+    }
+    .btn-back:hover { background: var(--cyan-dim); }
+    .btn-finish {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 12px;
+      letter-spacing: 0.2em; color: #fff;
+      background: var(--ink-cinnabar); border: 1px solid var(--ink-cinnabar);
+      padding: 6px 14px; border-radius: 3px; cursor: pointer;
+      transition: all 0.3s; text-decoration: none;
+    }
+    .btn-finish:hover { background: var(--ink-cinnabar-deep); }
+    .btn-toggle-theme {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 11px;
+      letter-spacing: 0.2em; padding: 4px 12px; border-radius: 20px;
+      border: 1.5px solid var(--ink-cinnabar); color: var(--ink-cinnabar);
+      background: transparent; cursor: pointer; transition: all 0.3s;
+    }
+    .btn-toggle-theme:hover { background: var(--ink-cinnabar); color: #fff; }
+
+    /* Camera Viewport */
+    .viewport {
+      width: 100%; aspect-ratio: 16/9;
+      background: #060b14;
+      border: 1px solid var(--cyan);
+      border-radius: 4px;
+      position: relative; overflow: hidden;
+      margin: 16px 0;
+    }
+    .viewport::before {
+      content: ''; position: absolute; inset: 0; z-index: 1; opacity: 0.04;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 1px,
+        rgba(0,229,255,0.3) 1px, rgba(0,229,255,0.3) 2px
+      );
+    }
+    /* Corner brackets */
+    .corner { position: absolute; width: 20px; height: 20px; z-index: 2; }
+    .corner::before, .corner::after { content: ''; position: absolute; background: var(--cyan-solid); }
+    .corner-tl { top: 8px; left: 8px; }
+    .corner-tl::before { width: 20px; height: 1px; top: 0; left: 0; }
+    .corner-tl::after { width: 1px; height: 20px; top: 0; left: 0; }
+    .corner-tr { top: 8px; right: 8px; }
+    .corner-tr::before { width: 20px; height: 1px; top: 0; right: 0; }
+    .corner-tr::after { width: 1px; height: 20px; top: 0; right: 0; }
+    .corner-bl { bottom: 8px; left: 8px; }
+    .corner-bl::before { width: 20px; height: 1px; bottom: 0; left: 0; }
+    .corner-bl::after { width: 1px; height: 20px; bottom: 0; left: 0; }
+    .corner-br { bottom: 8px; right: 8px; }
+    .corner-br::before { width: 20px; height: 1px; bottom: 0; right: 0; }
+    .corner-br::after { width: 1px; height: 20px; bottom: 0; right: 0; }
+
+    /* Holographic Piano Keys Overlay */
+    .holo-keys {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 4px; z-index: 3;
+    }
+    .holo-key {
+      width: 36px; height: 80px;
+      border: 1px solid var(--cyan); border-radius: 2px;
+      background: rgba(0,229,255,0.05);
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 6px; transition: all 0.15s;
+    }
+    .holo-key.active {
+      background: rgba(0,229,255,0.2);
+      box-shadow: 0 0 12px rgba(0,229,255,0.4);
+      border-color: var(--cyan-solid);
+    }
+    .holo-key-label {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 10px;
+      color: var(--cyan-solid); opacity: 0.8;
+    }
+    .holo-key.black { height: 50px; width: 24px; background: rgba(0,229,255,0.1); }
+
+    /* Hand Skeleton SVG hint */
+    .hand-skeleton {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-60%);
+      z-index: 3; opacity: 0.6;
+    }
+
+    /* HUD Overlay */
+    .hud {
+      position: absolute; top: 12px; left: 12px; right: 12px;
+      z-index: 4; display: flex; flex-direction: column; gap: 6px;
+    }
+    .hud-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 11px;
+      letter-spacing: 0.15em;
+    }
+    .hud-label { color: var(--cyan-solid); opacity: 0.7; }
+    .hud-value { color: var(--cyan-solid); }
+    .hud-status {
+      display: inline-block; padding: 2px 10px; border: 1px solid var(--cyan-solid);
+      border-radius: 2px; font-size: 10px; letter-spacing: 0.2em;
+      background: rgba(0,229,255,0.1);
+    }
+    .hud-status.tracking { animation: pulse-status 2s ease-in-out infinite; }
+    @keyframes pulse-status {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Bottom Control Panel */
+    .control-panel {
+      background: var(--dark-surface);
+      border: 1px solid var(--cyan);
+      border-radius: 4px; padding: 16px; margin-top: 8px;
+      position: relative;
+    }
+    .control-panel::after {
+      content: ''; position: absolute; inset: 3px;
+      border: 1px dashed rgba(0,229,255,0.2); pointer-events: none;
+      border-radius: 2px;
+    }
+    .control-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; border-bottom: 1px solid rgba(0,229,255,0.1);
+    }
+    .control-row:last-child { border-bottom: none; }
+    .control-label {
+      font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 11px;
+      letter-spacing: 0.2em; color: var(--cyan-solid); opacity: 0.8;
+    }
+    .control-value {
+      font-family: 'Noto Serif SC', serif; font-size: 12px; color: #c8d6e5;
+    }
+
+    /* Range Slider */
+    .range-slider {
+      -webkit-appearance: none; appearance: none;
+      width: 140px; height: 4px; background: rgba(0,229,255,0.2);
+      border-radius: 2px; outline: none;
+    }
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 16px; height: 16px; background: var(--cyan-solid);
+      border-radius: 50%; cursor: pointer;
+      box-shadow: 0 0 8px rgba(0,229,255,0.5);
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      width: 40px; height: 22px; background: rgba(0,229,255,0.15);
+      border: 1px solid var(--cyan); border-radius: 11px;
+      position: relative; cursor: pointer; transition: all 0.3s;
+    }
+    .toggle-switch.on { background: rgba(0,229,255,0.3); }
+    .toggle-switch::after {
+      content: ''; position: absolute; top: 2px; left: 2px;
+      width: 16px; height: 16px; background: var(--cyan-solid);
+      border-radius: 50%; transition: all 0.3s;
+    }
+    .toggle-switch.on::after { left: 20px; }
+
+    /* Save Button */
+    .save-section { padding: 16px 0; text-align: center; }
+    .btn-save {
+      font-family: 'Ma Shan Zheng', cursive; font-size: 18px;
+      letter-spacing: 0.15em; background: var(--ink-cinnabar); color: #fff;
+      border: none; border-radius: 4px; padding: 12px 48px;
+      cursor: pointer; transition: all 0.3s; width: 100%;
+    }
+    .btn-save:hover {
+      background: var(--ink-cinnabar-deep); transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(184,51,42,0.4);
+    }
+  </style>
+</body>
+</html>
+
+

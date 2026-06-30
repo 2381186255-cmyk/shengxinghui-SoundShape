@@ -8,7 +8,6 @@ import type { User, UserSettings, PlayRecord, TuningRecord } from './types';
 const TOKEN_KEY = 'soundshape_token';
 const SETTINGS_KEY = 'soundshape_settings';
 const PENDING_RECORD_KEY = 'soundshape_pending_record';
-const VISITED_KEY = 'soundshape_visited';
 const ACCOUNTS_KEY = 'soundshape_accounts';  // mock 用
 const RECORDS_KEY = 'soundshape_records';
 const TUNINGS_KEY = 'soundshape_tunings';
@@ -236,16 +235,5 @@ export const pendingStore = {
   },
   clear(): void {
     lsRemove(PENDING_RECORD_KEY);
-  },
-};
-
-// ========== 首次访问标记（教学引导用） ==========
-
-export const visitedStore = {
-  isVisited(): boolean {
-    return lsGet<boolean>(VISITED_KEY, false);
-  },
-  markVisited(): void {
-    lsSet(VISITED_KEY, true);
   },
 };

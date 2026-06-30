@@ -1,5 +1,5 @@
-// @mode: ink
-// 顶部导航栏 - 墨绘态
+// @mode: ink|thunder
+// 顶部导航栏 - 沉浸式双态
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../lib/store';
@@ -18,37 +18,31 @@ export function TopNav() {
   };
 
   return (
-    <header className="topbar parchment-bg" style={{ borderBottom: '1px solid var(--gold-faint)' }}>
-      <Link to="/" className="flex items-center gap-3 no-underline">
-        <span className="cinnabar-seal" style={{ width: 36, height: 36, fontSize: 16 }}>声</span>
-        <span className="font-display text-display-2" style={{ color: 'var(--ink-full)' }}>
-          SoundShape
+    <header className="topbar-immersive">
+      <Link to="/" className="brand-seal no-underline">
+        <span className="brand-seal-icon">声</span>
+        <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <span className="font-display" style={{ fontSize: 20, fontWeight: 600, lineHeight: 1 }}>
+            SoundShape
+          </span>
+          <span className="font-mono" style={{ fontSize: 10, opacity: 0.5, letterSpacing: '0.15em' }}>
+            MR · v2
+          </span>
         </span>
-        <span className="text-caption" style={{ color: 'var(--ink-faint)' }}>墨绘符印 · 雷霆唤声</span>
       </Link>
 
-      <nav className="flex items-center gap-6">
-        <Link to="/" className="font-body text-body no-underline" style={{ color: 'var(--ink-mid)' }}>
-          首页
-        </Link>
-        <Link to="/workbench" className="font-body text-body no-underline" style={{ color: 'var(--ink-mid)' }}>
-          工作台
-        </Link>
+      <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <Link to="/" className="nav-link no-underline">首页</Link>
+        <Link to="/workbench" className="nav-link no-underline">工作台</Link>
         {isAuthenticated ? (
           <>
-            <Link to="/profile" className="font-body text-body no-underline" style={{ color: 'var(--ink-mid)' }}>
-              {user?.nickname || '个人中心'}
-            </Link>
-            <button onClick={handleLogout} className="btn-engrave" style={{ padding: '8px 16px', fontSize: 13 }}>
-              退出
-            </button>
+            <Link to="/profile" className="nav-link no-underline">{user?.nickname || '个人中心'}</Link>
+            <button onClick={handleLogout} className="nav-link" style={{ color: 'var(--cinnabar)' }}>退出</button>
           </>
         ) : (
           <>
-            <Link to="/login" className="font-body text-body no-underline" style={{ color: 'var(--ink-mid)' }}>
-              登录
-            </Link>
-            <Link to="/register" className="btn-engrave no-underline" style={{ padding: '8px 16px', fontSize: 13, display: 'inline-block' }}>
+            <Link to="/login" className="nav-link no-underline">登录</Link>
+            <Link to="/register" className="btn-primary no-underline" style={{ padding: '8px 20px', fontSize: 13, marginLeft: 8 }}>
               注册
             </Link>
           </>

@@ -2,6 +2,9 @@
  * 字体引入 - Google Fonts @import（7.3）
  * 严格白名单：Cormorant Garamond / Spectral / JetBrains Mono / Noto Serif SC
  * 禁止：Inter / Roboto / Arial / system-ui / Space Grotesk / Geist
+ *
+ * 注：@import 放在文件开头，配合 tokens.css 中的 fallback 字体栈
+ * 网络不可用时自动降级到 Serif/Monospace 系统字体
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap');

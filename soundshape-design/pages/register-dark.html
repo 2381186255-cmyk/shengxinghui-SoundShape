@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 声形绘 SOUND SHAPE</title>
+    <style id="theme-vars">
+/* 墨画态 / 雷霆态 Design Tokens */
+
+/* ========== INK (Light) Theme (default / :root) ========== */
+:root {
+  --background: #f3e9d2;
+  --foreground: #1a1410;
+  --card: #ede0c4;
+  --card-foreground: #1a1410;
+  --muted: #c9b896;
+  --muted-foreground: #3d3328;
+  --border: #c9b896;
+  --input: #e2d4b0;
+  --ring: #b8332a;
+  --radius: 4px;
+  --primary: #b8332a;
+  --primary-foreground: #ffffff;
+  --secondary: #a87b2c;
+  --secondary-foreground: #ffffff;
+  --accent: #4a5a6a;
+  --accent-foreground: #ffffff;
+  --destructive: #8a1f18;
+  --destructive-foreground: #ffffff;
+
+  --background-50: #f3e9d2;
+  --background-100: #ede0c4;
+  --background-200: #e2d4b0;
+  --background-300: #c9b896;
+  --background-400: #b09c7c;
+  --background-500: #9a8568;
+  --background-600: #7d6b52;
+  --background-700: #6b5d4a;
+  --background-800: #3d3328;
+  --background-900: #1a1410;
+
+  --brand-50: #f0d5d3;
+  --brand-100: #e5b0ac;
+  --brand-200: #d08a83;
+  --brand-300: #b8332a;
+  --brand-400: #b8332a;
+  --brand-500: #b8332a;
+  --brand-600: #8a1f18;
+  --brand-700: #6c1812;
+
+  --text-50: #f3e9d2;
+  --text-100: #ede0c4;
+  --text-200: #c9b896;
+  --text-300: #9a8568;
+  --text-400: #6b5d4a;
+  --text-500: #3d3328;
+  --text-600: #3d3328;
+  --text-700: #2d2318;
+  --text-800: #1a1410;
+  --text-900: #0d0a08;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+}
+
+/* ========== THUNDER (Dark) Theme ========== */
+.dark {
+  --background: #050810;
+  --foreground: #d6f7ff;
+  --card: #0a1020;
+  --card-foreground: #d6f7ff;
+  --muted: #0f1830;
+  --muted-foreground: #6a8a99;
+  --border: rgba(0, 229, 255, 0.35);
+  --input: #050810;
+  --ring: #00e5ff;
+  --radius: 0px;
+  --primary: #00e5ff;
+  --primary-foreground: #020407;
+  --secondary: #ff2bd6;
+  --secondary-foreground: #020407;
+  --accent: #ffb800;
+  --accent-foreground: #020407;
+  --destructive: #ff3366;
+  --destructive-foreground: #020407;
+
+  --background-50: #020407;
+  --background-100: #050810;
+  --background-200: #0a1020;
+  --background-300: #0f1830;
+  --background-400: #142040;
+  --background-500: #1a2850;
+  --background-600: #203060;
+  --background-700: #264070;
+  --background-800: #305090;
+  --background-900: #5070b0;
+
+  --brand-50: #e0f7ff;
+  --brand-100: #b0eaff;
+  --brand-200: #80ddff;
+  --brand-300: #00e5ff;
+  --brand-400: #00e5ff;
+  --brand-500: #00e5ff;
+  --brand-600: #00b8cc;
+  --brand-700: #008a99;
+
+  --text-50: #d6f7ff;
+  --text-100: #c0e8ff;
+  --text-200: #9ad4f0;
+  --text-300: #6a8a99;
+  --text-400: #4a6a7a;
+  --text-500: #3a5a6a;
+  --text-600: #2a4a5a;
+  --text-700: #1a3a4a;
+  --text-800: #0a2a3a;
+  --text-900: #020407;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+        <style>
+      ::-webkit-scrollbar { width: 0 !important; height: 0 !important; }
+      html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+  <!-- Scanlines -->
+  <div class="scanlines"></div>
+
+  <!-- Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="btn-theme-toggle" data-dom-id="btn-toggle-theme">墨画</button>
+
+  <!-- Register Card -->
+  <div class="register-card">
+    <!-- Corners -->
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <!-- Logo -->
+    <div class="logo-section">
+      <div class="logo-text">SOUND SHAPE</div>
+      <div class="logo-sub">create account</div>
+      <div class="logo-divider"></div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-group">
+      <label class="form-label">NICKNAME // 昵称</label>
+      <input class="form-input" type="text" placeholder="your_name">
+      <div class="form-error">NICKNAME REQUIRED</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">EMAIL // 邮箱</label>
+      <input class="form-input" type="email" placeholder="user@example.com">
+      <div class="form-error">INVALID EMAIL FORMAT</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">PASSWORD // 密码</label>
+      <input class="form-input" type="password" placeholder="********">
+      <div class="pw-strength">
+        <div class="pw-bar active"></div>
+        <div class="pw-bar active"></div>
+        <div class="pw-bar warn"></div>
+        <div class="pw-bar"></div>
+      </div>
+      <div class="pw-label">STRENGTH: MEDIUM</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">CONFIRM PASSWORD // 确认密码</label>
+      <input class="form-input" type="password" placeholder="********">
+      <div class="form-error">PASSWORDS DO NOT MATCH</div>
+    </div>
+
+    <!-- Agreement -->
+    <div class="agreement">
+      注册即表示你同意 <a href="#">用户协议</a> 和 <a href="#">隐私政策</a><br>
+      BY REGISTERING YOU AGREE TO THE <a href="#">TERMS</a> AND <a href="#">PRIVACY POLICY</a>
+    </div>
+
+    <!-- Submit -->
+    <button class="btn-primary" data-dom-id="register-success">REGISTER</button>
+
+    <!-- Login Link -->
+    <a href="login-dark.html" class="form-link" data-dom-id="nav-login">
+      HAVE ACCOUNT? <span>LOGIN</span>
+    </a>
+  </div>
+
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --th-bg: #050810;
+      --th-bg-deep: #020407;
+      --th-cyan: #00e5ff;
+      --th-magenta: #ff2bd6;
+      --th-amber: #ffb800;
+      --th-green: #39ff7a;
+      --th-line: rgba(0,229,255,.35);
+      --th-text: #d6f7ff;
+      --th-text-dim: #6a8a99;
+    }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: var(--th-bg);
+      color: var(--th-text);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;
+      border-radius: 0;
+    }
+
+    /* === Scanlines === */
+    .scanlines {
+      position: fixed; inset: 0; pointer-events: none; z-index: 2;
+      background: repeating-linear-gradient(0deg,
+        rgba(0,229,255,.06) 0, rgba(0,229,255,.06) 1px,
+        transparent 1px, transparent 3px);
+    }
+    .scanlines::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.6) 100%);
+    }
+
+    /* === Particles === */
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 3; }
+    .particle {
+      position: absolute; width: 2px; height: 2px; background: var(--th-cyan);
+      border-radius: 50%; box-shadow: 0 0 6px var(--th-cyan);
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
+    }
+    .particle:nth-child(1) { left: 10%; animation-duration: 9s; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 30%; animation-duration: 12s; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 50%; animation-duration: 8s; animation-delay: 5s; }
+    .particle:nth-child(4) { left: 68%; animation-duration: 11s; animation-delay: 1s; }
+    .particle:nth-child(5) { left: 85%; animation-duration: 10s; animation-delay: 3s; }
+    .particle:nth-child(6) { left: 42%; animation-duration: 7s; animation-delay: 4s; }
+
+    /* === Theme Toggle === */
+    .btn-theme-toggle {
+      position: fixed; top: 14px; right: 14px; z-index: 10;
+      background: transparent; border: 1px solid var(--th-line); color: var(--th-text-dim);
+      font-family: 'Share Tech Mono', monospace; font-size: 11px; padding: 4px 10px;
+      letter-spacing: 0.1em; cursor: pointer; border-radius: 0;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-theme-toggle:hover { border-color: var(--th-cyan); color: var(--th-cyan); }
+
+    /* === Register Card === */
+    .register-card {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 400px;
+      padding: 36px 28px 32px;
+      background: rgba(0,229,255,0.02);
+      border: 1px solid var(--th-line);
+      border-radius: 0;
+      margin: 20px;
+    }
+    .register-card::before {
+      content: ""; position: absolute; inset: 8px;
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 0; pointer-events: none;
+    }
+
+    /* === Logo === */
+    .logo-section { text-align: center; margin-bottom: 28px; }
+    .logo-text {
+      font-size: 20px; color: var(--th-cyan); letter-spacing: 0.3em;
+      text-shadow: 0 0 16px rgba(0,229,255,0.5);
+      animation: logo-flicker 5s infinite;
+    }
+    @keyframes logo-flicker {
+      0%, 95%, 100% { opacity: 1; text-shadow: 0 0 16px rgba(0,229,255,0.5); }
+      96% { opacity: 0.85; text-shadow: 0 0 4px rgba(0,229,255,0.3); }
+      97% { opacity: 1; text-shadow: 0 0 20px rgba(0,229,255,0.6); }
+      98% { opacity: 0.9; }
+    }
+    .logo-sub {
+      font-size: 11px; color: var(--th-text-dim); letter-spacing: 0.3em;
+      margin-top: 6px; text-transform: uppercase;
+    }
+    .logo-divider {
+      width: 60px; height: 1px; background: var(--th-cyan);
+      margin: 16px auto 0; opacity: 0.5;
+      box-shadow: 0 0 6px var(--th-cyan);
+    }
+
+    /* === Form === */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block; font-size: 10px; color: var(--th-text-dim);
+      letter-spacing: 0.25em; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%; padding: 12px 14px;
+      background: var(--th-bg-deep);
+      border: 1px solid var(--th-line);
+      color: var(--th-text);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px; letter-spacing: 0.1em;
+      border-radius: 0; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-input::placeholder {
+      color: var(--th-text-dim); opacity: 0.5;
+    }
+    .form-input:focus {
+      border-color: var(--th-cyan);
+      box-shadow: 0 0 12px rgba(0,229,255,0.15);
+    }
+    .form-error {
+      font-size: 11px; color: var(--th-magenta);
+      letter-spacing: 0.1em; margin-top: 4px; opacity: 0;
+    }
+
+    /* === Password Strength === */
+    .pw-strength {
+      display: flex; gap: 4px; margin-top: 8px;
+    }
+    .pw-bar {
+      flex: 1; height: 3px;
+      background: var(--th-line);
+      border-radius: 0;
+      transition: background .2s;
+    }
+    .pw-bar.active { background: var(--th-cyan); box-shadow: 0 0 4px var(--th-cyan); }
+    .pw-bar.warn { background: var(--th-amber); box-shadow: 0 0 4px var(--th-amber); }
+    .pw-bar.error { background: var(--th-magenta); box-shadow: 0 0 4px var(--th-magenta); }
+    .pw-label {
+      font-size: 9px; color: var(--th-text-dim); letter-spacing: 0.15em;
+      margin-top: 4px; text-align: right;
+    }
+
+    /* === Submit Button === */
+    .btn-primary {
+      display: block; width: 100%; padding: 16px;
+      background: var(--th-cyan); color: var(--th-bg-deep);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px; letter-spacing: 0.25em;
+      text-transform: uppercase; text-decoration: none;
+      border: none; border-radius: 0; cursor: pointer;
+      transition: box-shadow .2s; margin-top: 8px;
+    }
+    .btn-primary:hover { box-shadow: 0 0 28px rgba(0,229,255,0.5); }
+
+    /* === Links === */
+    .form-link {
+      display: block; text-align: center;
+      margin-top: 16px;
+      font-size: 12px; color: var(--th-text-dim);
+      letter-spacing: 0.15em; text-decoration: none;
+      transition: color .2s;
+    }
+    .form-link:hover { color: var(--th-cyan); }
+    .form-link span { color: var(--th-cyan); }
+
+    /* === Corner Deco === */
+    .corner { position: absolute; width: 16px; height: 16px; }
+    .corner::before, .corner::after {
+      content: ""; position: absolute;
+      background: var(--th-cyan);
+    }
+    .corner.tl { top: -1px; left: -1px; }
+    .corner.tl::before { top: 0; left: 0; width: 16px; height: 1px; }
+    .corner.tl::after { top: 0; left: 0; width: 1px; height: 16px; }
+    .corner.tr { top: -1px; right: -1px; }
+    .corner.tr::before { top: 0; right: 0; width: 16px; height: 1px; }
+    .corner.tr::after { top: 0; right: 0; width: 1px; height: 16px; }
+    .corner.bl { bottom: -1px; left: -1px; }
+    .corner.bl::before { bottom: 0; left: 0; width: 16px; height: 1px; }
+    .corner.bl::after { bottom: 0; left: 0; width: 1px; height: 16px; }
+    .corner.br { bottom: -1px; right: -1px; }
+    .corner.br::before { bottom: 0; right: 0; width: 16px; height: 1px; }
+    .corner.br::after { bottom: 0; right: 0; width: 1px; height: 16px; }
+
+    /* === Agreement === */
+    .agreement {
+      font-size: 10px; color: var(--th-text-dim);
+      letter-spacing: 0.1em; line-height: 1.6;
+      margin-top: 12px; padding: 10px;
+      border: 1px solid var(--th-line);
+      border-radius: 0;
+      background: rgba(0,229,255,0.02);
+    }
+    .agreement a { color: var(--th-cyan); text-decoration: none; }
+  </style>
+</body>
+</html>
+

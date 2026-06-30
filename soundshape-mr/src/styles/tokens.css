@@ -135,9 +135,28 @@
   --drums-holo: #B829FF;
 }
 
-/* 灵格色工具类 */
-.soul-piano { --soul-ink: var(--piano-ink); --soul-holo: var(--piano-holo); }
-.soul-guitar { --soul-ink: var(--guitar-ink); --soul-holo: var(--guitar-holo); }
-.soul-violin { --soul-ink: var(--violin-ink); --soul-holo: var(--violin-holo); }
-.soul-flute { --soul-ink: var(--flute-ink); --soul-holo: var(--flute-holo); }
-.soul-drums { --soul-ink: var(--drums-ink); --soul-holo: var(--drums-holo); }
+/* ========== 响应式字号覆盖 ========== */
+
+/* tablet 768-1279px */
+@media (max-width: 1279px) and (min-width: 768px) {
+  :root {
+    --text-hero: 61px;
+    --text-display-1: 41px;
+    --text-display-2: 27px;
+    --text-body-lg: 15px;
+    --text-body: 13px;
+  }
+}
+
+/* mobile <768px */
+@media (max-width: 767px) {
+  :root {
+    --text-hero: 48px;
+    --text-display-1: 32px;
+    --text-display-2: 22px;
+    --text-body-lg: 13px;
+    --text-body: 12px;
+    --text-caption: 10px;
+    --text-data: 12px;
+  }
+}

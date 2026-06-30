@@ -58,18 +58,6 @@ export type WorkbenchPhase =
   | 'paused'
   | 'error';
 
-// 合法状态跳转（文档 8.2）
-export const VALID_TRANSITIONS: Record<WorkbenchPhase, WorkbenchPhase[]> = {
-  idle: ['drawing', 'error'],
-  drawing: ['generating', 'idle', 'error'],
-  generating: ['camera-pending', 'error'],
-  'camera-pending': ['camera-loading', 'idle', 'error'],
-  'camera-loading': ['tracking', 'error'],
-  tracking: ['paused', 'idle', 'error'],
-  paused: ['tracking', 'idle'],
-  error: ['idle'],
-};
-
 // MediaPipe 手部数据
 export interface Landmark {
   x: number;  // 归一化 0-1

@@ -34,12 +34,12 @@ def main():
         page.wait_for_timeout(1500)
         check("首页标题渲染", "SoundShape" in page.content())
         check("墨绘态默认 data-mode=ink", page.evaluate("document.documentElement.getAttribute('data-mode')") == "ink")
-        check("羊皮纸背景类存在", page.evaluate("document.querySelector('.parchment-bg') !== null"))
+        check("沉浸式容器类存在", page.evaluate("document.querySelector('.immersive') !== null"))
         check("五枚印章渲染（琴/弦/弓/笛/鼓）", all(t in page.content() for t in ["琴", "弦", "弓", "笛", "鼓"]))
 
         # 测试 2：灵格色
         print("\n[2] 灵格色 5 乐器")
-        seals = page.locator(".cinnabar-seal.soul-seal").all()
+        seals = page.locator(".soul-glyph").all()
         check("5 个灵格印章渲染", len(seals) == 5, f"找到 {len(seals)} 个")
 
         # 测试 3：注册流程

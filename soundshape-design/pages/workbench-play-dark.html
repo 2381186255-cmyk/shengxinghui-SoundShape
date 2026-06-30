@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演奏 - 声形绘 SOUND SHAPE</title>
+    <style id="theme-vars">
+/* 墨画态 / 雷霆态 Design Tokens */
+
+/* ========== INK (Light) Theme (default / :root) ========== */
+:root {
+  --background: #f3e9d2;
+  --foreground: #1a1410;
+  --card: #ede0c4;
+  --card-foreground: #1a1410;
+  --muted: #c9b896;
+  --muted-foreground: #3d3328;
+  --border: #c9b896;
+  --input: #e2d4b0;
+  --ring: #b8332a;
+  --radius: 4px;
+  --primary: #b8332a;
+  --primary-foreground: #ffffff;
+  --secondary: #a87b2c;
+  --secondary-foreground: #ffffff;
+  --accent: #4a5a6a;
+  --accent-foreground: #ffffff;
+  --destructive: #8a1f18;
+  --destructive-foreground: #ffffff;
+
+  --background-50: #f3e9d2;
+  --background-100: #ede0c4;
+  --background-200: #e2d4b0;
+  --background-300: #c9b896;
+  --background-400: #b09c7c;
+  --background-500: #9a8568;
+  --background-600: #7d6b52;
+  --background-700: #6b5d4a;
+  --background-800: #3d3328;
+  --background-900: #1a1410;
+
+  --brand-50: #f0d5d3;
+  --brand-100: #e5b0ac;
+  --brand-200: #d08a83;
+  --brand-300: #b8332a;
+  --brand-400: #b8332a;
+  --brand-500: #b8332a;
+  --brand-600: #8a1f18;
+  --brand-700: #6c1812;
+
+  --text-50: #f3e9d2;
+  --text-100: #ede0c4;
+  --text-200: #c9b896;
+  --text-300: #9a8568;
+  --text-400: #6b5d4a;
+  --text-500: #3d3328;
+  --text-600: #3d3328;
+  --text-700: #2d2318;
+  --text-800: #1a1410;
+  --text-900: #0d0a08;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+}
+
+/* ========== THUNDER (Dark) Theme ========== */
+.dark {
+  --background: #050810;
+  --foreground: #d6f7ff;
+  --card: #0a1020;
+  --card-foreground: #d6f7ff;
+  --muted: #0f1830;
+  --muted-foreground: #6a8a99;
+  --border: rgba(0, 229, 255, 0.35);
+  --input: #050810;
+  --ring: #00e5ff;
+  --radius: 0px;
+  --primary: #00e5ff;
+  --primary-foreground: #020407;
+  --secondary: #ff2bd6;
+  --secondary-foreground: #020407;
+  --accent: #ffb800;
+  --accent-foreground: #020407;
+  --destructive: #ff3366;
+  --destructive-foreground: #020407;
+
+  --background-50: #020407;
+  --background-100: #050810;
+  --background-200: #0a1020;
+  --background-300: #0f1830;
+  --background-400: #142040;
+  --background-500: #1a2850;
+  --background-600: #203060;
+  --background-700: #264070;
+  --background-800: #305090;
+  --background-900: #5070b0;
+
+  --brand-50: #e0f7ff;
+  --brand-100: #b0eaff;
+  --brand-200: #80ddff;
+  --brand-300: #00e5ff;
+  --brand-400: #00e5ff;
+  --brand-500: #00e5ff;
+  --brand-600: #00b8cc;
+  --brand-700: #008a99;
+
+  --text-50: #d6f7ff;
+  --text-100: #c0e8ff;
+  --text-200: #9ad4f0;
+  --text-300: #6a8a99;
+  --text-400: #4a6a7a;
+  --text-500: #3a5a6a;
+  --text-600: #2a4a5a;
+  --text-700: #1a3a4a;
+  --text-800: #0a2a3a;
+  --text-900: #020407;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+        <style>
+      ::-webkit-scrollbar { width: 0 !important; height: 0 !important; }
+      html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+  <!-- Scanlines -->
+  <div class="scanlines"></div>
+
+  <!-- Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="btn-theme-toggle" data-dom-id="btn-toggle-theme">墨画</button>
+
+  <!-- Play Container -->
+  <div class="play-container">
+
+    <!-- Camera Viewport -->
+    <div class="camera-viewport">
+
+      <!-- Perspective Grid -->
+      <div class="perspective-grid"></div>
+
+      <!-- HUD -->
+      <div class="hud">
+        <div class="hud-item hand-tracked">
+          <span class="dot"></span>HAND TRACKED
+        </div>
+        <div class="hud-item finger-info">
+          FINGER &rarr; D4
+        </div>
+        <div class="hud-item latency">
+          LATENCY <span>38ms</span>
+        </div>
+      </div>
+
+      <!-- Recording Indicator -->
+      <div class="rec-indicator">
+        <div class="rec-dot"></div>
+        <div class="rec-text">REC 00:12</div>
+      </div>
+
+      <!-- Hand Skeleton SVG -->
+      <svg class="hand-skeleton" width="180" height="220" viewBox="0 0 180 220">
+        <!-- Palm -->
+        <line class="skeleton-line" x1="60" y1="140" x2="120" y2="140"/>
+        <line class="skeleton-line" x1="60" y1="140" x2="50" y2="200"/>
+        <line class="skeleton-line" x1="120" y1="140" x2="130" y2="200"/>
+        <line class="skeleton-line" x1="50" y1="200" x2="130" y2="200"/>
+        <!-- Thumb -->
+        <line class="skeleton-line" x1="60" y1="140" x2="35" y2="110"/>
+        <line class="skeleton-line" x1="35" y1="110" x2="20" y2="85"/>
+        <circle class="fingertip" cx="20" cy="85" r="3"/>
+        <!-- Index -->
+        <line class="skeleton-line" x1="70" y1="140" x2="65" y2="90"/>
+        <line class="skeleton-line" x1="65" y1="90" x2="60" y2="40"/>
+        <circle class="fingertip" cx="60" cy="40" r="3"/>
+        <!-- Middle -->
+        <line class="skeleton-line" x1="85" y1="140" x2="83" y2="80"/>
+        <line class="skeleton-line" x1="83" y1="80" x2="80" y2="25"/>
+        <circle class="fingertip" cx="80" cy="25" r="3"/>
+        <!-- Ring -->
+        <line class="skeleton-line" x1="100" y1="140" x2="100" y2="85"/>
+        <line class="skeleton-line" x1="100" y1="85" x2="98" y2="38"/>
+        <circle class="fingertip" cx="98" cy="38" r="3"/>
+        <!-- Pinky -->
+        <line class="skeleton-line" x1="115" y1="140" x2="120" y2="100"/>
+        <line class="skeleton-line" x1="120" y1="100" x2="125" y2="65"/>
+        <circle class="fingertip" cx="125" cy="65" r="3"/>
+        <!-- Joints -->
+        <circle class="skeleton-joint" cx="35" cy="110" r="2"/>
+        <circle class="skeleton-joint" cx="65" cy="90" r="2"/>
+        <circle class="skeleton-joint" cx="83" cy="80" r="2"/>
+        <circle class="skeleton-joint" cx="100" cy="85" r="2"/>
+        <circle class="skeleton-joint" cx="120" cy="100" r="2"/>
+      </svg>
+
+      <!-- Particle Burst at trigger point -->
+      <div class="burst" style="bottom: 130px; left: calc(50% + 20px);">
+        <div class="burst-particle"></div>
+        <div class="burst-particle"></div>
+        <div class="burst-particle"></div>
+        <div class="burst-particle"></div>
+        <div class="burst-particle"></div>
+        <div class="burst-particle"></div>
+      </div>
+
+      <!-- Holographic Keys -->
+      <div class="holo-keys">
+        <div class="holo-key"><span class="holo-key-note">C4</span></div>
+        <div class="holo-key holo-key-black"><span class="holo-key-note">C#</span></div>
+        <div class="holo-key"><span class="holo-key-note">D4</span></div>
+        <div class="holo-key holo-key-black"><span class="holo-key-note">D#</span></div>
+        <div class="holo-key active"><span class="holo-key-note">E4</span></div>
+        <div class="holo-key"><span class="holo-key-note">F4</span></div>
+        <div class="holo-key holo-key-black"><span class="holo-key-note">F#</span></div>
+        <div class="holo-key"><span class="holo-key-note">G4</span></div>
+        <div class="holo-key holo-key-black"><span class="holo-key-note">G#</span></div>
+        <div class="holo-key"><span class="holo-key-note">A4</span></div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="bottom-controls">
+      <div class="control-row">
+        <div class="control-label">VOLUME</div>
+        <input type="range" class="control-slider" value="75" min="0" max="100">
+        <div class="control-value">75%</div>
+      </div>
+      <div class="control-row">
+        <div class="control-label">OCTAVE</div>
+        <input type="range" class="control-slider amber" value="4" min="2" max="7">
+        <div class="control-value amber">OCT 4</div>
+      </div>
+      <div class="control-row">
+        <div class="control-label">SENS</div>
+        <input type="range" class="control-slider" value="60" min="0" max="100">
+        <div class="control-value">60%</div>
+      </div>
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <div class="bottom-bar">
+      <a href="workbench-result-dark.html" class="btn-back" data-dom-id="btn-back-workbench">&larr; BACK</a>
+      <a href="profile-dark.html" class="btn-finish" data-dom-id="btn-finish">FINISH</a>
+    </div>
+
+  </div>
+
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --th-bg: #050810;
+      --th-bg-deep: #020407;
+      --th-cyan: #00e5ff;
+      --th-magenta: #ff2bd6;
+      --th-amber: #ffb800;
+      --th-green: #39ff7a;
+      --th-line: rgba(0,229,255,.35);
+      --th-text: #d6f7ff;
+      --th-text-dim: #6a8a99;
+    }
+    html, body { font-size: 16px; height: 100%; }
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: var(--th-bg-deep);
+      color: var(--th-text);
+      overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;
+      border-radius: 0;
+    }
+
+    /* === Scanlines === */
+    .scanlines {
+      position: fixed; inset: 0; pointer-events: none; z-index: 5;
+      background: repeating-linear-gradient(0deg,
+        rgba(0,229,255,.06) 0, rgba(0,229,255,.06) 1px,
+        transparent 1px, transparent 3px);
+    }
+    .scanlines::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.6) 100%);
+    }
+
+    /* === Particles === */
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 6; }
+    .particle {
+      position: absolute; width: 2px; height: 2px; background: var(--th-cyan);
+      border-radius: 50%; box-shadow: 0 0 6px var(--th-cyan);
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
+    }
+    .particle:nth-child(1) { left: 15%; animation-duration: 8s; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 30%; animation-duration: 10s; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 55%; animation-duration: 9s; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 75%; animation-duration: 11s; animation-delay: 1s; }
+    .particle:nth-child(5) { left: 88%; animation-duration: 7s; animation-delay: 3s; }
+
+    /* === Theme Toggle === */
+    .btn-theme-toggle {
+      position: fixed; top: 14px; right: 14px; z-index: 10;
+      background: rgba(2,4,7,0.8); border: 1px solid var(--th-line); color: var(--th-text-dim);
+      font-family: 'Share Tech Mono', monospace; font-size: 11px; padding: 4px 10px;
+      letter-spacing: 0.1em; cursor: pointer; border-radius: 0;
+      transition: border-color .2s, color .2s; z-index: 20;
+    }
+    .btn-theme-toggle:hover { border-color: var(--th-cyan); color: var(--th-cyan); }
+
+    /* === Play Container === */
+    .play-container {
+      position: relative; z-index: 1;
+      width: 100%; height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* === Camera Viewport (16:9) === */
+    .camera-viewport {
+      position: relative; flex: 1;
+      background: var(--th-bg-deep);
+      border-bottom: 1px solid var(--th-line);
+      overflow: hidden;
+    }
+    .camera-viewport::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      perspective: 200px;
+    }
+
+    /* Perspective grid floor */
+    .perspective-grid {
+      position: absolute; bottom: 0; left: -20%; right: -20%;
+      height: 40%; pointer-events: none;
+      background:
+        linear-gradient(transparent 0%, rgba(0,229,255,0.06) 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0, transparent 39px,
+          rgba(0,229,255,0.08) 39px, rgba(0,229,255,0.08) 40px
+        );
+      transform: perspective(200px) rotateX(60deg);
+      transform-origin: bottom;
+    }
+
+    /* Holographic Piano Keys overlay */
+    .holo-keys {
+      position: absolute; bottom: 60px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 3px;
+      z-index: 3;
+    }
+    .holo-key {
+      width: 32px; height: 80px;
+      background: rgba(0,229,255,0.06);
+      border: 1px solid var(--th-cyan);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-end;
+      padding-bottom: 8px;
+      border-radius: 0;
+      transition: background .1s, box-shadow .1s;
+    }
+    .holo-key.active {
+      background: rgba(0,229,255,0.25);
+      box-shadow: 0 0 24px rgba(0,229,255,0.6), inset 0 0 12px rgba(0,229,255,0.3);
+      border-color: var(--th-cyan);
+    }
+    .holo-key-note { font-size: 10px; color: var(--th-cyan); }
+    .holo-key-black {
+      width: 22px; height: 50px; margin-left: -10px; margin-right: -10px;
+      background: rgba(0,229,255,0.03);
+      border-color: rgba(0,229,255,0.5);
+      z-index: 4;
+    }
+    .holo-key-black .holo-key-note { font-size: 8px; }
+
+    /* Hand Skeleton SVG */
+    .hand-skeleton {
+      position: absolute; bottom: 80px; left: 50%;
+      transform: translateX(-30%);
+      z-index: 2; opacity: 0.9;
+    }
+    .skeleton-line {
+      stroke: var(--th-cyan); stroke-width: 2;
+      fill: none; stroke-linecap: square;
+    }
+    .skeleton-joint {
+      fill: var(--th-cyan); width: 4px; height: 4px;
+    }
+    .fingertip {
+      fill: var(--th-amber); width: 6px; height: 6px;
+      filter: drop-shadow(0 0 6px var(--th-amber));
+      animation: tip-glow 1.5s ease-in-out infinite;
+    }
+    @keyframes tip-glow {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* Particle Burst */
+    .burst {
+      position: absolute; width: 30px; height: 30px;
+      z-index: 4; pointer-events: none;
+    }
+    .burst-particle {
+      position: absolute; width: 3px; height: 3px;
+      background: var(--th-cyan); border-radius: 50%;
+      box-shadow: 0 0 8px var(--th-cyan);
+      animation: burstOut 0.6s ease-out forwards;
+    }
+    .burst-particle:nth-child(1) { animation-delay: 0s; }
+    .burst-particle:nth-child(2) { animation-delay: 0.05s; }
+    .burst-particle:nth-child(3) { animation-delay: 0.1s; }
+    .burst-particle:nth-child(4) { animation-delay: 0.15s; }
+    .burst-particle:nth-child(5) { animation-delay: 0.2s; }
+    .burst-particle:nth-child(6) { animation-delay: 0.1s; }
+    @keyframes burstOut {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+    }
+    .burst-particle:nth-child(1) { --dx: -15px; --dy: -12px; }
+    .burst-particle:nth-child(2) { --dx: 12px; --dy: -15px; }
+    .burst-particle:nth-child(3) { --dx: -8px; --dy: -18px; }
+    .burst-particle:nth-child(4) { --dx: 16px; --dy: -6px; }
+    .burst-particle:nth-child(5) { --dx: 0px; --dy: -20px; }
+    .burst-particle:nth-child(6) { --dx: 10px; --dy: -14px; }
+
+    /* === HUD Overlay === */
+    .hud {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 12px 16px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      z-index: 4; pointer-events: none;
+    }
+    .hud-item {
+      font-size: 10px; letter-spacing: 0.15em;
+      padding: 6px 10px;
+      background: rgba(2,4,7,0.7);
+      border: 1px solid var(--th-line);
+      border-radius: 0;
+    }
+    .hud-item.hand-tracked {
+      color: var(--th-green);
+      border-color: var(--th-green);
+      box-shadow: 0 0 8px rgba(57,255,122,0.2);
+    }
+    .hud-item .dot {
+      display: inline-block; width: 6px; height: 6px;
+      background: var(--th-green); margin-right: 6px;
+      box-shadow: 0 0 6px var(--th-green);
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hud-item.finger-info { color: var(--th-cyan); }
+    .hud-item.latency { color: var(--th-amber); }
+    .hud-item.latency span { color: var(--th-green); }
+
+    /* === Bottom Controls === */
+    .bottom-controls {
+      position: relative; z-index: 4;
+      padding: 16px 20px 24px;
+      background: var(--th-bg);
+      border-top: 1px solid var(--th-line);
+    }
+    .control-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 12px;
+    }
+    .control-row:last-child { margin-bottom: 0; }
+    .control-label {
+      font-size: 10px; color: var(--th-text-dim);
+      letter-spacing: 0.2em; min-width: 64px;
+      text-transform: uppercase;
+    }
+    .control-slider {
+      flex: 1; -webkit-appearance: none; appearance: none;
+      height: 4px;
+      background: var(--th-line);
+      border-radius: 0; outline: none;
+      cursor: pointer;
+    }
+    .control-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 16px; height: 16px;
+      background: var(--th-cyan);
+      border: none; border-radius: 0;
+      box-shadow: 0 0 8px var(--th-cyan);
+      cursor: pointer;
+    }
+    .control-slider.amber::-webkit-slider-thumb {
+      background: var(--th-amber);
+      box-shadow: 0 0 8px var(--th-amber);
+    }
+    .control-slider.amber {
+      background: rgba(255,184,0,0.2);
+    }
+    .control-value {
+      font-size: 11px; color: var(--th-cyan);
+      min-width: 40px; text-align: right;
+      letter-spacing: 0.1em;
+    }
+    .control-value.amber { color: var(--th-amber); }
+
+    /* === Bottom Action Bar === */
+    .bottom-bar {
+      display: flex; gap: 12px; padding: 12px 20px;
+      background: var(--th-bg);
+      border-top: 1px solid var(--th-line);
+    }
+    .btn-back {
+      flex: 1; padding: 14px;
+      background: transparent; color: var(--th-cyan);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px; letter-spacing: 0.15em;
+      text-transform: uppercase; text-decoration: none;
+      border: 1px solid var(--th-cyan); border-radius: 0;
+      cursor: pointer; text-align: center;
+      transition: box-shadow .2s;
+    }
+    .btn-back:hover { box-shadow: 0 0 12px rgba(0,229,255,0.3); }
+    .btn-finish {
+      flex: 1; padding: 14px;
+      background: var(--th-cyan); color: var(--th-bg-deep);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px; letter-spacing: 0.15em;
+      text-transform: uppercase; text-decoration: none;
+      border: none; border-radius: 0;
+      cursor: pointer; text-align: center;
+      transition: box-shadow .2s;
+    }
+    .btn-finish:hover { box-shadow: 0 0 20px rgba(0,229,255,0.5); }
+
+    /* === Recording Indicator === */
+    .rec-indicator {
+      position: absolute; top: 12px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      background: rgba(255,43,214,0.15);
+      border: 1px solid var(--th-magenta);
+      border-radius: 0; z-index: 4;
+    }
+    .rec-dot {
+      width: 8px; height: 8px;
+      background: var(--th-magenta);
+      box-shadow: 0 0 8px var(--th-magenta);
+      animation: rec-blink 1s infinite;
+    }
+    @keyframes rec-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+    .rec-text {
+      font-size: 11px; color: var(--th-magenta);
+      letter-spacing: 0.2em;
+    }
+  </style>
+</body>
+</html>
+

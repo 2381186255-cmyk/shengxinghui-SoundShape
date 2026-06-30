@@ -222,23 +222,6 @@ export interface TriggerEffect {
   instrument: Instrument;
 }
 
-// 从 TriggerEvent 构建 TriggerEffect（供调用方便捷使用）
-export function createTriggerEffect(
-  event: TriggerEvent,
-  x: number,
-  y: number,
-  instrument: Instrument,
-): TriggerEffect {
-  return {
-    keyId: event.keyId,
-    note: event.note,
-    x,
-    y,
-    bornAt: event.timestamp,
-    instrument,
-  };
-}
-
 // 粒子（内部类型，L3 粒子爆发用）
 interface Particle {
   x: number;
