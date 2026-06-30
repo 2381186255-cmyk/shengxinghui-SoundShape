@@ -36,47 +36,35 @@
 
 ---
 
-## 快速开始（小白一键启动）
+## 快速开始（一键启动）
 
-### 方式一：双击启动器（推荐）
+### 前置准备
 
-1. 下载本项目到本地并解压
-2. 安装 [Python 3.10+](https://www.python.org/downloads/)（安装时勾选 **Add Python to PATH**）
-3. 双击 `启动器.bat`
-4. 选 `1` 启动前端服务，浏览器自动打开首页
-5. 体验流程：**首页 → 工作台 → 画形状 → 识别 → 演奏 → 保存**
+- [Node.js 18+](https://nodejs.org/)（必装）
+- 后端（可选）：PostgreSQL 16+ 或 Supabase 免费档
 
-> 此模式为纯前端，所有数据保存在浏览器 localStorage，刷新不丢失，换浏览器/清缓存会丢失。
+### 一键启动
 
-### 方式二：完整模式（含后端 + 数据库）
+双击 `start.bat`，启动器会自动：
 
-适合需要云端账号、跨设备同步演奏记录的场景。
+1. 检测并安装前端依赖
+2. 启动前端 Vite 开发服务器（端口 5173，新窗口）
+3. 若 `backend/.env` 存在，启动后端 Express（端口 8787，新窗口）
+4. 打开浏览器访问 http://localhost:5173/
+
+启动后会有两个窗口分别显示前后端日志，关闭窗口即停止服务。
+
+### 启用后端（可选）
 
 ```bash
-# 1. 准备 PostgreSQL（本地安装 或 注册 Supabase 免费）
-# 2. 配置后端环境
 cd backend
 copy .env.example .env
 # 编辑 .env 填入 DATABASE_URL 和 JWT_SECRET
 npm install
 npm run migrate    # 建表
-
-# 3. 双击 启动器.bat 选 [2]，或分别启动：
-npm run dev        # 后端 :8787
-# 新开终端
-cd ..
-python launcher/server.py --port 8000   # 前端 :8000
 ```
 
-### 启动器菜单
-
-| 选项 | 作用 |
-| --- | --- |
-| `[1]` | 启动前端服务（端口 8000），自动开浏览器 |
-| `[2]` | 启动完整模式（前端 :8000 + 后端 :8787） |
-| `[3]` | 运行自动化测试（86 项验收清单） |
-| `[4]` | 停止所有本地服务 |
-| `[5]` | 查看使用说明 |
+配置完成后再次双击 `start.bat`，后端会自动启动。
 
 ---
 
@@ -84,24 +72,18 @@ python launcher/server.py --port 8000   # 前端 :8000
 
 ```
 music voice/
-├── 启动器.bat                    # 双击启动入口（菜单式）
-├── launcher/                     # 快捷启动器
-│   ├── server.py                 # Python 零依赖静态服务器
-│   └── run_tests.py              # 自动化测试脚本（86 项）
-├── soundshape-design/            # 前端（纯静态 HTML/JS）
-│   ├── pages/                    # 7 个页面 × 2 主题 = 14 个 HTML
-│   │   ├── home.html             # 首页
-│   │   ├── workbench.html        # 工作台（画图 + 识别）
-│   │   ├── workbench-result.html # 识别结果 + 调音引导
-│   │   ├── workbench-play.html   # 演奏区（手部追踪 + 特效）
-│   │   ├── login.html            # 登录
-│   │   ├── register.html         # 注册
-│   │   └── profile.html          # 个人中心（记录管理）
-│   ├── assets/
-│   │   ├── app.js                # 全站共享脚本（路由/存储/识别/音色/键盘）
-│   │   ├── icons/                # 41 个 SVG 图标
-│   │   └── hero-product-visual-v3.jpg
-│   └── tests/screens/            # 10 张测试截图
+├── start.bat                     # 一键启动（拉起前后端 + 开浏览器）
+├── soundshape-mr/                # 前端（React + Vite + TypeScript）
+│   ├── src/
+│   │   ├── components/           # AppShell / TopNav
+│   │   ├── lib/                  # audio / handTracking / recognition / store
+│   │   ├── pages/                # Home / Workbench / Auth / Profile
+│   │   └── styles/               # tokens / base / layout / animations
+│   ├── tests/
+│   │   ├── e2e_test.py           # Playwright 端到端测试
+│   │   └── screens/              # 10 张测试截图
+│   └── vite.config.ts
+├── soundshape-design/            # 静态设计稿（14 页面 + 2 hero 图）
 ├── backend/                      # 后端（Node.js + Express + TypeScript）
 │   ├── src/
 │   │   ├── server.ts             # 入口，含 /api/health
@@ -127,13 +109,14 @@ music voice/
 
 ## 技术栈
 
-**前端**（纯静态，零构建）
+**前端**（React + Vite）
 
-- 原生 HTML + JavaScript（[app.js](soundshape-design/assets/app.js)）
-- Tailwind CSS（CDN，Apple 极简风）
-- Web Audio API（音色合成，[M6 参数](docs/specs/2026-06-28-soundshape-modules.md)）
+- React 19 + Vite 8 + TypeScript
+- Tailwind CSS（Apple 极简风）
+- Web Audio API（音色合成）
 - MediaPipe Hands（手部追踪，浏览器端推理）
-- localStorage 持久化（无需后端即可运行）
+- Zustand（状态管理）
+- React Router（路由）
 
 **后端**（可选，云端保存）
 
@@ -143,8 +126,7 @@ music voice/
 
 **启动器**
 
-- Python 3.10+ 内置 http.server（零依赖）
-- Windows .bat 菜单式入口
+- Windows `start.bat`（一键拉起前后端 + 开浏览器）
 
 ---
 
@@ -158,7 +140,7 @@ music voice/
 | 长笛 | sine + triangle + 噪声 | A30ms D0 S0.7 R200ms | lowpass 2500Hz |
 | 架子鼓 | kick/snare/tom/cymbal | 各自合成 | — |
 
-详见 [app.js](soundshape-design/assets/app.js#L216-L261) 的 `INSTRUMENT_PRESETS`。
+详见 [audio.ts](soundshape-mr/src/lib/audio.ts) 的 `INSTRUMENT_PRESETS`。
 
 ---
 
@@ -190,14 +172,15 @@ music voice/
 运行测试：
 
 ```bash
-# 方式一：启动器菜单选 [3]
-启动器.bat
+# 1. 先启动前端（双击 start.bat，或手动）
+cd soundshape-mr && npm run dev
 
-# 方式二：直接运行
-python launcher/run_tests.py
+# 2. 另开终端运行 Playwright 测试
+cd soundshape-mr
+python tests/e2e_test.py
 ```
 
-最新结果：**86 / 86 项全部通过**，报告输出到 `launcher/test-report.txt`。
+最新结果：**86 / 86 项全部通过**。
 
 ---
 
@@ -244,23 +227,23 @@ python launcher/run_tests.py
 
 ## 常见问题
 
-**Q: 提示"python 不是内部命令"？**
-A: 安装 [Python 3.10+](https://www.python.org/downloads/)，安装时勾选 **Add Python to PATH**。
+**Q: 提示"node 不是内部命令"？**
+A: 安装 [Node.js 18+](https://nodejs.org/)。
 
 **Q: 端口被占用？**
-A: 启动器菜单选 `[4]` 停止所有服务，或修改 `launcher/server.py` 默认端口。
+A: 关闭之前启动的前后端窗口。或手动结束占用 5173/8787 的进程。
 
 **Q: 画图后识别不出？**
 A: 至少画 4 个独立形状（矩形/圆点），形状之间留间隙。参考上方"识别规则"。
 
 **Q: 摄像头无法开启？**
-A: 浏览器需 HTTPS 或 localhost 才能调用摄像头。本地访问 `http://127.0.0.1:8000` 即可。MediaPipe CDN 加载失败时会自动降级到键盘模式。
+A: 浏览器需 HTTPS 或 localhost 才能调用摄像头。本地访问 `http://localhost:5173` 即可。
 
 **Q: 中文显示乱码？**
-A: 启动器已自动切换 UTF-8 编码，无需手动处理。
+A: start.bat 已自动切换 UTF-8 编码，无需手动处理。
 
 **Q: 数据保存在哪里？**
-A: 纯前端模式下保存在浏览器 localStorage（`ss_accounts` / `ss_records` / `ss_tunings` 等 key）。完整模式下保存到 PostgreSQL。
+A: 未配后端时保存在浏览器 localStorage，配了后端则保存到 PostgreSQL。
 
 ---
 
